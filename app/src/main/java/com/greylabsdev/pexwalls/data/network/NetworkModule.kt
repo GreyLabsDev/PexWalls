@@ -11,6 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
 private const val PEXELS_EDNPOINT = "https://api.pexels.com/v1/"
+private const val KEY_AUTHORIZATION = "Authorization"
+private const val AUTHORIZATION_TOKEN = "some_token"
 
 val networkModule = module {
 
@@ -18,7 +20,9 @@ val networkModule = module {
 
     factory { createLoggingInterceptor() }
 
-    factory { createOkHttpClient(get()) }
+    factory { createNetworkInterceptor() }
+
+    factory { createOkHttpClient(get(), get()) }
 }
 
 fun createLoggingInterceptor(): HttpLoggingInterceptor {
@@ -29,11 +33,22 @@ fun createLoggingInterceptor(): HttpLoggingInterceptor {
     return logging
 }
 
+fun createNetworkInterceptor(): Interceptor {
+    return Interceptor {
+        val request = it.request().newBuilder()
+            .addHeader(KEY_AUTHORIZATION, AUTHORIZATION_TOKEN)
+            .build()
+        it.proceed(request)
+    }
+}
+
 fun createOkHttpClient(
-    loggingInterceptor: HttpLoggingInterceptor
+    loggingInterceptor: HttpLoggingInterceptor,
+    networkInterceptor: Interceptor
 ): OkHttpClient {
     return OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
+        .addNetworkInterceptor(networkInterceptor)
         .addNetworkInterceptor(StethoInterceptor())
         .hostnameVerifier { _, _ -> true }
         .retryOnConnectionFailure(false)
