@@ -1,13 +1,18 @@
 package com.greylabsdev.pexwalls.presentation.screen.splash
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.greylabsdev.pexwalls.R
+import com.greylabsdev.pexwalls.presentation.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity(
+    layoutResId = R.layout.activity_main
+) {
+    override val viewModel by viewModel<SplashViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun initViewModelObserving() {}
+
+    override fun initListeners() {
+        test_tv.setOnClickListener { viewModel.test() }
     }
 }

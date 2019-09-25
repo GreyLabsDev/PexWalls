@@ -7,8 +7,8 @@ import org.koin.dsl.module
 
 val dataSourceModule = module {
 
-    single<IDataSource>(named("local")) { LocalDataSource() }
+    single<IDataSource>(named("local")) { LocalDataSource(get()) }
 
-    single<IDataSource>(named("remote")) { RemoteDataSource() }
+    single<IDataSource>(named("remote")) { RemoteDataSource(get()) }
 
 }

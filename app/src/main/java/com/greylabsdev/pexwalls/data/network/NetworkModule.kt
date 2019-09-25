@@ -18,7 +18,7 @@ val networkModule = module {
 
     factory { createLoggingInterceptor() }
 
-    factory { createOkHttpClient(get(), get()) }
+    factory { createOkHttpClient(get()) }
 }
 
 fun createLoggingInterceptor(): HttpLoggingInterceptor {
@@ -30,12 +30,10 @@ fun createLoggingInterceptor(): HttpLoggingInterceptor {
 }
 
 fun createOkHttpClient(
-    loggingInterceptor: HttpLoggingInterceptor,
-    interceptor: Interceptor
+    loggingInterceptor: HttpLoggingInterceptor
 ): OkHttpClient {
     return OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
-        .addNetworkInterceptor(interceptor)
         .addNetworkInterceptor(StethoInterceptor())
         .hostnameVerifier { _, _ -> true }
         .retryOnConnectionFailure(false)
