@@ -30,5 +30,4 @@ interface PexelsApi {
         @Query("w") width: Int
     )
 
-
 }
