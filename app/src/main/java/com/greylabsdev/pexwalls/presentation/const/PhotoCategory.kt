@@ -4,7 +4,7 @@ sealed class PhotoCategory(val name: String) {
     //future categories for wallpapers, using like search request to API but with name string
 
     //base themes
-    class ABSTRACT: PhotoCategory("")
+    class ABSTRACT: PhotoCategory("abstract")
     class NATURE: PhotoCategory("")
     class ARCHITECTURE: PhotoCategory("")
     class ANIMALS: PhotoCategory("")

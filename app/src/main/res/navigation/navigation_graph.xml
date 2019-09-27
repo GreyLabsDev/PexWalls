@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/categoryImagesFragment"
-        android:name="com.greylabsdev.pexwalls.presentation.screen.categoryimages.CategoryImagesFragment"
+        android:name="com.greylabsdev.pexwalls.presentation.screen.categoryphotos.CategoryImagesFragment"
         android:label="CategoryImagesFragment"
         tools:layout="@layout/fragment_categoryimages"/>
 </navigation>

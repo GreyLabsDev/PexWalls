@@ -30,10 +30,6 @@ abstract class BaseFragment(
         return inflater.inflate(layoutResId, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     override fun onStart() {
         super.onStart()
 
@@ -41,11 +37,13 @@ abstract class BaseFragment(
         initListeners()
         initToolbar()
         initViewModelObserving()
+        doInitialCalls()
     }
 
     protected open fun initViews() {}
     protected open fun initListeners() {}
     protected open fun initViewModelObserving() {}
+    protected open fun doInitialCalls() {}
 
     protected open fun showLoading(isShow: Boolean) {}
     protected open fun showError(errorMessage: String) {}

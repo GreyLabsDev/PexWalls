@@ -4,19 +4,19 @@ import com.google.gson.annotations.SerializedName
 
 data class PhotoSrcDto(
     @SerializedName("landscape")
-    val landscape: String?,
+    val landscape: String,
     @SerializedName("large")
-    val large: String?,
+    val large: String,
     @SerializedName("large2x")
-    val large2x: String?,
+    val large2x: String,
     @SerializedName("medium")
-    val medium: String?,
+    val medium: String,
     @SerializedName("original")
-    val original: String?,
+    val original: String,
     @SerializedName("portrait")
-    val portrait: String?,
+    val portrait: String,
     @SerializedName("small")
-    val small: String?,
+    val small: String,
     @SerializedName("tiny")
-    val tiny: String?
+    val tiny: String
 )

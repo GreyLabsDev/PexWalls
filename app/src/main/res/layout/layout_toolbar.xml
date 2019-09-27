@@ -4,7 +4,6 @@
     app:elevation="0dp"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -26,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:tint="@color/colorPrimary"
+                android:tint="@color/colorPrimaryDark"
                 android:src="@drawable/ic_back"/>
 
             <TextView
@@ -36,7 +35,7 @@
                 android:text="Category"
                 android:textSize="32dp"
                 android:layout_marginStart="16dp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
                 android:textAlignment="center"/>
 
