@@ -5,17 +5,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.screen.splash.SplashActivity">
+    android:gravity="center"
+    tools:context=".presentation.screen.splash.SplashActivity"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/test_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Splash"
+        android:textSize="32dp"
+        android:textStyle="bold"
         android:layout_gravity="center"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_height="4dp"
+        android:indeterminate="true"/>
 
 </LinearLayout>

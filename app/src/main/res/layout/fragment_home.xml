@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    tools:context=".presentation.screen.host.HostActivity"
+    android:background="@color/colorBackground">
+
+    <include
+        layout="@layout/layout_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <TextView
+            android:id="@+id/category_btn_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Go to category"
+            android:textSize="32dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

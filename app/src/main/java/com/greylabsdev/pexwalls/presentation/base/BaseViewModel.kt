@@ -5,7 +5,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseViewModel: ViewModel(), LifecycleObserver {
 
-    private val disposables = CompositeDisposable()
+    protected val disposables = CompositeDisposable()
     private var _progressState: MutableLiveData<ProgressState> = MutableLiveData()
 
     val progressState: LiveData<ProgressState> = _progressState

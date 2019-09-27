@@ -8,15 +8,15 @@ data class PhotoDto(
     @SerializedName("id")
     val id: Int,
     @SerializedName("photographer")
-    val photographer: String?,
+    val photographer: String,
     @SerializedName("photographer_id")
-    val photographerId: Int?,
+    val photographerId: Int,
     @SerializedName("photographer_url")
-    val photographerUrl: String?,
+    val photographerUrl: String,
     @SerializedName("src")
     val src: PhotoSrcDto,
     @SerializedName("url")
-    val url: String?,
+    val url: String,
     @SerializedName("width")
     val width: Int
 )

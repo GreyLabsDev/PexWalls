@@ -8,7 +8,7 @@ abstract class BaseActivity(
     @LayoutRes private val layoutResId: Int
 ): AppCompatActivity() {
 
-    protected abstract val viewModel: BaseViewModel
+    protected abstract val viewModel: BaseViewModel?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,7 @@ abstract class BaseActivity(
 
     protected open fun initViews() {}
     protected open fun initListeners() {}
-    protected abstract fun initViewModelObserving()
+    protected open fun initViewModelObserving() {}
 
     protected open fun showLoading(isShow: Boolean) {}
     protected open fun showError(errorMessage: String) {}

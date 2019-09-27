@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.greylabsdev.pexwalls.presentation.screen.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_categoryImagesFragment"
+            app:destination="@id/categoryImagesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryImagesFragment"
+        android:name="com.greylabsdev.pexwalls.presentation.screen.categoryimages.CategoryImagesFragment"
+        android:label="CategoryImagesFragment"
+        tools:layout="@layout/fragment_categoryimages"/>
+</navigation>
