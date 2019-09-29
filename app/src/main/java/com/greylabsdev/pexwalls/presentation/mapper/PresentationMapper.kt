@@ -7,7 +7,7 @@ object PresentationMapper {
     fun mapToPhotoModel(photo: PhotoEntity): PhotoModel {
         return PhotoModel(
             photo.id,
-            photo.src.small,
+            photo.src.medium,
             photo.photographer,
             photo.photographerUrl
         )

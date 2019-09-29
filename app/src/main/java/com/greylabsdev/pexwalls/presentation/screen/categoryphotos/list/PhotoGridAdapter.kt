@@ -6,7 +6,10 @@ import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.ext.inflate
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 
-class PhotoGridAdapter(): RecyclerView.Adapter<PhotoGridViewHolder>() {
+class PhotoGridAdapter(
+    private val itemWidth: Int,
+    private val itemHeight: Int
+): RecyclerView.Adapter<PhotoGridViewHolder>() {
 
     var photos: List<PhotoModel> = listOf()
 
@@ -17,7 +20,7 @@ class PhotoGridAdapter(): RecyclerView.Adapter<PhotoGridViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoGridViewHolder {
         val view = parent.inflate(R.layout.item_photo, parent, false)
-        return PhotoGridViewHolder(view)
+        return PhotoGridViewHolder(view, itemWidth, itemHeight)
     }
 
     override fun getItemCount(): Int = photos.size
