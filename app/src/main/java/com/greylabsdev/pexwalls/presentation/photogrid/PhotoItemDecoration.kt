@@ -5,8 +5,6 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.greylabsdev.pexwalls.presentation.ext.isEven
 import com.greylabsdev.pexwalls.presentation.ext.isOdd
-import com.greylabsdev.pexwalls.presentation.ext.orNot
-import com.greylabsdev.pexwalls.presentation.ext.then
 
 class PhotoItemDecoration(private val offset: Int) : RecyclerView.ItemDecoration() {
 

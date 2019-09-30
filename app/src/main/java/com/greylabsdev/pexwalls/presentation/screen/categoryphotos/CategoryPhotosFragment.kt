@@ -6,10 +6,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
-import com.greylabsdev.pexwalls.presentation.ext.argSerializable
-import com.greylabsdev.pexwalls.presentation.ext.dpToPix
-import com.greylabsdev.pexwalls.presentation.ext.getScreenHeightInPixels
-import com.greylabsdev.pexwalls.presentation.ext.getScreenWidthInPixels
+import com.greylabsdev.pexwalls.presentation.ext.*
 import com.greylabsdev.pexwalls.presentation.photogrid.PhotoItemDecoration
 import com.greylabsdev.pexwalls.presentation.photogrid.PhotoGridPagingAdapter
 import kotlinx.android.synthetic.main.fragment_categoryimages.*
@@ -32,32 +29,29 @@ class CategoryPhotosFragment : BaseFragment(
     private val imageCardHeight by lazy { requireActivity().getScreenHeightInPixels()/3}
 
     override fun initViews() {
-        photo_grid_rv.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL).apply {
+        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL).apply {
             gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         }
-
-//        photo_grid_rv.adapter = photoAdapter
-//        photo_grid_rv.addItemDecoration(
-//            PhotoItemDecoration(
-//                imageCardMargin.toInt()
-//            )
-//        )
-
-        initRxPagingRv()
+        photo_grid_rv.layoutManager = staggeredGridLayoutManager
+        initPhotoGridAdapter()
     }
 
     override fun doInitialCalls() {
         viewModel.getInitialPhotosByCategory()
     }
 
-    private fun initRxPagingRv() {
-        val photoGridPagingAdapter = PhotoGridPagingAdapter(imageCardWidth, imageCardHeight)
-        photoGridPagingAdapter.dataSource = viewModel.photoGridDataSource
-        photo_grid_rv.adapter = photoGridPagingAdapter
-        photo_grid_rv.addItemDecoration(
-            PhotoItemDecoration(
-                imageCardMargin.toInt()
+    private fun initPhotoGridAdapter() {
+        if (photo_grid_rv.adapter == null) {
+            val photoGridPagingAdapter = PhotoGridPagingAdapter(imageCardWidth, imageCardHeight)
+            photoGridPagingAdapter.dataSource = viewModel.photoGridDataSource
+            photo_grid_rv.adapter = photoGridPagingAdapter
+        }
+        if (photo_grid_rv.itemDecorationCount == 0) {
+            photo_grid_rv.addItemDecoration(
+                PhotoItemDecoration(
+                    imageCardMargin.toInt()
+                )
             )
-        )
+        }
     }
 }

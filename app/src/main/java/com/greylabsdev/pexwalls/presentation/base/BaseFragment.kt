@@ -12,8 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.google.android.material.appbar.AppBarLayout
-import com.greylabsdev.pexwalls.presentation.ext.setNavigationClickListener
-import com.greylabsdev.pexwalls.presentation.ext.then
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
 import java.io.Serializable
@@ -92,7 +90,7 @@ abstract class BaseFragment(
         toolbarView?.let {
             toolbar_container.toolbar_title_tv.text = toolbarTitle ?: ""
             toolbar_container.back_iv.isVisible = hasToolbarBackButton
-            hasToolbarBackButton.then {
+            if (hasToolbarBackButton) {
                 toolbar_container.setOnClickListener { navigateBack() }
             }
         }

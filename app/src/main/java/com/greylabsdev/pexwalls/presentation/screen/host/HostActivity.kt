@@ -7,7 +7,6 @@ import android.os.Bundle
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseActivity
 import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
-import com.greylabsdev.pexwalls.presentation.ext.then
 
 class HostActivity : BaseActivity(
     layoutResId = R.layout.activity_host
@@ -16,7 +15,7 @@ class HostActivity : BaseActivity(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O).then {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.navigationBarColor = getColor(R.color.colorBackground)
         }
     }

@@ -4,7 +4,6 @@ import com.greylabsdev.pexwalls.domain.usecase.PhotoDisplayingUseCase
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.ext.mainThreadObserve
 import com.greylabsdev.pexwalls.presentation.ext.shedulersSubscribe
-import com.greylabsdev.pexwalls.presentation.ext.then
 import com.greylabsdev.pexwalls.presentation.mapper.PresentationMapper
 import com.greylabsdev.pexwalls.presentation.paging.PagingLoadingState
 import com.greylabsdev.pexwalls.presentation.paging.RxPagingAdapter

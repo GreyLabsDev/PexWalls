@@ -4,8 +4,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.greylabsdev.pexwalls.R
+import com.greylabsdev.pexwalls.presentation.ext.dpToPix
 import com.greylabsdev.pexwalls.presentation.ext.inflate
-import com.greylabsdev.pexwalls.presentation.ext.then
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.PAGING_VIEW_TYPE_DATA
 import com.greylabsdev.pexwalls.presentation.paging.PAGING_VIEW_TYPE_FOOTER
@@ -24,7 +24,8 @@ class PhotoGridPagingAdapter(
                 viewHolder = PhotoGridViewHolder(
                     view,
                     itemWidth,
-                    itemHeight
+                    itemHeight,
+                    view.context.dpToPix(16)
                 )
             }
             PAGING_VIEW_TYPE_FOOTER -> {
@@ -39,8 +40,8 @@ class PhotoGridPagingAdapter(
         when (holder) {
             is PhotoGridViewHolder -> {
                 getItem(position)?.let { item ->
-                    (item is PhotoModel).then {
-                        holder.bind(item as PhotoModel)
+                    if (item is PhotoModel) {
+                        holder.bind(item)
                     }
                 }
             }
