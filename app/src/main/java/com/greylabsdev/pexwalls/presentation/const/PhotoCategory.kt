@@ -1,6 +1,8 @@
 package com.greylabsdev.pexwalls.presentation.const
 
-sealed class PhotoCategory(val name: String) {
+import java.io.Serializable
+
+sealed class PhotoCategory(val name: String): Serializable {
     //future categories for wallpapers, using like search request to API but with name string
 
     //base themes

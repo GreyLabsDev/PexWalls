@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:tint="@color/colorPrimaryDark"
+                android:tint="@color/colorBlack"
                 android:src="@drawable/ic_back"/>
 
             <TextView
@@ -35,7 +35,7 @@
                 android:text="Category"
                 android:textSize="32dp"
                 android:layout_marginStart="16dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorBlack"
                 android:textStyle="bold"
                 android:textAlignment="center"/>
 

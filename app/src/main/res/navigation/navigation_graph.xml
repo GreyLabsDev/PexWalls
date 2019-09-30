@@ -16,7 +16,11 @@
     </fragment>
     <fragment
         android:id="@+id/categoryImagesFragment"
-        android:name="com.greylabsdev.pexwalls.presentation.screen.categoryphotos.CategoryImagesFragment"
+        android:name="com.greylabsdev.pexwalls.presentation.screen.categoryphotos.CategoryPhotosFragment"
         android:label="CategoryImagesFragment"
-        tools:layout="@layout/fragment_categoryimages"/>
+        tools:layout="@layout/fragment_categoryimages">
+        <argument
+            android:name="category"
+            app:argType="com.greylabsdev.pexwalls.presentation.const.PhotoCategory" />
+    </fragment>
 </navigation>
