@@ -29,7 +29,7 @@ class CategoryPhotosFragment : BaseFragment(
     private val photoCategory by argSerializable<PhotoCategory>("category")
     private val imageCardMargin by lazy { requireActivity().dpToPix(16) }
     private val imageCardWidth by lazy { requireActivity().getScreenWidthInPixels()/2 }
-    private val imageCardHeight by lazy { requireActivity().getScreenHeightInPixels()/3 }
+    private val imageCardHeight by lazy { requireActivity().getScreenHeightInPixels()/3}
 
     override fun initViews() {
         photo_grid_rv.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL).apply {

@@ -21,7 +21,7 @@ class HomeFragment : BaseFragment(
         category_btn_tv.setOnClickListener {
             navigateTo(
                 R.id.categoryImagesFragment,
-                listOf(Pair("category", PhotoCategory.ABSTRACT()))
+                listOf(Pair("category", PhotoCategory.NIGHT()))
             )
         }
     }

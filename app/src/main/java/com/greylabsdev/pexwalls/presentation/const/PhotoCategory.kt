@@ -12,7 +12,7 @@ sealed class PhotoCategory(val name: String): Serializable {
     class ANIMALS: PhotoCategory("")
     class PORTRAITS: PhotoCategory("")
     class SEA: PhotoCategory("")
-    class NIGHT: PhotoCategory("")
+    class NIGHT: PhotoCategory("night")
 
     //colors
     class COLOR_BLACK: PhotoCategory("")
