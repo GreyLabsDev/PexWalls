@@ -10,6 +10,7 @@ import com.greylabsdev.pexwalls.presentation.ext.getScreenWidthInPixels
 import com.greylabsdev.pexwalls.presentation.ext.inflate
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.PagingAdapter
+import com.greylabsdev.pexwalls.presentation.paging.PagingItem
 import com.greylabsdev.pexwalls.presentation.paging.PagingUpdater
 import com.greylabsdev.pexwalls.presentation.photogrid.PhotoGridViewHolder
 
@@ -23,18 +24,43 @@ class PGPagingAdapter(
     initialLoad
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = parent.inflate(R.layout.item_photo, parent, false)
-        return PhotoGridViewHolder(
-            view,
-            view.context.getScreenWidthInPixels()/2,
-            view.context.getScreenHeightInPixels()/3,
-            view.context.dpToPix(16)
-        )
+        lateinit var holder: RecyclerView.ViewHolder
+        when (viewType) {
+            PagingItem.ItemType.DATA.itemCode -> {
+                val view = parent.inflate(R.layout.item_photo, parent, false)
+                holder = PhotoGridViewHolder(
+                    view,
+                    view.context.getScreenWidthInPixels()/2,
+                    view.context.getScreenHeightInPixels()/3,
+                    view.context.dpToPix(16)
+                )
+            }
+            PagingItem.ItemType.HEADER.itemCode -> {}
+            PagingItem.ItemType.FOOTER.itemCode -> {
+                val view = parent.inflate(R.layout.item_footer, parent, false)
+                holder = FooterViewHolder(
+                    view,
+                    view.context.getScreenWidthInPixels()/2,
+                    view.context.getScreenHeightInPixels()/3
+                )
+            }
+        }
+        return holder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is PhotoGridViewHolder) {
-            holder.bind(items[position])
+        when (getItemViewType(position)) {
+            PagingItem.ItemType.DATA.itemCode -> {
+                items[position].data?.let {
+                    (holder as PhotoGridViewHolder).bind(it)
+                }
+            }
+            PagingItem.ItemType.HEADER.itemCode -> {}
+            PagingItem.ItemType.FOOTER.itemCode -> {
+                items[position].itemData?.let {
+                    (holder as FooterViewHolder).bind(it)
+                }
+            }
         }
     }
 

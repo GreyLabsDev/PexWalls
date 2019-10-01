@@ -11,7 +11,7 @@ abstract class PagingAdapter<VH : RecyclerView.ViewHolder,ItemType> (
     private val initialLoad: Boolean = false
 ) : RecyclerView.Adapter<VH>() {
 
-    var items: List<ItemType> = listOf()
+    var items: List<PagingItem<ItemType>> = listOf()
         set(value) {
             val pagingDiffCallback =
                 PagingDiffCallback<ItemType>(
@@ -25,6 +25,10 @@ abstract class PagingAdapter<VH : RecyclerView.ViewHolder,ItemType> (
         }
 
     override fun getItemCount(): Int = items.size
+
+    override fun getItemViewType(position: Int): Int {
+        return items[position].itemType.itemCode
+    }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
@@ -64,16 +68,25 @@ abstract class PagingAdapter<VH : RecyclerView.ViewHolder,ItemType> (
 
     class PagingDiffCallback<ItemType>(
         private val diffCallback: DiffUtil.ItemCallback<ItemType>,
-        private val oldItems: List<ItemType>,
-        private val newItems: List<ItemType>
+        private val oldItems: List<PagingItem<ItemType>>,
+        private val newItems: List<PagingItem<ItemType>>
     ): DiffUtil.Callback() {
         override fun getOldListSize(): Int = oldItems.size
         override fun getNewListSize(): Int = newItems.size
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return diffCallback.areItemsTheSame(oldItems[oldItemPosition], newItems[newItemPosition])
+            return if (oldItems[oldItemPosition].data != null && newItems[newItemPosition].data != null) {
+                diffCallback.areItemsTheSame(oldItems[oldItemPosition].data!!, newItems[newItemPosition].data!!)
+            } else {
+                false
+            }
+
         }
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return diffCallback.areContentsTheSame(oldItems[oldItemPosition], newItems[newItemPosition])
+            return if (oldItems[oldItemPosition].data != null &&  newItems[newItemPosition].data != null) {
+                diffCallback.areContentsTheSame(oldItems[oldItemPosition].data!!, newItems[newItemPosition].data!!)
+            } else {
+                false
+            }
         }
     }
 }

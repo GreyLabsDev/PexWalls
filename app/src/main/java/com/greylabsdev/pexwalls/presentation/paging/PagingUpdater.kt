@@ -12,7 +12,7 @@ abstract class PagingUpdater<ItemType>(
 
     abstract fun fetchPage()
 
-    fun pushToDataSource(items: List<ItemType>) {
+    fun pushToDataSource(items: List<PagingItem<ItemType>>) {
         pagingDataSource.addItems(items)
     }
 
@@ -29,6 +29,10 @@ abstract class PagingUpdater<ItemType>(
                 }
             }
         }
+    }
+
+    fun <Type>mapToItems(list: List<Type>): List<PagingItem<Type>> {
+        return list.map { PagingItem(it, PagingItem.ItemType.DATA, null) }.toList()
     }
 
     sealed class PagingMode {

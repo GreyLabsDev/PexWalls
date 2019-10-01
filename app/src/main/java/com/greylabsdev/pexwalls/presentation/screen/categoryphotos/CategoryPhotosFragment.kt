@@ -9,7 +9,6 @@ import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.ext.*
 import com.greylabsdev.pexwalls.presentation.photogrid.PhotoItemDecoration
-import com.greylabsdev.pexwalls.presentation.photogrid.PhotoGridPagingAdapter
 import com.greylabsdev.pexwalls.presentation.photogrid.paging_v2.PGPagingAdapter
 import kotlinx.android.synthetic.main.fragment_categoryimages.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -29,7 +28,7 @@ class CategoryPhotosFragment : BaseFragment(
     private val imageCardMargin by lazy { requireActivity().dpToPix(16) }
     private val imageCardWidth by lazy { requireActivity().getScreenWidthInPixels()/2 }
     private val imageCardHeight by lazy { requireActivity().getScreenHeightInPixels()/3}
-    private lateinit var photoGridPagingAdapter: PhotoGridPagingAdapter
+
     private lateinit var photoGridPagingAdapterV2: PGPagingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +39,6 @@ class CategoryPhotosFragment : BaseFragment(
     override fun initViews() {
         val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         photo_grid_rv.layoutManager = staggeredGridLayoutManager
-
-//        photo_grid_rv.adapter = photoGridPagingAdapter
         photo_grid_rv.adapter = photoGridPagingAdapterV2
 
         if (photo_grid_rv.itemDecorationCount == 0) {
@@ -61,10 +58,6 @@ class CategoryPhotosFragment : BaseFragment(
     }
 
     private fun initPhotoGridAdapter() {
-        //        V1
-        photoGridPagingAdapter = PhotoGridPagingAdapter(imageCardWidth, imageCardHeight)
-        photoGridPagingAdapter.dataSource = viewModel.photoGridDataSource
-        //        V2
         photoGridPagingAdapterV2 = PGPagingAdapter(viewModel.photoGridPagingUpdater, true)
     }
 }

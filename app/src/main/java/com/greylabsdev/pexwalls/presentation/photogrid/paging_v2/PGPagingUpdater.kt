@@ -6,6 +6,7 @@ import com.greylabsdev.pexwalls.presentation.ext.mainThreadObserve
 import com.greylabsdev.pexwalls.presentation.ext.shedulersSubscribe
 import com.greylabsdev.pexwalls.presentation.mapper.PresentationMapper
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
+import com.greylabsdev.pexwalls.presentation.paging.DataSourceMode
 import com.greylabsdev.pexwalls.presentation.paging.PagingDataSource
 import com.greylabsdev.pexwalls.presentation.paging.PagingUpdater
 import io.reactivex.disposables.CompositeDisposable
@@ -18,7 +19,7 @@ class PGPagingUpdater(
     private val photoDisplayingUseCase: PhotoDisplayingUseCase,
     private val photoCategory: PhotoCategory
 ) : PagingUpdater<PhotoModel>(
-    pagingDataSource = PagingDataSource<PhotoModel>(PagingDataSource.DataSourceMode.LIVEDATA()),
+    pagingDataSource = PagingDataSource<PhotoModel>(DataSourceMode.LIVEDATA()),
     pagingMode = PagingMode.BY_PAGE(),
     pageSize = 15,
     currentPage = 1
@@ -28,9 +29,11 @@ class PGPagingUpdater(
             .map { it.map { photoEntity ->  PresentationMapper.mapToPhotoModel(photoEntity)} }
             .shedulersSubscribe()
             .mainThreadObserve()
+            .doOnSubscribe { pagingDataSource.addFooter("","") }
             .subscribeBy(
                 onNext = {photos ->
-                    pushToDataSource(photos)
+                    pagingDataSource.removeFooter()
+                    pushToDataSource(mapToItems(photos))
                     updateCurrentPage(photos.size)
                 },
                 onError = { Timber.e(it) },

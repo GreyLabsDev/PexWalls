@@ -10,27 +10,30 @@ open class PagingDataSource<ItemType>(
     private val dataSourceMode: DataSourceMode = DataSourceMode.RX()
 ) {
 
-    private var _itemsChannelLiveData: MutableLiveData<List<ItemType>> = MutableLiveData<List<ItemType>>()
-    val itemsChannelLiveData: LiveData<List<ItemType>>
+    private var _itemsChannelLiveData: MutableLiveData<List<PagingItem<ItemType>>> = MutableLiveData<List<PagingItem<ItemType>>>()
+    val itemsChannelLiveData: LiveData<List<PagingItem<ItemType>>>
         get() = _itemsChannelLiveData
 
-    private var _itemsChannelRx: BehaviorSubject<List<ItemType>> = BehaviorSubject.create<List<ItemType>>()
-    val itemsChannelRx: Observable<List<ItemType>>
+    private var _itemsChannelRx: BehaviorSubject<List<PagingItem<ItemType>>> = BehaviorSubject.create<List<PagingItem<ItemType>>>()
+    val itemsChannelRx: Observable<List<PagingItem<ItemType>>>
         get() = _itemsChannelRx.hide()
 
-    private var _items: MutableList<ItemType> = mutableListOf()
-    val items: List<ItemType>
+    private var _items: MutableList<PagingItem<ItemType>> = mutableListOf()
+    val items: List<PagingItem<ItemType>>
         get() = _items
 
     val itemCount: Int
         get() = _items.size
 
-    fun addItems(items: List<ItemType>) {
+    private var lastFooterPosition: Int? = null
+    private var hasFooter = false
+
+    fun addItems(items: List<PagingItem<ItemType>>) {
         _items.addAll(items)
         pushUpdatedItems()
     }
 
-    fun addItem(newItem: ItemType) {
+    fun addItem(newItem: PagingItem<ItemType>) {
         _items.add(newItem)
         pushUpdatedItems()
     }
@@ -40,9 +43,31 @@ open class PagingDataSource<ItemType>(
         pushUpdatedItems()
     }
 
-    fun insertItemAtPosition(position: Int, item: ItemType) {
+    fun insertItemAtPosition(position: Int, item: PagingItem<ItemType>) {
         _items.add(position, item)
         pushUpdatedItems()
+    }
+
+    fun addFooter(title: String, message: String) {
+        if (hasFooter.not()) {
+            lastFooterPosition = itemCount
+            val footer = PagingItem<ItemType>(
+                data = null,
+                itemType = PagingItem.ItemType.FOOTER,
+                itemData = PagingItem.ItemData(title, message)
+            )
+            addItem(footer)
+            hasFooter = true
+        }
+    }
+
+    fun removeFooter() {
+        if (hasFooter) {
+            lastFooterPosition?.let {
+                removeItemAtPosition(it)
+                hasFooter = false
+            }
+        }
     }
 
     private fun pushUpdatedItems() {
@@ -56,13 +81,9 @@ open class PagingDataSource<ItemType>(
         }
     }
 
-    sealed class DataSourceMode() {
-        class LIVEDATA: DataSourceMode()
-        class RX: DataSourceMode()
-    }
 
-    sealed class PagingItem(data: Any? = null, state: String? = null) {
-        class DATA: PagingItem()
-        class STATE: PagingItem()
-    }
+
+
+
+
 }
