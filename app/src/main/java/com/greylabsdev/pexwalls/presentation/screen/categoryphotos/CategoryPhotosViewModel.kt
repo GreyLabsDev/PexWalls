@@ -1,13 +1,14 @@
 package com.greylabsdev.pexwalls.presentation.screen.categoryphotos
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.greylabsdev.pexwalls.domain.usecase.PhotoDisplayingUseCase
 import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.RxPagingAdapter
+import com.greylabsdev.pexwalls.presentation.paging.PagingUpdater
 import com.greylabsdev.pexwalls.presentation.photogrid.PhotoGridPagingUpdater
+import com.greylabsdev.pexwalls.presentation.photogrid.paging_v2.PGPagingUpdater
 
 
 class CategoryPhotosViewModel(
@@ -15,9 +16,8 @@ class CategoryPhotosViewModel(
     private val photoDisplayingUseCase: PhotoDisplayingUseCase
 ) : BaseViewModel() {
 
-    private val _photos: MutableLiveData<List<PhotoModel>> = MutableLiveData()
     val photos: LiveData<List<PhotoModel>>
-        get() = _photos
+        get() = photoGridPagingUpdater.pagingDataSource.itemsChannelLiveData
 
     var photoGridDataSource = RxPagingAdapter.DataSource().apply {
         pagingUpdater = PhotoGridPagingUpdater(
@@ -27,9 +27,9 @@ class CategoryPhotosViewModel(
         ).setup(offset = 1, count = 10)
     }
 
-    fun getInitialPhotosByCategory() {
-        if (photoGridDataSource.items.isEmpty()) {
-            photoGridDataSource.pagingUpdater?.loadNewItems()
-        }
-    }
+    var photoGridPagingUpdater: PagingUpdater<PhotoModel> = PGPagingUpdater(
+        disposables,
+        photoDisplayingUseCase,
+        photoCategory
+    )
 }

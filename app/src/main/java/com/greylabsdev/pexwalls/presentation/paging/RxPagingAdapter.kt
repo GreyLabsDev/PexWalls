@@ -36,6 +36,7 @@ const val PAGING_VIEW_TYPE_DATA = 1
  * @property loadingStateChannel
  */
 
+@Deprecated("Migrate to PagingAdapter")
 abstract class RxPagingAdapter<VH : RecyclerView.ViewHolder, ITEM>(
     private val initialLoad: Boolean = false
 ) : RecyclerView.Adapter<VH>() {

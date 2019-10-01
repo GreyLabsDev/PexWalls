@@ -1,5 +1,6 @@
 package com.greylabsdev.pexwalls.presentation.screen.categoryphotos
 
+import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -9,6 +10,7 @@ import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.ext.*
 import com.greylabsdev.pexwalls.presentation.photogrid.PhotoItemDecoration
 import com.greylabsdev.pexwalls.presentation.photogrid.PhotoGridPagingAdapter
+import com.greylabsdev.pexwalls.presentation.photogrid.paging_v2.PGPagingAdapter
 import kotlinx.android.synthetic.main.fragment_categoryimages.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -27,25 +29,21 @@ class CategoryPhotosFragment : BaseFragment(
     private val imageCardMargin by lazy { requireActivity().dpToPix(16) }
     private val imageCardWidth by lazy { requireActivity().getScreenWidthInPixels()/2 }
     private val imageCardHeight by lazy { requireActivity().getScreenHeightInPixels()/3}
+    private lateinit var photoGridPagingAdapter: PhotoGridPagingAdapter
+    private lateinit var photoGridPagingAdapterV2: PGPagingAdapter
 
-    override fun initViews() {
-        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL).apply {
-            gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
-        }
-        photo_grid_rv.layoutManager = staggeredGridLayoutManager
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         initPhotoGridAdapter()
     }
 
-    override fun doInitialCalls() {
-        viewModel.getInitialPhotosByCategory()
-    }
+    override fun initViews() {
+        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        photo_grid_rv.layoutManager = staggeredGridLayoutManager
 
-    private fun initPhotoGridAdapter() {
-        if (photo_grid_rv.adapter == null) {
-            val photoGridPagingAdapter = PhotoGridPagingAdapter(imageCardWidth, imageCardHeight)
-            photoGridPagingAdapter.dataSource = viewModel.photoGridDataSource
-            photo_grid_rv.adapter = photoGridPagingAdapter
-        }
+//        photo_grid_rv.adapter = photoGridPagingAdapter
+        photo_grid_rv.adapter = photoGridPagingAdapterV2
+
         if (photo_grid_rv.itemDecorationCount == 0) {
             photo_grid_rv.addItemDecoration(
                 PhotoItemDecoration(
@@ -53,5 +51,20 @@ class CategoryPhotosFragment : BaseFragment(
                 )
             )
         }
+    }
+
+    override fun initViewModelObserving() {
+        super.initViewModelObserving()
+        viewModel.photos.observe(this, Observer {newPhotos ->
+            photoGridPagingAdapterV2.items = newPhotos
+        })
+    }
+
+    private fun initPhotoGridAdapter() {
+        //        V1
+        photoGridPagingAdapter = PhotoGridPagingAdapter(imageCardWidth, imageCardHeight)
+        photoGridPagingAdapter.dataSource = viewModel.photoGridDataSource
+        //        V2
+        photoGridPagingAdapterV2 = PGPagingAdapter(viewModel.photoGridPagingUpdater, true)
     }
 }

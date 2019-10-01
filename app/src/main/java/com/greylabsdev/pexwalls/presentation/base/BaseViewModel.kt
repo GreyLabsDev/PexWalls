@@ -10,9 +10,13 @@ abstract class BaseViewModel: ViewModel(), LifecycleObserver {
 
     val progressState: LiveData<ProgressState> = _progressState
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun clearDisposables() {
         disposables.clear()
+    }
+
+    override fun onCleared() {
+        clearDisposables()
+        super.onCleared()
     }
 
 }
