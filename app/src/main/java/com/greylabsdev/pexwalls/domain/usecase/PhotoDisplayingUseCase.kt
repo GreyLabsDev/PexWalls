@@ -16,4 +16,10 @@ class PhotoDisplayingUseCase(private val repository: IRepository) {
             .map { it.photos.map {photoDto ->  DomainMapper.mapToPhotoEntity(photoDto) } }
     }
 
+    fun getPhotoCategoryCover(category: String): Observable<String> {
+        return repository.searchPhotos(category, 1, 30)
+            .map { it.photos.map {photoDto ->  DomainMapper.mapToPhotoEntity(photoDto) } }
+            .map { it.random().url }
+    }
+
 }
