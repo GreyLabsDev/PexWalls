@@ -1,4 +1,4 @@
-package com.greylabsdev.pexwalls.presentation.photogrid.paging_v2
+package com.greylabsdev.pexwalls.presentation.photogrid
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -12,12 +12,13 @@ import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.PagingAdapter
 import com.greylabsdev.pexwalls.presentation.paging.PagingItem
 import com.greylabsdev.pexwalls.presentation.paging.PagingUpdater
-import com.greylabsdev.pexwalls.presentation.photogrid.PhotoGridViewHolder
 
 
-class PGPagingAdapter(
+class PhotoGridPagingAdapter(
     pagingUpdater: PagingUpdater<PhotoModel>,
-    initialLoad: Boolean = false
+    initialLoad: Boolean = false,
+    private val photoCardWidth: Int,
+    private val photoCardHeight: Int
 ) : PagingAdapter<RecyclerView.ViewHolder, PhotoModel>(
     pagingUpdater,
     DIFF_CALLBACK,
@@ -28,20 +29,27 @@ class PGPagingAdapter(
         when (viewType) {
             PagingItem.ItemType.DATA.itemCode -> {
                 val view = parent.inflate(R.layout.item_photo, parent, false)
-                holder = PhotoGridViewHolder(
+                holder = PhotoGridDataViewHolder(
                     view,
-                    view.context.getScreenWidthInPixels()/2,
-                    view.context.getScreenHeightInPixels()/3,
+                    photoCardWidth,
+                    photoCardHeight,
                     view.context.dpToPix(16)
                 )
             }
-            PagingItem.ItemType.HEADER.itemCode -> {}
+            PagingItem.ItemType.HEADER.itemCode -> {
+                val view = parent.inflate(R.layout.item_header, parent, false)
+                holder = PhotoGridHeaderViewHolder(
+                    view,
+                    photoCardWidth,
+                    photoCardHeight
+                )
+            }
             PagingItem.ItemType.FOOTER.itemCode -> {
                 val view = parent.inflate(R.layout.item_footer, parent, false)
-                holder = FooterViewHolder(
+                holder = PhotoGridFooterViewHolder(
                     view,
-                    view.context.getScreenWidthInPixels()/2,
-                    view.context.getScreenHeightInPixels()/3
+                    photoCardWidth,
+                    photoCardHeight
                 )
             }
         }
@@ -52,13 +60,17 @@ class PGPagingAdapter(
         when (getItemViewType(position)) {
             PagingItem.ItemType.DATA.itemCode -> {
                 items[position].data?.let {
-                    (holder as PhotoGridViewHolder).bind(it)
+                    (holder as PhotoGridDataViewHolder).bind(it)
                 }
             }
-            PagingItem.ItemType.HEADER.itemCode -> {}
+            PagingItem.ItemType.HEADER.itemCode -> {
+                items[position].itemData?.let {
+                    (holder as PhotoGridHeaderViewHolder).bind(it)
+                }
+            }
             PagingItem.ItemType.FOOTER.itemCode -> {
                 items[position].itemData?.let {
-                    (holder as FooterViewHolder).bind(it)
+                    (holder as PhotoGridFooterViewHolder).bind(it)
                 }
             }
         }

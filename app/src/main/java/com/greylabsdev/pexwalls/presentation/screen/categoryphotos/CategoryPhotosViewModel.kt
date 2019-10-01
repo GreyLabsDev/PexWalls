@@ -7,7 +7,7 @@ import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.PagingItem
 import com.greylabsdev.pexwalls.presentation.paging.PagingUpdater
-import com.greylabsdev.pexwalls.presentation.photogrid.paging_v2.PGPagingUpdater
+import com.greylabsdev.pexwalls.presentation.photogrid.PhotoGridPagingUpdater
 
 
 class CategoryPhotosViewModel(
@@ -18,9 +18,10 @@ class CategoryPhotosViewModel(
     val photos: LiveData<List<PagingItem<PhotoModel>>>
         get() = photoGridPagingUpdater.pagingDataSource.itemsChannelLiveData
 
-    var photoGridPagingUpdater: PagingUpdater<PhotoModel> = PGPagingUpdater(
-        disposables,
-        photoDisplayingUseCase,
-        photoCategory
-    )
+    var photoGridPagingUpdater: PagingUpdater<PhotoModel> =
+        PhotoGridPagingUpdater(
+            disposables,
+            photoDisplayingUseCase,
+            photoCategory
+        )
 }

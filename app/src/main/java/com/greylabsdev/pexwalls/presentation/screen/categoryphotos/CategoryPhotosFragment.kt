@@ -9,7 +9,7 @@ import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.ext.*
 import com.greylabsdev.pexwalls.presentation.photogrid.PhotoItemDecoration
-import com.greylabsdev.pexwalls.presentation.photogrid.paging_v2.PGPagingAdapter
+import com.greylabsdev.pexwalls.presentation.photogrid.PhotoGridPagingAdapter
 import kotlinx.android.synthetic.main.fragment_categoryimages.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -25,11 +25,11 @@ class CategoryPhotosFragment : BaseFragment(
     override val progressBar: View by lazy { progress_bar }
 
     private val photoCategory by argSerializable<PhotoCategory>("category")
-    private val imageCardMargin by lazy { requireActivity().dpToPix(16) }
-    private val imageCardWidth by lazy { requireActivity().getScreenWidthInPixels()/2 }
-    private val imageCardHeight by lazy { requireActivity().getScreenHeightInPixels()/3}
+    private val photoCardMargin by lazy { requireActivity().dpToPix(16) }
+    private val photoCardWidth by lazy { requireActivity().getScreenWidthInPixels()/2 }
+    private val photoCardHeight by lazy { requireActivity().getScreenHeightInPixels()/3}
 
-    private lateinit var photoGridPagingAdapterV2: PGPagingAdapter
+    private lateinit var photoGridPagingAdapter: PhotoGridPagingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +39,12 @@ class CategoryPhotosFragment : BaseFragment(
     override fun initViews() {
         val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         photo_grid_rv.layoutManager = staggeredGridLayoutManager
-        photo_grid_rv.adapter = photoGridPagingAdapterV2
+        photo_grid_rv.adapter = photoGridPagingAdapter
 
         if (photo_grid_rv.itemDecorationCount == 0) {
             photo_grid_rv.addItemDecoration(
                 PhotoItemDecoration(
-                    imageCardMargin.toInt()
+                    photoCardMargin.toInt()
                 )
             )
         }
@@ -53,11 +53,17 @@ class CategoryPhotosFragment : BaseFragment(
     override fun initViewModelObserving() {
         super.initViewModelObserving()
         viewModel.photos.observe(this, Observer {newPhotos ->
-            photoGridPagingAdapterV2.items = newPhotos
+            photoGridPagingAdapter.items = newPhotos
         })
     }
 
     private fun initPhotoGridAdapter() {
-        photoGridPagingAdapterV2 = PGPagingAdapter(viewModel.photoGridPagingUpdater, true)
+        photoGridPagingAdapter =
+            PhotoGridPagingAdapter(
+                viewModel.photoGridPagingUpdater,
+                true,
+                photoCardWidth,
+                photoCardHeight
+            )
     }
 }

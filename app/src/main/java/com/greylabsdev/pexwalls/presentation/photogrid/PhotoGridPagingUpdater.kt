@@ -1,4 +1,4 @@
-package com.greylabsdev.pexwalls.presentation.photogrid.paging_v2
+package com.greylabsdev.pexwalls.presentation.photogrid
 
 import com.greylabsdev.pexwalls.domain.usecase.PhotoDisplayingUseCase
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
@@ -13,8 +13,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
-class PGPagingUpdater(
+class PhotoGridPagingUpdater(
     private val disposables: CompositeDisposable,
     private val photoDisplayingUseCase: PhotoDisplayingUseCase,
     private val photoCategory: PhotoCategory
@@ -26,6 +27,8 @@ class PGPagingUpdater(
 ) {
     override fun fetchPage() {
         photoDisplayingUseCase.getPhotosForCategory(photoCategory.name, currentPage, pageSize)
+            .debounce(400, TimeUnit.MILLISECONDS)
+            .distinctUntilChanged()
             .map { it.map { photoEntity ->  PresentationMapper.mapToPhotoModel(photoEntity)} }
             .shedulersSubscribe()
             .mainThreadObserve()

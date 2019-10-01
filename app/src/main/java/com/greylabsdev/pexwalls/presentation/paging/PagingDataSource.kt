@@ -61,6 +61,15 @@ open class PagingDataSource<ItemType>(
         }
     }
 
+    fun addHeader(title: String, message: String) {
+        val header = PagingItem<ItemType>(
+            data = null,
+            itemType = PagingItem.ItemType.HEADER,
+            itemData = PagingItem.ItemData(title, message)
+        )
+        addItem(header)
+    }
+
     fun removeFooter() {
         if (hasFooter) {
             lastFooterPosition?.let {
