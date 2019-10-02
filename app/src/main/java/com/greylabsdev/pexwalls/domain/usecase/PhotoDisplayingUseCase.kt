@@ -22,4 +22,17 @@ class PhotoDisplayingUseCase(private val repository: IRepository) {
             .map { it.random().url }
     }
 
+    fun getCuratedPhotos(pageNumber: Int, perPageCount: Int): Observable<List<PhotoEntity>> {
+        return repository.getCuratedPhotos(pageNumber, perPageCount)
+            .map { it.photos.map {photoDto ->  DomainMapper.mapToPhotoEntity(photoDto) } }
+    }
+
+    fun serachPhoto(query: String,
+                    pageNumber: Int,
+                    perPageCount: Int
+    ): Observable<List<PhotoEntity>> {
+        return repository.searchPhotos(query, pageNumber, perPageCount)
+            .map { it.photos.map {photoDto ->  DomainMapper.mapToPhotoEntity(photoDto) } }
+    }
+
 }

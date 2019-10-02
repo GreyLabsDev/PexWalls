@@ -1,4 +1,4 @@
-package com.greylabsdev.pexwalls.presentation.photogrid
+package com.greylabsdev.pexwalls.presentation.collection.photolist
 
 import android.graphics.Outline
 import android.view.View
@@ -8,16 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
-import kotlinx.android.synthetic.main.item_photo.view.*
+import kotlinx.android.synthetic.main.item_photo_in_list.view.*
 import timber.log.Timber
 
-class PhotoGridDataViewHolder(
-    private val view: View,
-    private val itemWidth: Int,
+class PhotoListDataViewHolder (
+    view: View,
     private val itemHeight: Int,
     private val photoCardCornerRadius: Float
-) : RecyclerView.ViewHolder(view) {
 
+): RecyclerView.ViewHolder(view) {
     private val outlineProvider by lazy {
         object : ViewOutlineProvider() {
             override fun getOutline(view: View, outline: Outline) {
@@ -27,11 +26,12 @@ class PhotoGridDataViewHolder(
     }
 
     fun bind(item: PhotoModel) {
-        view.layoutParams = ViewGroup.LayoutParams(itemWidth, itemHeight)
-        Glide.with(view.context)
+        itemView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemHeight)
+        Glide.with(itemView.context)
             .load(item.photoUrl)
             .transform(CenterCrop())
             .into(itemView.photo_iv)
+        itemView.author_tv.text = item.photographer
         itemView.photo_iv.outlineProvider = outlineProvider
         itemView.photo_iv.clipToOutline = true
         itemView.photo_iv.setOnClickListener { Timber.d("click") }

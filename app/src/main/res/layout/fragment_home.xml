@@ -29,6 +29,17 @@
             android:textStyle="bold"
             android:textAlignment="center" />
 
+        <TextView
+            android:id="@+id/curated_btn_tv"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Go to curated"
+            android:textSize="32dp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textAlignment="center" />
+
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

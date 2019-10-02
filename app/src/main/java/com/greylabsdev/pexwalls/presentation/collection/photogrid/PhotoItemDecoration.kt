@@ -1,4 +1,4 @@
-package com.greylabsdev.pexwalls.presentation.photogrid
+package com.greylabsdev.pexwalls.presentation.collection.photogrid
 
 import android.graphics.Rect
 import android.view.View

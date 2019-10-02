@@ -12,15 +12,23 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_categoryImagesFragment"
-            app:destination="@id/categoryImagesFragment" />
+            app:destination="@id/categoryPhotosFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_curatedPhotosFragment"
+            app:destination="@id/curatedPhotosFragment" />
     </fragment>
     <fragment
-        android:id="@+id/categoryImagesFragment"
+        android:id="@+id/categoryPhotosFragment"
         android:name="com.greylabsdev.pexwalls.presentation.screen.categoryphotos.CategoryPhotosFragment"
         android:label="CategoryImagesFragment"
-        tools:layout="@layout/fragment_categoryimages">
+        tools:layout="@layout/fragment_category_photos">
         <argument
             android:name="category"
             app:argType="com.greylabsdev.pexwalls.presentation.const.PhotoCategory" />
     </fragment>
+    <fragment
+        android:id="@+id/curatedPhotosFragment"
+        android:name="com.greylabsdev.pexwalls.presentation.screen.curatedphotos.CuratedPhotosFragment"
+        android:label="CuratedPhotosFragment"
+        tools:layout="@layout/fragment_curated_photos"/>
 </navigation>

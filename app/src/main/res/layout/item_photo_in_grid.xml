@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/photo_iv"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         android:clickable="true"
         android:focusable="true"
         android:background="?attr/selectableItemBackground"

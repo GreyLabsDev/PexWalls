@@ -8,14 +8,14 @@ import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.ext.*
-import com.greylabsdev.pexwalls.presentation.photogrid.PhotoItemDecoration
-import com.greylabsdev.pexwalls.presentation.photogrid.PhotoGridPagingAdapter
-import kotlinx.android.synthetic.main.fragment_categoryimages.*
+import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoItemDecoration
+import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoGridPagingAdapter
+import kotlinx.android.synthetic.main.fragment_category_photos.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class CategoryPhotosFragment : BaseFragment(
-    layoutResId = R.layout.fragment_categoryimages,
+    layoutResId = R.layout.fragment_category_photos,
     hasToolbarBackButton = true
 ) {
     override val viewModel by viewModel<CategoryPhotosViewModel>{
@@ -33,7 +33,7 @@ class CategoryPhotosFragment : BaseFragment(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initPhotoGridAdapter()
+        initPhotoGridPagingAdapter()
     }
 
     override fun initViews() {
@@ -57,7 +57,7 @@ class CategoryPhotosFragment : BaseFragment(
         })
     }
 
-    private fun initPhotoGridAdapter() {
+    private fun initPhotoGridPagingAdapter() {
         photoGridPagingAdapter =
             PhotoGridPagingAdapter(
                 viewModel.photoGridPagingUpdater,

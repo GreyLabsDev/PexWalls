@@ -1,12 +1,10 @@
-package com.greylabsdev.pexwalls.presentation.photogrid
+package com.greylabsdev.pexwalls.presentation.collection.photogrid
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
-import com.greylabsdev.pexwalls.presentation.ext.getScreenHeightInPixels
-import com.greylabsdev.pexwalls.presentation.ext.getScreenWidthInPixels
 import com.greylabsdev.pexwalls.presentation.ext.inflate
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.PagingAdapter
@@ -28,7 +26,7 @@ class PhotoGridPagingAdapter(
         lateinit var holder: RecyclerView.ViewHolder
         when (viewType) {
             PagingItem.ItemType.DATA.itemCode -> {
-                val view = parent.inflate(R.layout.item_photo, parent, false)
+                val view = parent.inflate(R.layout.item_photo_in_grid, parent, false)
                 holder = PhotoGridDataViewHolder(
                     view,
                     photoCardWidth,
@@ -60,7 +58,7 @@ class PhotoGridPagingAdapter(
         when (getItemViewType(position)) {
             PagingItem.ItemType.DATA.itemCode -> {
                 items[position].data?.let {
-                    (holder as PhotoGridDataViewHolder).bind(it)
+                    (holder as PhotoGridDataViewHolder).bind(it, (position % 3 == 0))
                 }
             }
             PagingItem.ItemType.HEADER.itemCode -> {
@@ -70,7 +68,7 @@ class PhotoGridPagingAdapter(
             }
             PagingItem.ItemType.FOOTER.itemCode -> {
                 items[position].itemData?.let {
-                    (holder as PhotoGridFooterViewHolder).bind(it)
+                    (holder as PhotoGridFooterViewHolder).bind(it, (position % 3 == 0))
                 }
             }
         }

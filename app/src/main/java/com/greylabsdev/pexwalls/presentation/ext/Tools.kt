@@ -1,45 +1,12 @@
 package com.greylabsdev.pexwalls.presentation.ext
 
 /**
- * JUST FOR FUN!
- * Because why not?
+ * Returnng random element from input variables
  *
- * replace for stadard if (condition) { action } constructon to more beautiful:
+ * val randomLetter = randomFrom("a","b","c","d","e","f","g")
  *
- * condition.then {
- *     action
- * }
- *
- * @property action - action that you want to do if condition is true
- *
+ * @property variables
  */
-fun Boolean.then(action: () -> Unit): Boolean {
-    if (this) action.invoke()
-    return this
-}
-
-/**
- * JUST FOR FUN!
- * Because why not?
- *
- * replace for stadard if (!condition) { action } constructon to more beautiful:
- *
- * condition.orNot {
- *     action
- * }
- *
- * can be used with previous .then extension in chain like this:
- *
- * condition.then {
- *    action
- * }.orNot {
- *    another action
- * }
- *
- * @property action - action that you want to do if condition is false
- *
- */
-fun Boolean.orNot(action: () -> Unit): Boolean {
-    if (!this) action.invoke()
-    return this
+fun <T> randomFrom(vararg variables: T): T {
+    return variables.random()
 }

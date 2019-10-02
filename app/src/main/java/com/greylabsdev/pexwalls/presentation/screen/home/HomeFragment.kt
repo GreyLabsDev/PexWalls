@@ -20,9 +20,12 @@ class HomeFragment : BaseFragment(
     override fun initListeners() {
         category_btn_tv.setOnClickListener {
             navigateTo(
-                R.id.categoryImagesFragment,
+                R.id.categoryPhotosFragment,
                 listOf(Pair("category", PhotoCategory.NIGHT()))
             )
+        }
+        curated_btn_tv.setOnClickListener{
+            navigateTo(R.id.curatedPhotosFragment)
         }
     }
 }
