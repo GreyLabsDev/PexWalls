@@ -14,7 +14,8 @@ import com.greylabsdev.pexwalls.presentation.paging.PagingUpdater
 class PhotoListPagingAdapter (
     pagingUpdater: PagingUpdater<PhotoModel>,
     initialLoad: Boolean = false,
-    private val photoCardHeight: Int
+    private val photoCardHeight: Int,
+    private val photoCardCornerRadius: Int
 ) : PagingAdapter<RecyclerView.ViewHolder, PhotoModel>(
     pagingUpdater,
     DIFF_CALLBACK,
@@ -28,7 +29,7 @@ class PhotoListPagingAdapter (
                 holder = PhotoListDataViewHolder(
                     view,
                     photoCardHeight,
-                    view.context.dpToPix(16)
+                    view.context.dpToPix(photoCardCornerRadius)
                 )
             }
             PagingItem.ItemType.HEADER.itemCode -> {

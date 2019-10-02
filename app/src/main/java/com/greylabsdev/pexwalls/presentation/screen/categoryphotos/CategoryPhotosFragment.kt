@@ -10,6 +10,7 @@ import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.ext.*
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoItemDecoration
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoGridPagingAdapter
+import com.greylabsdev.pexwalls.presentation.const.Consts
 import kotlinx.android.synthetic.main.fragment_category_photos.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -25,7 +26,8 @@ class CategoryPhotosFragment : BaseFragment(
     override val progressBar: View by lazy { progress_bar }
 
     private val photoCategory by argSerializable<PhotoCategory>("category")
-    private val photoCardMargin by lazy { requireActivity().dpToPix(16) }
+
+    private val photoCardMargin by lazy { requireActivity().dpToPix(Consts.DEFAULT_MARGIN_DP) }
     private val photoCardWidth by lazy { requireActivity().getScreenWidthInPixels()/2 }
     private val photoCardHeight by lazy { requireActivity().getScreenHeightInPixels()/3}
 
@@ -63,7 +65,8 @@ class CategoryPhotosFragment : BaseFragment(
                 viewModel.photoGridPagingUpdater,
                 true,
                 photoCardWidth,
-                photoCardHeight
+                photoCardHeight,
+                Consts.DEFAULT_CORNER_RADIUS_DP
             )
     }
 }

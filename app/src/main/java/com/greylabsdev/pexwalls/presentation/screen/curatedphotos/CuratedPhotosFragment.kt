@@ -8,6 +8,7 @@ import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoGridPagingAdapter
 import com.greylabsdev.pexwalls.presentation.collection.photolist.PhotoListItemDecoration
 import com.greylabsdev.pexwalls.presentation.collection.photolist.PhotoListPagingAdapter
+import com.greylabsdev.pexwalls.presentation.const.Consts
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
 import com.greylabsdev.pexwalls.presentation.ext.getScreenHeightInPixels
 import kotlinx.android.synthetic.main.fragment_curated_photos.*
@@ -22,8 +23,10 @@ class CuratedPhotosFragment : BaseFragment(
     override val progressBar: View? = null
     override val toolbarTitle: String? = "Curated"
 
-    private val photoCardMargin by lazy { requireActivity().dpToPix(16).toInt() }
-    private val photoCardHeight by lazy { (requireActivity().getScreenHeightInPixels()*0.55).toInt() }
+    private val photoCardMargin by lazy { requireActivity().dpToPix(Consts.DEFAULT_MARGIN_DP).toInt() }
+    private val photoCardHeight by lazy {
+        (requireActivity().getScreenHeightInPixels() * Consts.PHOTO_HEIGHT_BY_SCREEN_PERCENT).toInt()
+    }
 
     private lateinit var photoListPagingAdapter: PhotoListPagingAdapter
 
@@ -52,7 +55,8 @@ class CuratedPhotosFragment : BaseFragment(
         photoListPagingAdapter = PhotoListPagingAdapter(
             viewModel.photoPagingUpdater,
             true,
-            photoCardHeight
+            photoCardHeight,
+            Consts.DEFAULT_CORNER_RADIUS_DP
         )
     }
 

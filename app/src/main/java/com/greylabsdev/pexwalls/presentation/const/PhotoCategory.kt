@@ -7,19 +7,19 @@ sealed class PhotoCategory(val name: String): Serializable {
 
     //base themes
     class ABSTRACT: PhotoCategory("abstract")
-    class NATURE: PhotoCategory("")
-    class ARCHITECTURE: PhotoCategory("")
-    class ANIMALS: PhotoCategory("")
-    class PORTRAITS: PhotoCategory("")
-    class SEA: PhotoCategory("")
+    class NATURE: PhotoCategory("nature")
+    class ARCHITECTURE: PhotoCategory("architecture")
+    class ANIMALS: PhotoCategory("animals")
+    class PORTRAITS: PhotoCategory("portraits")
+    class SEA: PhotoCategory("sea")
     class NIGHT: PhotoCategory("night")
 
     //colors
-    class COLOR_BLACK: PhotoCategory("")
-    class COLOR_WHITE: PhotoCategory("")
-    class COLOR_RED: PhotoCategory("")
-    class COLOR_GREEN: PhotoCategory("")
-    class COLOR_BLUE: PhotoCategory("")
-    class COLOR_YELLOW: PhotoCategory("")
-    class COLOR_VIOLET: PhotoCategory("")
+    class COLOR_BLACK: PhotoCategory("black")
+    class COLOR_WHITE: PhotoCategory("white")
+    class COLOR_RED: PhotoCategory("red")
+    class COLOR_GREEN: PhotoCategory("green")
+    class COLOR_BLUE: PhotoCategory("blue")
+    class COLOR_YELLOW: PhotoCategory("yellow")
+    class COLOR_VIOLET: PhotoCategory("violet")
 }

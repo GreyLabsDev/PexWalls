@@ -3,7 +3,10 @@ package com.greylabsdev.pexwalls.domain.usecase
 import com.greylabsdev.pexwalls.domain.entity.PhotoEntity
 import com.greylabsdev.pexwalls.domain.mapper.DomainMapper
 import com.greylabsdev.pexwalls.domain.repository.IRepository
+import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
+import com.greylabsdev.pexwalls.presentation.model.CategoryModel
 import io.reactivex.Observable
+import io.reactivex.Single
 
 class PhotoDisplayingUseCase(private val repository: IRepository) {
 
@@ -16,10 +19,10 @@ class PhotoDisplayingUseCase(private val repository: IRepository) {
             .map { it.photos.map {photoDto ->  DomainMapper.mapToPhotoEntity(photoDto) } }
     }
 
-    fun getPhotoCategoryCover(category: String): Observable<String> {
-        return repository.searchPhotos(category, 1, 30)
+    fun getPhotoCategoryCover(category: PhotoCategory): Observable<CategoryModel> {
+        return repository.searchPhotos(category.name, 1, 30)
             .map { it.photos.map {photoDto ->  DomainMapper.mapToPhotoEntity(photoDto) } }
-            .map { it.random().url }
+            .map { CategoryModel(category, it.random().src.large) }
     }
 
     fun getCuratedPhotos(pageNumber: Int, perPageCount: Int): Observable<List<PhotoEntity>> {

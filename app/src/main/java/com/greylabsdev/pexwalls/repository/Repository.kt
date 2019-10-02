@@ -4,6 +4,7 @@ import com.greylabsdev.pexwalls.data.datasource.IDataSource
 import com.greylabsdev.pexwalls.data.dto.SearchResultDto
 import com.greylabsdev.pexwalls.domain.repository.IRepository
 import io.reactivex.Observable
+import io.reactivex.Single
 
 class Repository(
     private val localDataSource: IDataSource,
@@ -16,6 +17,10 @@ class Repository(
 
     override fun getCuratedPhotos(page: Int, perPage: Int): Observable<SearchResultDto> {
         return remoteDataSource.getCuratedPhotos(page, perPage)
+    }
+
+    override fun searchPhotosSingle(query: String, page: Int, perPage: Int): Single<SearchResultDto> {
+        return localDataSource.searchPhotosSingle(query, page, perPage)
     }
 
 }

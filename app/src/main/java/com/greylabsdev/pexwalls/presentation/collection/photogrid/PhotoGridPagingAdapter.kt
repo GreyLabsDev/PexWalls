@@ -16,7 +16,8 @@ class PhotoGridPagingAdapter(
     pagingUpdater: PagingUpdater<PhotoModel>,
     initialLoad: Boolean = false,
     private val photoCardWidth: Int,
-    private val photoCardHeight: Int
+    private val photoCardHeight: Int,
+    private val photoCardCornerRadius: Int
 ) : PagingAdapter<RecyclerView.ViewHolder, PhotoModel>(
     pagingUpdater,
     DIFF_CALLBACK,
@@ -31,7 +32,7 @@ class PhotoGridPagingAdapter(
                     view,
                     photoCardWidth,
                     photoCardHeight,
-                    view.context.dpToPix(16)
+                    view.context.dpToPix(photoCardCornerRadius)
                 )
             }
             PagingItem.ItemType.HEADER.itemCode -> {
