@@ -10,4 +10,36 @@
         <item name="android:windowLightNavigationBar">true</item>
     </style>
 
+    <style name="TextStyle">
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="TextStyle.Normal">
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="TextStyle.Normal.White">
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorLight</item>
+    </style>
+
+    <style name="TextStyle.Big" parent="TextStyle">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextStyle.Big.White" parent="TextStyle.Big">
+        <item name="android:textColor">@color/colorLight</item>
+    </style>
+
+    <style name="TextStyle.ToolbarTitle" parent="TextStyle">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+
 </resources>

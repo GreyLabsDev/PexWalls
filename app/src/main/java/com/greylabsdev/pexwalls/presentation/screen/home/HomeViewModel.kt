@@ -21,6 +21,10 @@ class HomeViewModel(
     val categoryThemes: LiveData<List<CategoryModel>>
         get() = _categoryThemes
 
+    private var _categoryColors: MutableLiveData<List<CategoryModel>> = MutableLiveData()
+    val categoryColors: LiveData<List<CategoryModel>>
+        get() = _categoryColors
+
     fun fetchCategories() {
         if (_categoryThemes.value.isNullOrEmpty()) {
             val categoryThemeVariants: List<PhotoCategory> = listOf<PhotoCategory>(
@@ -42,6 +46,32 @@ class HomeViewModel(
                 .subscribeBy(
                     onNext = { categoriesWithPhoto ->
                         _categoryThemes.value = categoriesWithPhoto
+                    },
+                    onError = { error ->
+                        Timber.e(error)
+                    }
+                ).addTo(disposables)
+        }
+        if (_categoryColors.value.isNullOrEmpty()) {
+            val categoryThemeVariants: List<PhotoCategory> = listOf<PhotoCategory>(
+                PhotoCategory.COLOR_WHITE(),
+                PhotoCategory.COLOR_BLACK(),
+                PhotoCategory.COLOR_RED(),
+                PhotoCategory.COLOR_GREEN(),
+                PhotoCategory.COLOR_BLUE(),
+                PhotoCategory.COLOR_VIOLET(),
+                PhotoCategory.COLOR_YELLOW()
+            )
+            Observable.fromIterable(categoryThemeVariants)
+                .flatMap {
+                    photoDisplayingUseCase.getPhotoCategoryCover(it)
+                }
+                .buffer(categoryThemeVariants.size)
+                .shedulersSubscribe()
+                .mainThreadObserve()
+                .subscribeBy(
+                    onNext = { categoriesWithPhoto ->
+                        _categoryColors.value = categoriesWithPhoto
                     },
                     onError = { error ->
                         Timber.e(error)

@@ -8,6 +8,9 @@
 
     <ProgressBar
         android:layout_width="64dp"
-        android:layout_height="64dp"/>
+        android:layout_height="64dp"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/colorBlack"/>
 
 </LinearLayout>

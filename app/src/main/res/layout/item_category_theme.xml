@@ -8,7 +8,7 @@
     android:layout_height="90dp">
 
     <ImageView
-        android:id="@+id/category_photo_iv"
+        android:id="@+id/category_cover_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>
@@ -24,8 +24,7 @@
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:textSize="22sp"
+        style="@style/TextStyle.Big.White"
         tools:text="Category"/>
 
 </FrameLayout>

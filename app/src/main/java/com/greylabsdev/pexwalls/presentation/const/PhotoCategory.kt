@@ -1,8 +1,13 @@
 package com.greylabsdev.pexwalls.presentation.const
 
+import androidx.annotation.ColorRes
+import com.greylabsdev.pexwalls.R
 import java.io.Serializable
 
-sealed class PhotoCategory(val name: String): Serializable {
+sealed class PhotoCategory(
+    val name: String,
+    @ColorRes val color: Int? = null
+): Serializable {
     //future categories for wallpapers, using like search request to API but with name string
 
     //base themes
@@ -15,11 +20,11 @@ sealed class PhotoCategory(val name: String): Serializable {
     class NIGHT: PhotoCategory("night")
 
     //colors
-    class COLOR_BLACK: PhotoCategory("black")
-    class COLOR_WHITE: PhotoCategory("white")
-    class COLOR_RED: PhotoCategory("red")
-    class COLOR_GREEN: PhotoCategory("green")
-    class COLOR_BLUE: PhotoCategory("blue")
-    class COLOR_YELLOW: PhotoCategory("yellow")
-    class COLOR_VIOLET: PhotoCategory("violet")
+    class COLOR_BLACK: PhotoCategory("black", R.color.colorBlack)
+    class COLOR_WHITE: PhotoCategory("white", R.color.colorLight)
+    class COLOR_RED: PhotoCategory("red", R.color.colorRed)
+    class COLOR_GREEN: PhotoCategory("green", R.color.colorGreen)
+    class COLOR_BLUE: PhotoCategory("blue", R.color.colorBlue)
+    class COLOR_YELLOW: PhotoCategory("yellow", R.color.colorYellow)
+    class COLOR_VIOLET: PhotoCategory("violet", R.color.colorViolet)
 }

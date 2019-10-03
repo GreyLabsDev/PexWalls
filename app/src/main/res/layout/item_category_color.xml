@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="120dp"
+    android:layout_height="120dp">
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/category_cover_iv"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_color"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="8dp"
+        android:padding="2dp">
+
+        <ImageView
+            android:id="@+id/color_iv"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_color"/>
+
+    </LinearLayout>
+
+
+
+</FrameLayout>

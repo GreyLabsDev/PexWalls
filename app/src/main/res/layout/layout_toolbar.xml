@@ -18,13 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="16dp">
 
             <ImageView
                 android:id="@+id/back_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:tint="@color/colorBlack"
                 android:src="@drawable/ic_back"/>
 
@@ -33,10 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Category"
-                android:textSize="32dp"
-                android:layout_marginStart="16dp"
-                android:textColor="@color/colorBlack"
-                android:textStyle="bold"
+                style="@style/TextStyle.ToolbarTitle"
                 android:textAlignment="center"/>
 
         </LinearLayout>

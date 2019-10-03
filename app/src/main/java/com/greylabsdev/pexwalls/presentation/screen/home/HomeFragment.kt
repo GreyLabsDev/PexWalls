@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
@@ -11,6 +13,8 @@ import com.greylabsdev.pexwalls.presentation.const.Consts
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
 import com.greylabsdev.pexwalls.presentation.ext.setNavigationClickListener
+import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryColorAdapter
+import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryColorItemDecoration
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryThemeAdapter
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryThemeItemDecoration
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -21,10 +25,11 @@ class HomeFragment : BaseFragment(
     hasToolbarBackButton = false
 ) {
     override val viewModel by viewModel<HomeViewModel>()
-    override val toolbarTitle = "Home"
+    override val toolbarTitle = "PexWalls"
     override val progressBar: View? = null
 
     private lateinit var categoryThemeAdapter: CategoryThemeAdapter
+    private lateinit var categoryColorAdapter: CategoryColorAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,13 @@ class HomeFragment : BaseFragment(
         if (category_themes_rv.itemDecorationCount == 0) {
             category_themes_rv.addItemDecoration(
                 CategoryThemeItemDecoration(requireContext().dpToPix(Consts.SMALL_MARGIN_DP).toInt())
+            )
+        }
+        category_colors_rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        category_colors_rv.adapter = categoryColorAdapter
+        if (category_colors_rv.itemDecorationCount == 0) {
+            category_colors_rv.addItemDecoration(
+                CategoryColorItemDecoration(requireContext().dpToPix(Consts.DEFAULT_MARGIN_DP).toInt())
             )
         }
     }
@@ -52,17 +64,28 @@ class HomeFragment : BaseFragment(
         viewModel.categoryThemes.observe(this, Observer {categories ->
             categoryThemeAdapter.categories = categories
         })
+        viewModel.categoryColors.observe(this, Observer {categories ->
+            categoryColorAdapter.categories = categories
+        })
     }
 
     private fun initCategoriesAdapters() {
         categoryThemeAdapter = CategoryThemeAdapter(
             requireContext().dpToPix(Consts.DEFAULT_CORNER_RADIUS_DP)
         ) {selectedCategory ->
-            navigateTo(
-                R.id.categoryPhotosFragment,
-                listOf(Pair("category", selectedCategory.category))
-            )
+            navigateToCategory(selectedCategory.category)
         }
-        //TODO add color category adapter
+        categoryColorAdapter = CategoryColorAdapter(
+            requireContext().dpToPix(Consts.DEFAULT_CORNER_RADIUS_DP)
+        ) {selectedCategory ->
+            navigateToCategory(selectedCategory.category)
+        }
+    }
+
+    private fun navigateToCategory(category: PhotoCategory) {
+        navigateTo(
+            R.id.categoryPhotosFragment,
+            listOf(Pair("category", category))
+        )
     }
 }
