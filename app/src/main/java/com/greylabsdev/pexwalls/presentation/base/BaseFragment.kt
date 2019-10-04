@@ -23,7 +23,9 @@ abstract class BaseFragment(
 
     protected abstract val viewModel: BaseViewModel?
     protected abstract val toolbarTitle: String?
-    protected abstract val progressBar: View?
+    protected abstract val progressView: View?
+    protected abstract val contentView: View?
+
 
     private val toolbarView: AppBarLayout? by lazy { toolbar_container }
 
@@ -61,13 +63,15 @@ abstract class BaseFragment(
         viewModel?.progressState?.observe(this, Observer {progressState ->
             when (progressState) {
                 is ProgressState.DONE -> {
-                    progressBar?.isVisible = false
+                    progressView?.isVisible = false
+                    contentView?.isVisible = true
                 }
                 is ProgressState.LOADING -> {
-                    progressBar?.isVisible = true
+                    progressView?.isVisible = true
+                    contentView?.isVisible = false
                 }
                 is ProgressState.ERROR -> {
-                    progressBar?.isVisible = false
+                    progressView?.isVisible = false
                 }
             }
         })

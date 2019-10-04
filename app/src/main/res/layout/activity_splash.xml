@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     tools:context=".presentation.screen.splash.SplashActivity"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/test_tv"
+        android:id="@+id/logo_tv"
+        android:text="@string/app_name"
+        style="@style/TextStyle.ToolbarTitle"
+        android:textSize="36sp"
+        android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Splash"
-        android:textSize="32dp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <ProgressBar
+    <TextView
+        android:text="powered by pexels api"
+        style="@style/TextStyle"
         android:layout_width="match_parent"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_height="4dp"
-        android:indeterminate="true"/>
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

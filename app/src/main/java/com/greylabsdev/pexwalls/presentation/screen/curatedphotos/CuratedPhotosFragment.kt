@@ -20,7 +20,8 @@ class CuratedPhotosFragment : BaseFragment(
     hasToolbarBackButton = true
 ) {
     override val viewModel by viewModel<CuratedPhotosViewModel>()
-    override val progressBar: View? = null
+    override val progressView: View? = null
+    override val contentView: View? = null
     override val toolbarTitle: String? = "Curated"
 
     private val photoCardMargin by lazy { requireActivity().dpToPix(Consts.DEFAULT_MARGIN_DP).toInt() }

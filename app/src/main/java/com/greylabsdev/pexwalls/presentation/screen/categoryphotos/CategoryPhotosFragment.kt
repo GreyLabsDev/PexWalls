@@ -23,7 +23,8 @@ class CategoryPhotosFragment : BaseFragment(
         parametersOf(photoCategory)
     }
     override val toolbarTitle by lazy { photoCategory.name.capitalize() }
-    override val progressBar: View by lazy { progress_bar }
+    override val progressView: View by lazy { progress_bar }
+    override val contentView: View? = null
 
     private val photoCategory by argSerializable<PhotoCategory>("category")
 

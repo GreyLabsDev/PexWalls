@@ -26,7 +26,8 @@ class HomeFragment : BaseFragment(
 ) {
     override val viewModel by viewModel<HomeViewModel>()
     override val toolbarTitle = "PexWalls"
-    override val progressBar: View? = null
+    override val progressView: View? by lazy { placeholder_container_ll }
+    override val contentView: View? by lazy { content_container_ll }
 
     private lateinit var categoryThemeAdapter: CategoryThemeAdapter
     private lateinit var categoryColorAdapter: CategoryColorAdapter

@@ -15,10 +15,6 @@ class SplashActivity : BaseActivity(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Handler().postDelayed({HostActivity.start(this)}, 1000)
-    }
-
-    override fun initListeners() {
-        test_tv.setOnClickListener { viewModel.test() }
+        Handler().postDelayed({HostActivity.start(this)}, 1500)
     }
 }
