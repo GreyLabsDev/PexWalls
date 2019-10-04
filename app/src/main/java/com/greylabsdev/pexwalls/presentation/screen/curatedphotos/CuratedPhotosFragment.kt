@@ -5,7 +5,6 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
-import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoGridPagingAdapter
 import com.greylabsdev.pexwalls.presentation.collection.photolist.PhotoListItemDecoration
 import com.greylabsdev.pexwalls.presentation.collection.photolist.PhotoListPagingAdapter
 import com.greylabsdev.pexwalls.presentation.const.Consts
@@ -22,7 +21,7 @@ class CuratedPhotosFragment : BaseFragment(
     override val viewModel by viewModel<CuratedPhotosViewModel>()
     override val progressView: View? = null
     override val contentView: View? = null
-    override val toolbarTitle: String? = "Curated"
+    override val toolbarTitle: String? by lazy { getString(R.string.curated_toolbar_title) }
 
     private val photoCardMargin by lazy { requireActivity().dpToPix(Consts.DEFAULT_MARGIN_DP).toInt() }
     private val photoCardHeight by lazy {

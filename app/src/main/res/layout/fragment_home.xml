@@ -32,14 +32,15 @@
                 style="@style/TextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="your inspiration almost here"
+                android:text="@string/progress_title"
                 android:textAlignment="center" />
 
         </LinearLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:id="@+id/content_container_ll"
@@ -55,12 +56,13 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
-                    android:text="Color" />
+                    android:text="@string/category_color_title" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/category_colors_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"/>
 
                 <TextView
                     style="@style/TextStyle.Big"
@@ -70,7 +72,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
-                    android:text="Theme" />
+                    android:text="@string/category_theme_title" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/category_themes_rv"
@@ -78,6 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <TextView
@@ -92,10 +95,6 @@
 
         </androidx.core.widget.NestedScrollView>
 
-
-
-
     </FrameLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

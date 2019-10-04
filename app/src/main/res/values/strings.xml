@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">PexWalls</string>
-    <string name="pexels_promo">Photos provided by Pexels</string>
+
+    <!--  category  -->
+    <string name="category_toolbar_title">Category</string>
+    <string name="category_color_title">Color</string>
+    <string name="category_theme_title">Theme</string>
+
+    <!--  curated  -->
+    <string name="curated_toolbar_title">Curated</string>
+
+    <!--  common  -->
+    <string name="progress_title">your inspiration almost here</string>
+    <string name="pexels_promo">powered by pexels api</string>
+
 </resources>

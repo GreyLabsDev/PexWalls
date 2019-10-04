@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
 
 open class PagingDataSource<ItemType>(
     private val dataSourceMode: DataSourceMode = DataSourceMode.RX()
 ) {
 
-    private var _itemsChannelLiveData: MutableLiveData<List<PagingItem<ItemType>>> = MutableLiveData<List<PagingItem<ItemType>>>()
+    private var _itemsChannelLiveData: MutableLiveData<List<PagingItem<ItemType>>> = MutableLiveData()
     val itemsChannelLiveData: LiveData<List<PagingItem<ItemType>>>
         get() = _itemsChannelLiveData
 

@@ -21,7 +21,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
-        android:text="powered by pexels api"
+        android:text="@string/pexels_promo"
         style="@style/TextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,7 +1,7 @@
 package com.greylabsdev.pexwalls.presentation.ext
 
 /**
- * Returnng random element from input variables
+ * Returning random element from input variables
  *
  * val randomLetter = randomFrom("a","b","c","d","e","f","g")
  *

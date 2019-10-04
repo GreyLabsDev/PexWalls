@@ -1,18 +1,14 @@
 package com.greylabsdev.pexwalls.presentation.screen.home
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
-import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
 import com.greylabsdev.pexwalls.presentation.const.Consts
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
-import com.greylabsdev.pexwalls.presentation.ext.setNavigationClickListener
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryColorAdapter
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryColorItemDecoration
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryThemeAdapter
@@ -25,7 +21,7 @@ class HomeFragment : BaseFragment(
     hasToolbarBackButton = false
 ) {
     override val viewModel by viewModel<HomeViewModel>()
-    override val toolbarTitle = "PexWalls"
+    override val toolbarTitle: String? by lazy { getString(R.string.category_toolbar_title) }
     override val progressView: View? by lazy { placeholder_container_ll }
     override val contentView: View? by lazy { content_container_ll }
 

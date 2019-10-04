@@ -24,7 +24,7 @@ class PhotoPagingUpdater(
     private val photoCategory: PhotoCategory? = null,
     private val searchQuery: String? = null
 ) : PagingUpdater<PhotoModel>(
-    pagingDataSource = PagingDataSource<PhotoModel>(DataSourceMode.LIVEDATA()),
+    pagingDataSource = PagingDataSource(DataSourceMode.LIVEDATA()),
     pagingMode = PagingMode.BY_PAGE(),
     pageSize = 15,
     currentPage = 1

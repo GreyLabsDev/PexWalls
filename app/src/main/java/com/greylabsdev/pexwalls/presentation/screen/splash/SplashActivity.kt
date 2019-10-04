@@ -1,5 +1,6 @@
 package com.greylabsdev.pexwalls.presentation.screen.splash
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import com.greylabsdev.pexwalls.R
@@ -14,6 +15,9 @@ class SplashActivity : BaseActivity(
     override val viewModel by viewModel<SplashViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            window.navigationBarColor = getColor(R.color.colorBackground)
+        }
         super.onCreate(savedInstanceState)
         Handler().postDelayed({HostActivity.start(this)}, 1500)
     }

@@ -14,7 +14,7 @@ abstract class PagingAdapter<VH : RecyclerView.ViewHolder,ItemType> (
     var items: List<PagingItem<ItemType>> = listOf()
         set(value) {
             val pagingDiffCallback =
-                PagingDiffCallback<ItemType>(
+                PagingDiffCallback(
                     diffCallback,
                     field,
                     value
