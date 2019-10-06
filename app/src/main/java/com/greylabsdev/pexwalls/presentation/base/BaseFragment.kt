@@ -26,7 +26,6 @@ abstract class BaseFragment(
     protected abstract val progressView: View?
     protected abstract val contentView: View?
 
-
     private val toolbarView: AppBarLayout? by lazy { toolbar_container }
 
     override fun onCreate(savedInstanceState: Bundle?) {

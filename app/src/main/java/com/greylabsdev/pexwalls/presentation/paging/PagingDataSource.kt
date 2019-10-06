@@ -78,6 +78,11 @@ open class PagingDataSource<ItemType>(
         }
     }
 
+    fun clearItems() {
+        _items.clear()
+        pushUpdatedItems()
+    }
+
     private fun pushUpdatedItems() {
         when (dataSourceMode) {
             is DataSourceMode.LIVEDATA -> {

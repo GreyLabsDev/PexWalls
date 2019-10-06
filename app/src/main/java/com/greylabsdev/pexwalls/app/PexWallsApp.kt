@@ -11,6 +11,7 @@ import com.greylabsdev.pexwalls.domain.usecase.useCaseModule
 import com.greylabsdev.pexwalls.presentation.screen.categoryphotos.categoryPhotosModule
 import com.greylabsdev.pexwalls.presentation.screen.curatedphotos.curatedPhotosModule
 import com.greylabsdev.pexwalls.presentation.screen.home.homeModule
+import com.greylabsdev.pexwalls.presentation.screen.search.searchModule
 import com.greylabsdev.pexwalls.presentation.screen.splash.splashModule
 import com.greylabsdev.pexwalls.repository.repositoryModule
 import org.koin.android.ext.koin.androidContext
@@ -37,7 +38,8 @@ class PexWallsApp : Application() {
                     useCaseModule,
                     categoryPhotosModule,
                     curatedPhotosModule,
-                    homeModule
+                    homeModule,
+                    searchModule
                 )
             )
         }

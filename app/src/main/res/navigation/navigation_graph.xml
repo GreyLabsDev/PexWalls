@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_curatedPhotosFragment"
             app:destination="@id/curatedPhotosFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryPhotosFragment"
@@ -31,4 +34,8 @@
         android:name="com.greylabsdev.pexwalls.presentation.screen.curatedphotos.CuratedPhotosFragment"
         android:label="CuratedPhotosFragment"
         tools:layout="@layout/fragment_curated_photos"/>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.greylabsdev.pexwalls.presentation.screen.search.SearchFragment"
+        android:label="SearchFragment" />
 </navigation>

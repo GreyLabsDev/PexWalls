@@ -9,6 +9,9 @@
     <!--  curated  -->
     <string name="curated_toolbar_title">Curated</string>
 
+    <!--  search  -->
+    <string name="search_toolbar_title">Search</string>
+
     <!--  common  -->
     <string name="progress_title">your inspiration almost here</string>
     <string name="pexels_promo">powered by pexels api</string>

@@ -7,6 +7,8 @@ abstract class PagingUpdater<ItemType>(
     var currentPage: Int = 0
 ) {
 
+    private val initialPage: Int = currentPage
+
     private var _isReachedPagingEnd: Boolean = false
     val isReachedPagingEnd: Boolean = _isReachedPagingEnd
 
@@ -29,6 +31,16 @@ abstract class PagingUpdater<ItemType>(
                 }
             }
         }
+    }
+
+    fun resetPaging() {
+        currentPage = initialPage
+        pagingDataSource.clearItems()
+    }
+
+    fun resetAndFetchAgain() {
+        resetPaging()
+        fetchPage()
     }
 
     fun <Type>mapToItems(list: List<Type>): List<PagingItem<Type>> {

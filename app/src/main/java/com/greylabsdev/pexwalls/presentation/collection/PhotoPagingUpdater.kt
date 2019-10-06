@@ -22,13 +22,14 @@ class PhotoPagingUpdater(
     private val photoDisplayingUseCase: PhotoDisplayingUseCase,
     private val type: UpdaterType,
     private val photoCategory: PhotoCategory? = null,
-    private val searchQuery: String? = null
+    var searchQuery: String? = null
 ) : PagingUpdater<PhotoModel>(
     pagingDataSource = PagingDataSource(DataSourceMode.LIVEDATA()),
     pagingMode = PagingMode.BY_PAGE(),
     pageSize = 15,
     currentPage = 1
 ) {
+
     override fun fetchPage() {
         var photoFetchObservable: Observable<List<PhotoEntity>>? = null
         when (type) {

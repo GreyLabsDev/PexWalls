@@ -54,6 +54,9 @@ class HomeFragment : BaseFragment(
         curated_btn_tv.setOnClickListener{
             navigateTo(R.id.curatedPhotosFragment)
         }
+        search_btn_tv.setOnClickListener {
+            navigateTo(R.id.searchFragment)
+        }
     }
 
     override fun initViewModelObserving() {

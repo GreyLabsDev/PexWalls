@@ -8,13 +8,13 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="categoryImagesFragment">
+                  <entry key="categoryPhotosFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="397" />
-                            <option name="y" value="-75" />
+                            <option name="x" value="392" />
+                            <option name="y" value="-73" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -53,7 +53,24 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_homeFragment_to_searchFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="searchFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="589" />
+                            <option name="y" value="85" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
