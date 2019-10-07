@@ -6,5 +6,6 @@ val useCaseModule = module {
 
     factory { SampleUseCase(get()) }
     factory { PhotoDisplayingUseCase(get()) }
+    factory { PhotoDownloadingUseCase() }
 
 }

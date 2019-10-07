@@ -10,6 +10,8 @@ import com.greylabsdev.pexwalls.presentation.collection.photolist.PhotoListPagin
 import com.greylabsdev.pexwalls.presentation.const.Consts
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
 import com.greylabsdev.pexwalls.presentation.ext.getScreenHeightInPixels
+import com.greylabsdev.pexwalls.presentation.model.PhotoModel
+import com.greylabsdev.pexwalls.presentation.screen.photo.PhotoFragment
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.fragment_curated_photos.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -62,7 +64,12 @@ class CuratedPhotosFragment : BaseFragment(
             true,
             photoCardHeight,
             Consts.DEFAULT_CORNER_RADIUS_DP
-        )
+        ) {
+            navigateToFullPhoto(it)
+        }
     }
 
+    private fun navigateToFullPhoto(photoModel: PhotoModel) {
+        navigateTo(R.id.photoFragment, listOf(Pair(PhotoFragment.ARG_KEY, photoModel)))
+    }
 }

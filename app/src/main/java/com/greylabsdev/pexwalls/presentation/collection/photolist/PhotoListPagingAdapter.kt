@@ -15,7 +15,8 @@ class PhotoListPagingAdapter (
     pagingUpdater: PagingUpdater<PhotoModel>,
     initialLoad: Boolean = false,
     private val photoCardHeight: Int,
-    private val photoCardCornerRadius: Int
+    private val photoCardCornerRadius: Int,
+    private val onPhotoClickListener: ((photoModel: PhotoModel) -> Unit)? = null
 ) : PagingAdapter<RecyclerView.ViewHolder, PhotoModel>(
     pagingUpdater,
     DIFF_CALLBACK,
@@ -53,8 +54,11 @@ class PhotoListPagingAdapter (
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             PagingItem.ItemType.DATA.itemCode -> {
-                items[position].data?.let {
-                    (holder as PhotoListDataViewHolder).bind(it)
+                items[position].data?.let {photo ->
+                    (holder as PhotoListDataViewHolder).apply {
+                        bind(photo)
+                        setOnClickListener { onPhotoClickListener?.invoke(photo) }
+                    }
                 }
             }
             PagingItem.ItemType.HEADER.itemCode -> {
@@ -76,7 +80,7 @@ class PhotoListPagingAdapter (
                 return oldItem.id == newItem.id
             }
             override fun areContentsTheSame(oldItem: PhotoModel, newItem: PhotoModel): Boolean {
-                return oldItem.photoUrl == newItem.photoUrl
+                return oldItem.normalPhotoUrl == newItem.normalPhotoUrl
             }
         }
     }

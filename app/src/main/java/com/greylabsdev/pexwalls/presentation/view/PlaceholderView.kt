@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import com.google.android.material.button.MaterialButton
 import com.greylabsdev.pexwalls.R
+import kotlinx.android.synthetic.main.view_placeholder.view.*
 
 class PlaceholderView @JvmOverloads constructor(
     context: Context,
@@ -16,28 +17,16 @@ class PlaceholderView @JvmOverloads constructor(
 
     var onTryNowBtnClickAction: (() -> Unit)? = null
         set(value) {
-            tryNowBtn.isVisible = value != null
+            try_now_btn.isVisible = value != null
             value?.let { action ->
-                tryNowBtn.setOnClickListener { action.invoke() }
+                try_now_btn.setOnClickListener { action.invoke() }
             }
             field = value
         }
 
-    private val loadingContainer: LinearLayout
-    private val errorContainer: LinearLayout
-    private val initialContainer: LinearLayout
-    private val emptyContainer: LinearLayout
-    private val tryNowBtn: MaterialButton
-
     init {
         inflate(context, R.layout.view_placeholder, this)
-        loadingContainer = findViewById(R.id.loading_container_ll)
-        errorContainer = findViewById(R.id.error_container_ll)
-        initialContainer = findViewById(R.id.initial_container_ll)
-        emptyContainer = findViewById(R.id.empty_container_ll)
-        tryNowBtn = findViewById(R.id.try_now_btn)
-
-        tryNowBtn.setOnClickListener { hideAll() }
+        try_now_btn.setOnClickListener { hideAll() }
     }
 
     fun setState(state: PlaceholderState) {
@@ -52,37 +41,37 @@ class PlaceholderView @JvmOverloads constructor(
 
     private fun showLoading() {
         show()
-        loadingContainer.isVisible = true
-        errorContainer.isVisible = false
-        initialContainer.isVisible = false
-        emptyContainer.isVisible = false
+        loading_container_ll.isVisible = true
+        error_container_ll.isVisible = false
+        initial_container_ll.isVisible = false
+        empty_container_ll.isVisible = false
     }
     private fun showError() {
         show()
-        loadingContainer.isVisible = false
-        errorContainer.isVisible = true
-        initialContainer.isVisible = false
-        emptyContainer.isVisible = false
+        loading_container_ll.isVisible = false
+        error_container_ll.isVisible = true
+        initial_container_ll.isVisible = false
+        empty_container_ll.isVisible = false
     }
     private fun showEmpty() {
         show()
-        loadingContainer.isVisible = false
-        errorContainer.isVisible = false
-        initialContainer.isVisible = false
-        emptyContainer.isVisible = true
+        loading_container_ll.isVisible = false
+        error_container_ll.isVisible = false
+        initial_container_ll.isVisible = false
+        empty_container_ll.isVisible = true
     }
     private fun showInitial() {
         show()
-        loadingContainer.isVisible = false
-        errorContainer.isVisible = false
-        initialContainer.isVisible = true
-        emptyContainer.isVisible = false
+        loading_container_ll.isVisible = false
+        error_container_ll.isVisible = false
+        initial_container_ll.isVisible = true
+        empty_container_ll.isVisible = false
     }
     private fun hideAll() {
-        loadingContainer.isVisible = false
-        errorContainer.isVisible = false
-        initialContainer.isVisible = false
-        emptyContainer.isVisible = false
+        loading_container_ll.isVisible = false
+        error_container_ll.isVisible = false
+        initial_container_ll.isVisible = false
+        empty_container_ll.isVisible = false
         this.isVisible = false
     }
     private fun show() {

@@ -110,7 +110,7 @@ abstract class BaseFragment(
             toolbar_container.toolbar_title_tv.text = toolbarTitle ?: ""
             toolbar_container.back_iv.isVisible = hasToolbarBackButton
             if (hasToolbarBackButton) {
-                toolbar_container.setOnClickListener { navigateBack() }
+                toolbar_container.back_iv.setOnClickListener { navigateBack() }
             }
         }
     }

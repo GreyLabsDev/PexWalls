@@ -9,6 +9,7 @@ import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.const.Consts
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
+import com.greylabsdev.pexwalls.presentation.screen.categoryphotos.CategoryPhotosFragment
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryColorAdapter
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryColorItemDecoration
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryThemeAdapter
@@ -89,7 +90,14 @@ class HomeFragment : BaseFragment(
     private fun navigateToCategory(category: PhotoCategory) {
         navigateTo(
             R.id.categoryPhotosFragment,
-            listOf(Pair("category", category))
+            listOf(Pair(CategoryPhotosFragment.ARG_KEY, category))
+        )
+    }
+
+    private fun navigateToPhoto(category: PhotoCategory) {
+        navigateTo(
+            R.id.categoryPhotosFragment,
+            listOf(Pair(CategoryPhotosFragment.ARG_KEY, category))
         )
     }
 }

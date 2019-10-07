@@ -11,6 +11,8 @@ import com.greylabsdev.pexwalls.presentation.ext.*
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoItemDecoration
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoGridPagingAdapter
 import com.greylabsdev.pexwalls.presentation.const.Consts
+import com.greylabsdev.pexwalls.presentation.model.PhotoModel
+import com.greylabsdev.pexwalls.presentation.screen.photo.PhotoFragment
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.fragment_category_photos.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -27,7 +29,7 @@ class CategoryPhotosFragment : BaseFragment(
     override val placeholderView: PlaceholderView by lazy { placeholder_view }
     override val contentView: View? by lazy { photo_grid_rv }
 
-    private val photoCategory by argSerializable<PhotoCategory>("category")
+    private val photoCategory by argSerializable<PhotoCategory>(ARG_KEY)
 
     private val photoCardMargin by lazy { requireActivity().dpToPix(Consts.DEFAULT_MARGIN_DP) }
     private val photoCardWidth by lazy { requireActivity().getScreenWidthInPixels()/2 }
@@ -73,6 +75,16 @@ class CategoryPhotosFragment : BaseFragment(
                 photoCardWidth,
                 photoCardHeight,
                 Consts.DEFAULT_CORNER_RADIUS_DP
-            )
+            ) { photo ->
+                navigateToFullPhoto(photo)
+            }
+    }
+
+    private fun navigateToFullPhoto(photoModel: PhotoModel) {
+        navigateTo(R.id.photoFragment, listOf(Pair(PhotoFragment.ARG_KEY, photoModel)))
+    }
+
+    companion object {
+        const val ARG_KEY = "category"
     }
 }

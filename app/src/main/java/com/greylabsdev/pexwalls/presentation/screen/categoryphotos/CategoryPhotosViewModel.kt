@@ -13,8 +13,8 @@ import com.greylabsdev.pexwalls.presentation.collection.UpdaterType
 
 
 class CategoryPhotosViewModel(
-    private val photoCategory: PhotoCategory,
-    private val photoDisplayingUseCase: PhotoDisplayingUseCase
+    private val photoDisplayingUseCase: PhotoDisplayingUseCase,
+    private val photoCategory: PhotoCategory
 ) : BaseViewModel() {
 
     val photos: LiveData<List<PagingItem<PhotoModel>>>
@@ -26,7 +26,7 @@ class CategoryPhotosViewModel(
             photoDisplayingUseCase = photoDisplayingUseCase,
             type = UpdaterType.CATEGORY,
             photoCategory = photoCategory,
-            emptyResultListener = {_progressState.value = ProgressState.EMPTY()},
+            emptyResultListener = {_progressState.value = ProgressState.EMPTY() },
             errorListener = { error -> _progressState.value = ProgressState.ERROR(error) }
         )
 

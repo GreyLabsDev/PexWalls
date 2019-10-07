@@ -7,10 +7,8 @@ import android.view.ViewOutlineProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import kotlinx.android.synthetic.main.item_photo_in_grid.view.*
-import timber.log.Timber
 
 class PhotoGridDataViewHolder(
     view: View,
@@ -33,11 +31,14 @@ class PhotoGridDataViewHolder(
             if (useHalfOfHeight) itemHeight/2 else itemHeight
         )
         Glide.with(itemView.context)
-            .load(item.photoUrl)
+            .load(item.normalPhotoUrl)
             .transform(CenterCrop())
             .into(itemView.photo_iv)
         itemView.photo_iv.outlineProvider = outlineProvider
         itemView.photo_iv.clipToOutline = true
-        itemView.photo_iv.setOnClickListener { Timber.d("click") }
+    }
+
+    fun setOnClickListener(onClickListener: () -> Unit) {
+        itemView.photo_iv.setOnClickListener { onClickListener.invoke() }
     }
 }

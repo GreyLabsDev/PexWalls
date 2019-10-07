@@ -16,6 +16,8 @@ import com.greylabsdev.pexwalls.presentation.ext.dpToPix
 import com.greylabsdev.pexwalls.presentation.ext.getScreenHeightInPixels
 import com.greylabsdev.pexwalls.presentation.ext.getScreenWidthInPixels
 import com.greylabsdev.pexwalls.presentation.ext.hideKeyboard
+import com.greylabsdev.pexwalls.presentation.model.PhotoModel
+import com.greylabsdev.pexwalls.presentation.screen.photo.PhotoFragment
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.layout_toolbar_search.*
@@ -81,6 +83,12 @@ class SearchFragment : BaseFragment(
                 photoCardWidth,
                 photoCardHeight,
                 Consts.DEFAULT_CORNER_RADIUS_DP
-            )
+            ) { photo ->
+                navigateToFullPhoto(photo)
+            }
+    }
+
+    private fun navigateToFullPhoto(photoModel: PhotoModel) {
+        navigateTo(R.id.photoFragment, listOf(Pair(PhotoFragment.ARG_KEY, photoModel)))
     }
 }

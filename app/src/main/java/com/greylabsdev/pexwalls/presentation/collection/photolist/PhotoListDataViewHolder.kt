@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import kotlinx.android.synthetic.main.item_photo_in_list.view.*
-import timber.log.Timber
+import kotlinx.android.synthetic.main.item_photo_in_list.view.photo_iv
 
 class PhotoListDataViewHolder (
     view: View,
@@ -28,12 +28,15 @@ class PhotoListDataViewHolder (
     fun bind(item: PhotoModel) {
         itemView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemHeight)
         Glide.with(itemView.context)
-            .load(item.photoUrl)
+            .load(item.normalPhotoUrl)
             .transform(CenterCrop())
             .into(itemView.photo_iv)
         itemView.author_tv.text = item.photographer
         itemView.photo_iv.outlineProvider = outlineProvider
         itemView.photo_iv.clipToOutline = true
-        itemView.photo_iv.setOnClickListener { Timber.d("click") }
+    }
+
+    fun setOnClickListener(onClickListener: () -> Unit) {
+        itemView.photo_iv.setOnClickListener { onClickListener.invoke() }
     }
 }

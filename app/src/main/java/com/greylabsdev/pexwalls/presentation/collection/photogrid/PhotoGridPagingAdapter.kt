@@ -17,7 +17,8 @@ class PhotoGridPagingAdapter(
     initialLoad: Boolean = false,
     private val photoCardWidth: Int,
     private val photoCardHeight: Int,
-    private val photoCardCornerRadius: Int
+    private val photoCardCornerRadius: Int,
+    private val onPhotoClickListener: ((photoModel: PhotoModel) -> Unit)? = null
 ) : PagingAdapter<RecyclerView.ViewHolder, PhotoModel>(
     pagingUpdater,
     DIFF_CALLBACK,
@@ -58,8 +59,11 @@ class PhotoGridPagingAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             PagingItem.ItemType.DATA.itemCode -> {
-                items[position].data?.let {
-                    (holder as PhotoGridDataViewHolder).bind(it, (position % 3 == 0))
+                items[position].data?.let {photo ->
+                    (holder as PhotoGridDataViewHolder).apply {
+                        bind(photo, (position % 3 == 0))
+                        setOnClickListener { onPhotoClickListener?.invoke(photo) }
+                    }
                 }
             }
             PagingItem.ItemType.HEADER.itemCode -> {
@@ -81,7 +85,7 @@ class PhotoGridPagingAdapter(
                 return oldItem.id == newItem.id
             }
             override fun areContentsTheSame(oldItem: PhotoModel, newItem: PhotoModel): Boolean {
-                return oldItem.photoUrl == newItem.photoUrl
+                return oldItem.normalPhotoUrl == newItem.normalPhotoUrl
             }
         }
     }

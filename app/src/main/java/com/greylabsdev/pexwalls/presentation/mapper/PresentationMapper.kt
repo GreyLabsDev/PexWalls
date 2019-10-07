@@ -8,8 +8,11 @@ object PresentationMapper {
         return PhotoModel(
             photo.id,
             photo.src.large,
+            photo.src.large2x,
             photo.photographer,
-            photo.photographerUrl
+            photo.photographerUrl,
+            photo.width,
+            photo.height
         )
     }
 }

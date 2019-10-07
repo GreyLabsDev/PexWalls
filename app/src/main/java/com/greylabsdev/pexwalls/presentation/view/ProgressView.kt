@@ -3,11 +3,10 @@ package com.greylabsdev.pexwalls.presentation.view
 import android.animation.AnimatorSet
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.ext.addEndListener
+import kotlinx.android.synthetic.main.view_progress.view.*
 
 class ProgressView @JvmOverloads constructor(
     context: Context,
@@ -16,44 +15,35 @@ class ProgressView @JvmOverloads constructor(
 ): ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val animator: ViewAnimator
-    private val pLetter: TextView
-    private val wLetter: TextView
-    private val divider: View
 
     init {
         inflate(context, R.layout.view_progress, this)
         animator = ViewAnimator()
-        pLetter = findViewById(R.id.p_letter_tv)
-        wLetter = findViewById(R.id.w_letter_tv)
-        divider = findViewById(R.id.divider_v)
-
         startLoadingAnimation()
     }
 
     private fun startLoadingAnimation() {
         val scaleFirst = AnimatorSet().apply {
-            play(animator.shiftUp(pLetter, 450))
-                .with(animator.shiftDown(wLetter, 450))
-                .with(animator.fadeIn(divider, 450))
-
-
+            play(animator.shiftUp(p_letter_tv, 450))
+                .with(animator.shiftDown(w_letter_tv, 450))
+                .with(animator.fadeIn(divider_v, 450))
         }
         val scaleBack = AnimatorSet().apply {
-            play(animator.shiftBack(wLetter, 450))
-                .with(animator.shiftBack(pLetter, 450))
-                .with(animator.fadeOut(divider, 450))
+            play(animator.shiftBack(w_letter_tv, 450))
+                .with(animator.shiftBack(p_letter_tv, 450))
+                .with(animator.fadeOut(divider_v, 450))
 
         }
         val scaleBackSecond = AnimatorSet().apply {
-            play(animator.shiftBack(pLetter, 450))
-                .with(animator.shiftBack(wLetter, 450))
-                .with(animator.fadeOut(divider, 450))
+            play(animator.shiftBack(p_letter_tv, 450))
+                .with(animator.shiftBack(w_letter_tv, 450))
+                .with(animator.fadeOut(divider_v, 450))
 
         }
         val scaleSecond = AnimatorSet().apply {
-            play(animator.shiftUp(wLetter, 450))
-                .with(animator.shiftDown(pLetter, 450))
-                .with(animator.fadeIn(divider, 450))
+            play(animator.shiftUp(w_letter_tv, 450))
+                .with(animator.shiftDown(p_letter_tv, 450))
+                .with(animator.fadeIn(divider_v, 450))
         }
         val scaleFull = AnimatorSet().apply {
             play(scaleFirst).before(scaleBack)

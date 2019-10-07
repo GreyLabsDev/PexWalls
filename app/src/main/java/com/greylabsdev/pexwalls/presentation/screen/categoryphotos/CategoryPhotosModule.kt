@@ -5,5 +5,5 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val categoryPhotosModule = module {
-    viewModel { (photoCategory: PhotoCategory) -> CategoryPhotosViewModel(photoCategory, get()) }
+    viewModel { (photoCategory: PhotoCategory) -> CategoryPhotosViewModel(get(), photoCategory) }
 }

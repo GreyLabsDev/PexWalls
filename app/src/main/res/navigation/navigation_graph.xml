@@ -28,14 +28,31 @@
         <argument
             android:name="category"
             app:argType="com.greylabsdev.pexwalls.presentation.const.PhotoCategory" />
+        <action
+            android:id="@+id/action_categoryPhotosFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
     </fragment>
     <fragment
         android:id="@+id/curatedPhotosFragment"
         android:name="com.greylabsdev.pexwalls.presentation.screen.curatedphotos.CuratedPhotosFragment"
         android:label="CuratedPhotosFragment"
-        tools:layout="@layout/fragment_curated_photos"/>
+        tools:layout="@layout/fragment_curated_photos">
+        <action
+            android:id="@+id/action_curatedPhotosFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.greylabsdev.pexwalls.presentation.screen.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.greylabsdev.pexwalls.presentation.screen.photo.PhotoFragment"
+        android:label="PhotoFragment"
+        tools:layout="@layout/fragment_photo"/>
 </navigation>
