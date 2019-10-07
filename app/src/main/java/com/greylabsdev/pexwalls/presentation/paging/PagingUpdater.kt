@@ -7,12 +7,13 @@ abstract class PagingUpdater<ItemType>(
     var currentPage: Int = 0
 ) {
 
-    private val initialPage: Int = currentPage
+    val initialPage: Int = currentPage
 
     private var _isReachedPagingEnd: Boolean = false
-    val isReachedPagingEnd: Boolean = _isReachedPagingEnd
+    val isReachedPagingEnd: Boolean
+        get() = _isReachedPagingEnd
 
-    abstract fun fetchPage()
+    abstract fun fetchPage(usePageUpdate: Boolean = true)
 
     fun pushToDataSource(items: List<PagingItem<ItemType>>) {
         pagingDataSource.addItems(items)

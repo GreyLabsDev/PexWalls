@@ -13,6 +13,7 @@ import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryColorAdapt
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryColorItemDecoration
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryThemeAdapter
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryThemeItemDecoration
+import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -22,7 +23,7 @@ class HomeFragment : BaseFragment(
 ) {
     override val viewModel by viewModel<HomeViewModel>()
     override val toolbarTitle: String? by lazy { getString(R.string.category_toolbar_title) }
-    override val progressView: View? by lazy { placeholder_container_ll }
+    override val placeholderView: PlaceholderView? by lazy { placeholder_view }
     override val contentView: View? by lazy { content_container_ll }
 
     private lateinit var categoryThemeAdapter: CategoryThemeAdapter
@@ -56,6 +57,9 @@ class HomeFragment : BaseFragment(
         }
         search_btn_tv.setOnClickListener {
             navigateTo(R.id.searchFragment)
+        }
+        placeholder_view.onTryNowBtnClickAction = {
+            viewModel.fetchCategories()
         }
     }
 

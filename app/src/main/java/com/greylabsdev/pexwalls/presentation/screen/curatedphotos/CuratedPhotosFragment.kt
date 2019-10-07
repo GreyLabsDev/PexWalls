@@ -10,6 +10,7 @@ import com.greylabsdev.pexwalls.presentation.collection.photolist.PhotoListPagin
 import com.greylabsdev.pexwalls.presentation.const.Consts
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
 import com.greylabsdev.pexwalls.presentation.ext.getScreenHeightInPixels
+import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.fragment_curated_photos.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -19,8 +20,8 @@ class CuratedPhotosFragment : BaseFragment(
     hasToolbarBackButton = true
 ) {
     override val viewModel by viewModel<CuratedPhotosViewModel>()
-    override val progressView: View? = null
-    override val contentView: View? = null
+    override val placeholderView: PlaceholderView? by lazy { placeholder_view }
+    override val contentView: View? by lazy { photo_list_rv }
     override val toolbarTitle: String? by lazy { getString(R.string.curated_toolbar_title) }
 
     private val photoCardMargin by lazy { requireActivity().dpToPix(Consts.DEFAULT_MARGIN_DP).toInt() }
@@ -42,6 +43,10 @@ class CuratedPhotosFragment : BaseFragment(
                 PhotoListItemDecoration(photoCardMargin)
             )
         }
+    }
+
+    override fun initListeners() {
+        placeholder_view.onTryNowBtnClickAction = { viewModel.repeatFetch() }
     }
 
     override fun initViewModelObserving() {

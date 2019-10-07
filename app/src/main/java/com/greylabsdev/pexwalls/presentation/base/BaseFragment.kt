@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.google.android.material.appbar.AppBarLayout
+import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
 import java.io.Serializable
@@ -23,7 +24,7 @@ abstract class BaseFragment(
 
     protected abstract val viewModel: BaseViewModel?
     protected abstract val toolbarTitle: String?
-    protected abstract val progressView: View?
+    protected abstract val placeholderView: PlaceholderView?
     protected abstract val contentView: View?
 
     private val toolbarView: AppBarLayout? by lazy { toolbar_container }
@@ -62,24 +63,30 @@ abstract class BaseFragment(
         viewModel?.progressState?.observe(this, Observer {progressState ->
             when (progressState) {
                 is ProgressState.DONE -> {
-                    progressView?.isVisible = false
+                    placeholderView?.setState(PlaceholderView.PlaceholderState.GONE)
                     contentView?.isVisible = true
                 }
                 is ProgressState.LOADING -> {
-                    progressView?.isVisible = true
+                    placeholderView?.setState(PlaceholderView.PlaceholderState.LOADING)
                     contentView?.isVisible = false
                 }
                 is ProgressState.ERROR -> {
-                    progressView?.isVisible = false
+                    placeholderView?.setState(PlaceholderView.PlaceholderState.ERROR)
+                    contentView?.isVisible = false
+                }
+                is ProgressState.INITIAL -> {
+                    placeholderView?.setState(PlaceholderView.PlaceholderState.INITIAL)
+                    contentView?.isVisible = false
+                }
+                is ProgressState.EMPTY -> {
+                    placeholderView?.setState(PlaceholderView.PlaceholderState.EMPTY)
+                    contentView?.isVisible = false
                 }
             }
         })
     }
-    protected open fun doInitialCalls() {}
 
-    protected open fun showLoading(isShow: Boolean) {}
-    protected open fun showError(errorMessage: String) {}
-    protected open fun showPlaceholder(isShow: Boolean, titleText: String? = null) {}
+    protected open fun doInitialCalls() {}
 
     protected fun navigateBack() {
         Navigation.findNavController(requireView()).popBackStack()
@@ -107,5 +114,9 @@ abstract class BaseFragment(
             }
         }
     }
+
+
+
+
 
 }

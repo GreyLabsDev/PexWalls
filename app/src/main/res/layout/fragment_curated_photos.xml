@@ -23,13 +23,11 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_photo_in_grid"/>
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
+        <com.greylabsdev.pexwalls.presentation.view.PlaceholderView
+            android:id="@+id/placeholder_view"
             android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:indeterminate="true"/>
+            android:layout_height="match_parent" />
 
     </FrameLayout>
 

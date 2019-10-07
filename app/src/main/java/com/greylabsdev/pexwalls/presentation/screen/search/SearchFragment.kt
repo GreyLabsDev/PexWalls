@@ -16,6 +16,7 @@ import com.greylabsdev.pexwalls.presentation.ext.dpToPix
 import com.greylabsdev.pexwalls.presentation.ext.getScreenHeightInPixels
 import com.greylabsdev.pexwalls.presentation.ext.getScreenWidthInPixels
 import com.greylabsdev.pexwalls.presentation.ext.hideKeyboard
+import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.layout_toolbar_search.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -26,8 +27,8 @@ class SearchFragment : BaseFragment(
 ) {
     override val viewModel by viewModel<SearchViewModel>()
     override val toolbarTitle: String? = null
-    override val contentView: View? = null
-    override val progressView: View? = null
+    override val contentView: View? by lazy { content_ll }
+    override val placeholderView: PlaceholderView? by lazy { placeholder_view }
 
     private val photoCardMargin by lazy { requireActivity().dpToPix(Consts.DEFAULT_MARGIN_DP) }
     private val photoCardWidth by lazy { requireActivity().getScreenWidthInPixels()/2 }

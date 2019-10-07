@@ -22,6 +22,10 @@ class PhotoPagingUpdater(
     private val photoDisplayingUseCase: PhotoDisplayingUseCase,
     private val type: UpdaterType,
     private val photoCategory: PhotoCategory? = null,
+    private val loadingListener: (() -> Unit)? = null,
+    private val doneListener: (() -> Unit)? = null,
+    private val errorListener: ((error: String) -> Unit)? = null,
+    private val emptyResultListener: (() -> Unit)? = null,
     var searchQuery: String? = null
 ) : PagingUpdater<PhotoModel>(
     pagingDataSource = PagingDataSource(DataSourceMode.LIVEDATA()),
@@ -30,7 +34,7 @@ class PhotoPagingUpdater(
     currentPage = 1
 ) {
 
-    override fun fetchPage() {
+    override fun fetchPage(usePageUpdate: Boolean) {
         var photoFetchObservable: Observable<List<PhotoEntity>>? = null
         when (type) {
             UpdaterType.SEARCH -> {
@@ -56,14 +60,22 @@ class PhotoPagingUpdater(
                 .map { it.map { photoEntity -> PresentationMapper.mapToPhotoModel(photoEntity) } }
                 .shedulersSubscribe()
                 .mainThreadObserve()
-                .doOnSubscribe { pagingDataSource.addFooter("", "") }
+                .doOnSubscribe {
+                    if (currentPage == initialPage) loadingListener?.invoke()
+                    pagingDataSource.addFooter("", "")
+                }
                 .subscribeBy(
                     onNext = { photos ->
+                        if (currentPage == initialPage) doneListener?.invoke()
+                        if (photos.isNullOrEmpty()) emptyResultListener?.invoke()
                         pagingDataSource.removeFooter()
                         pushToDataSource(mapToItems(photos))
-                        updateCurrentPage(photos.size)
+                        if (usePageUpdate) updateCurrentPage(photos.size)
                     },
-                    onError = { Timber.e(it) },
+                    onError = {
+                        Timber.e(it)
+                        errorListener?.invoke(it.message ?: "")
+                    },
                     onComplete = {}
                 )
                 .addTo(disposables)

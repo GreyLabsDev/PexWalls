@@ -23,6 +23,7 @@
 
             <ImageView
                 android:id="@+id/back_iv"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tint="@color/colorBlack"
@@ -32,29 +33,30 @@
                 android:id="@+id/toolbar_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Category"
                 android:visibility="gone"
+                android:text="Category"
                 style="@style/TextStyle.ToolbarTitle"
                 android:textAlignment="center"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <EditText
+                android:id="@+id/search_field_edt"
+                android:hint="search here"
                 android:layout_marginEnd="16dp"
+                android:textAppearance="@style/TextStyle.Normal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:maxLines="1"
+                android:drawableLeft="@drawable/ic_search"
+                android:imeOptions="actionDone"
+                android:background="@drawable/bg_search"
+                android:drawablePadding="8dp"
+                android:padding="8dp"
+                android:inputType="text"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/search_field_edt"
-                    android:hint="search here"
-                    android:textAppearance="@style/TextStyle.Normal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:imeOptions="actionDone"
-                    android:inputType="text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

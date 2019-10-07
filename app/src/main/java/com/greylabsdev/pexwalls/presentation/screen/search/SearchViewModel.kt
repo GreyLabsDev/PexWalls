@@ -3,6 +3,7 @@ package com.greylabsdev.pexwalls.presentation.screen.search
 import androidx.lifecycle.LiveData
 import com.greylabsdev.pexwalls.domain.usecase.PhotoDisplayingUseCase
 import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
+import com.greylabsdev.pexwalls.presentation.base.ProgressState
 import com.greylabsdev.pexwalls.presentation.collection.PhotoPagingUpdater
 import com.greylabsdev.pexwalls.presentation.collection.UpdaterType
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
@@ -19,8 +20,15 @@ class SearchViewModel(
         PhotoPagingUpdater(
             disposables = disposables,
             photoDisplayingUseCase = photoDisplayingUseCase,
-            type = UpdaterType.SEARCH
+            type = UpdaterType.SEARCH,
+            doneListener = {_progressState.value = ProgressState.DONE()},
+            emptyResultListener = {_progressState.value = ProgressState.EMPTY()},
+            errorListener = { error -> _progressState.value = ProgressState.ERROR(error) }
         )
+
+    init {
+        _progressState.value = ProgressState.INITIAL()
+    }
 
     fun search(searchQuery: String) {
         photoGridPagingUpdater.searchQuery = searchQuery

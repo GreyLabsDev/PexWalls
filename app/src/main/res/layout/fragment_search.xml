@@ -29,11 +29,11 @@
 
         </LinearLayout>
 
-        <com.greylabsdev.pexwalls.presentation.view.ProgressView
+        <com.greylabsdev.pexwalls.presentation.view.PlaceholderView
             android:visibility="gone"
-            android:id="@+id/progress_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/placeholder_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"/>
 
     </FrameLayout>

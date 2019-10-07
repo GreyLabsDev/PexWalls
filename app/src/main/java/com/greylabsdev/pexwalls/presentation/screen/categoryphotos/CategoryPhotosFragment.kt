@@ -11,6 +11,7 @@ import com.greylabsdev.pexwalls.presentation.ext.*
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoItemDecoration
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoGridPagingAdapter
 import com.greylabsdev.pexwalls.presentation.const.Consts
+import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.fragment_category_photos.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -23,8 +24,8 @@ class CategoryPhotosFragment : BaseFragment(
         parametersOf(photoCategory)
     }
     override val toolbarTitle by lazy { photoCategory.name.capitalize() }
-    override val progressView: View by lazy { progress_bar }
-    override val contentView: View? = null
+    override val placeholderView: PlaceholderView by lazy { placeholder_view }
+    override val contentView: View? by lazy { photo_grid_rv }
 
     private val photoCategory by argSerializable<PhotoCategory>("category")
 
@@ -51,6 +52,10 @@ class CategoryPhotosFragment : BaseFragment(
                 )
             )
         }
+    }
+
+    override fun initListeners() {
+        placeholder_view.onTryNowBtnClickAction = { viewModel.repeatFetch() }
     }
 
     override fun initViewModelObserving() {

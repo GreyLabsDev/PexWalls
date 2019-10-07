@@ -3,6 +3,7 @@ package com.greylabsdev.pexwalls.presentation.screen.categoryphotos
 import androidx.lifecycle.LiveData
 import com.greylabsdev.pexwalls.domain.usecase.PhotoDisplayingUseCase
 import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
+import com.greylabsdev.pexwalls.presentation.base.ProgressState
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.PagingItem
@@ -24,6 +25,13 @@ class CategoryPhotosViewModel(
             disposables = disposables,
             photoDisplayingUseCase = photoDisplayingUseCase,
             type = UpdaterType.CATEGORY,
-            photoCategory = photoCategory
+            photoCategory = photoCategory,
+            emptyResultListener = {_progressState.value = ProgressState.EMPTY()},
+            errorListener = { error -> _progressState.value = ProgressState.ERROR(error) }
         )
+
+    fun repeatFetch() {
+        _progressState.value = ProgressState.DONE()
+        photoGridPagingUpdater.fetchPage(false)
+    }
 }
