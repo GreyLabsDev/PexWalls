@@ -2,6 +2,8 @@ package com.greylabsdev.pexwalls.domain.usecase
 
 import com.greylabsdev.pexwalls.domain.repository.IRepository
 
-class SampleUseCase(private val repository: IRepository) {
-    fun test() = "GoogleSans"
+class PhotoFavoritesUseCase (
+    private val repository: IRepository
+) {
+
 }

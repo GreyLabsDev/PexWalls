@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryPhotosFragment"
@@ -55,4 +58,13 @@
         android:name="com.greylabsdev.pexwalls.presentation.screen.photo.PhotoFragment"
         android:label="PhotoFragment"
         tools:layout="@layout/fragment_photo"/>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.greylabsdev.pexwalls.presentation.screen.favorites.FavoritesFragment"
+        android:label="FavoritesFragment"
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_favoritesFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
+    </fragment>
 </navigation>

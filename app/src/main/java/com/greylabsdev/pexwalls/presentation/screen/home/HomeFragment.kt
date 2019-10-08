@@ -59,6 +59,9 @@ class HomeFragment : BaseFragment(
         search_btn_tv.setOnClickListener {
             navigateTo(R.id.searchFragment)
         }
+        favorites_btn_tv.setOnClickListener {
+            navigateTo(R.id.favoritesFragment)
+        }
         placeholder_view.onTryNowBtnClickAction = {
             viewModel.fetchCategories()
         }

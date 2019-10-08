@@ -2,6 +2,7 @@ package com.greylabsdev.pexwalls.presentation.collection
 
 import com.greylabsdev.pexwalls.domain.entity.PhotoEntity
 import com.greylabsdev.pexwalls.domain.usecase.PhotoDisplayingUseCase
+import com.greylabsdev.pexwalls.domain.usecase.PhotoFavoritesUseCase
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.ext.mainThreadObserve
 import com.greylabsdev.pexwalls.presentation.ext.shedulersSubscribe
@@ -19,8 +20,9 @@ import java.util.concurrent.TimeUnit
 
 class PhotoPagingUpdater(
     private val disposables: CompositeDisposable,
-    private val photoDisplayingUseCase: PhotoDisplayingUseCase,
     private val type: UpdaterType,
+    private val photoDisplayingUseCase: PhotoDisplayingUseCase? = null,
+    private val photoFavoritesUseCase: PhotoFavoritesUseCase? = null,
     private val photoCategory: PhotoCategory? = null,
     private val loadingListener: (() -> Unit)? = null,
     private val doneListener: (() -> Unit)? = null,
@@ -40,18 +42,21 @@ class PhotoPagingUpdater(
             UpdaterType.SEARCH -> {
                 searchQuery?.let {
                     photoFetchObservable =
-                        photoDisplayingUseCase.serachPhoto(it, currentPage, pageSize)
+                        photoDisplayingUseCase?.serachPhoto(it, currentPage, pageSize)
                 }
             }
             UpdaterType.CATEGORY -> {
                 photoCategory?.let {
                     photoFetchObservable =
-                        photoDisplayingUseCase.getPhotosForCategory(it.name, currentPage, pageSize)
+                        photoDisplayingUseCase?.getPhotosForCategory(it.name, currentPage, pageSize)
                 }
             }
             UpdaterType.CURATED -> {
                 photoFetchObservable =
-                    photoDisplayingUseCase.getCuratedPhotos(currentPage, pageSize)
+                    photoDisplayingUseCase?.getCuratedPhotos(currentPage, pageSize)
+            }
+            UpdaterType.FAVORITES -> {
+//              TODO add impl
             }
         }
         photoFetchObservable?.let { photoFetch ->

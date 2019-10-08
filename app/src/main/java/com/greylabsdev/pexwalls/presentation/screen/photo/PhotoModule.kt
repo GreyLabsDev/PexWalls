@@ -5,5 +5,5 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val photoModule = module {
-    viewModel { (photoModel: PhotoModel) -> PhotoViewModel(get(), photoModel) }
+    viewModel { (photoModel: PhotoModel) -> PhotoViewModel(get(), get(), photoModel) }
 }

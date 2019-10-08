@@ -10,6 +10,7 @@ import com.greylabsdev.pexwalls.data.prefs.prefsModule
 import com.greylabsdev.pexwalls.domain.usecase.useCaseModule
 import com.greylabsdev.pexwalls.presentation.screen.categoryphotos.categoryPhotosModule
 import com.greylabsdev.pexwalls.presentation.screen.curatedphotos.curatedPhotosModule
+import com.greylabsdev.pexwalls.presentation.screen.favorites.favoritesModule
 import com.greylabsdev.pexwalls.presentation.screen.home.homeModule
 import com.greylabsdev.pexwalls.presentation.screen.photo.photoModule
 import com.greylabsdev.pexwalls.presentation.screen.search.searchModule
@@ -41,7 +42,8 @@ class PexWallsApp : Application() {
                     curatedPhotosModule,
                     homeModule,
                     searchModule,
-                    photoModule
+                    photoModule,
+                    favoritesModule
                 )
             )
         }

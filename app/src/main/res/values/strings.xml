@@ -12,6 +12,9 @@
     <!--  search  -->
     <string name="search_toolbar_title">Search</string>
 
+    <!--  favorites  -->
+    <string name="favorites_toolbar_title">Favorites</string>
+
     <!--  common  -->
     <string name="progress_title">your inspiration almost here</string>
     <string name="pexels_promo">powered by pexels api</string>

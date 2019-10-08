@@ -8,4 +8,9 @@ interface IDataSource {
     fun searchPhotos(query: String, page: Int, perPage: Int): Observable<SearchResultDto>
     fun searchPhotosSingle(query: String, page: Int, perPage: Int): Single<SearchResultDto>
     fun getCuratedPhotos(page: Int, perPage: Int): Observable<SearchResultDto>
+
+//    TODO add impl
+//    fun addPhotoToFavorites()
+//    fun removePhotoFromFavorites()
+//    fun checkIfPhotoInFavorites()
 }

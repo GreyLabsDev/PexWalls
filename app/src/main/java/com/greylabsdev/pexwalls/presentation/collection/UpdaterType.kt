@@ -1,5 +1,5 @@
 package com.greylabsdev.pexwalls.presentation.collection
 
 enum class UpdaterType {
-    SEARCH, CATEGORY, CURATED
+    SEARCH, CATEGORY, CURATED, FAVORITES
 }

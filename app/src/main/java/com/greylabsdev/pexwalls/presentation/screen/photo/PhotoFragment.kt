@@ -6,6 +6,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.ext.argSerializable
+import com.greylabsdev.pexwalls.presentation.ext.getScreenResolution
 import com.greylabsdev.pexwalls.presentation.ext.setTint
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
@@ -37,6 +38,7 @@ class PhotoFragment : BaseFragment(
 
     override fun initListeners() {
         back_btn_ll.setOnClickListener { navigateBack() }
+        download_btn_iv.setOnClickListener { viewModel.downloadPhoto(requireContext().getScreenResolution()) }
     }
 
     companion object {
