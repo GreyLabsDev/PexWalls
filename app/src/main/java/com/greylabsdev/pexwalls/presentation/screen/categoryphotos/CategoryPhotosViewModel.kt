@@ -13,8 +13,8 @@ import com.greylabsdev.pexwalls.presentation.collection.UpdaterType
 
 
 class CategoryPhotosViewModel(
-    private val photoDisplayingUseCase: PhotoDisplayingUseCase,
-    private val photoCategory: PhotoCategory
+    photoDisplayingUseCase: PhotoDisplayingUseCase,
+    photoCategory: PhotoCategory
 ) : BaseViewModel() {
 
     val photos: LiveData<List<PagingItem<PhotoModel>>>

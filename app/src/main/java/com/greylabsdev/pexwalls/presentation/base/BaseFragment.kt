@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.core.view.isVisible
@@ -19,7 +20,8 @@ import java.io.Serializable
 
 abstract class BaseFragment(
     @LayoutRes private val layoutResId: Int,
-    private val hasToolbarBackButton: Boolean = false
+    private val hasToolbarBackButton: Boolean = false,
+    private val transparentStatusBar: Boolean = false
 ): Fragment() {
 
     protected abstract val viewModel: BaseViewModel?
@@ -29,20 +31,12 @@ abstract class BaseFragment(
 
     private val toolbarView: AppBarLayout? by lazy { toolbar_container }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setupStatusBar()
         return inflater.inflate(layoutResId, container, false)
     }
 
@@ -115,7 +109,22 @@ abstract class BaseFragment(
         }
     }
 
+    private fun setupStatusBar() {
+        if (transparentStatusBar) {
+            requireActivity().window.apply {
+                setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                decorView.systemUiVisibility = 0
+            }
 
+        } else {
+            requireActivity().window.apply {
+                clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
+        }
+    }
 
 
 

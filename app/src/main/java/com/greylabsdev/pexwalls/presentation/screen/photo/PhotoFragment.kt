@@ -1,9 +1,10 @@
 package com.greylabsdev.pexwalls.presentation.screen.photo
 
 import android.graphics.Outline
-import android.view.View
-import android.view.ViewOutlineProvider
+import android.os.Bundle
+import android.view.*
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.const.Consts
@@ -17,7 +18,8 @@ import org.koin.core.parameter.parametersOf
 
 class PhotoFragment : BaseFragment(
     layoutResId = R.layout.fragment_photo,
-    hasToolbarBackButton = true
+    hasToolbarBackButton = true,
+    transparentStatusBar = true
 ) {
     override val viewModel by viewModel<PhotoViewModel>{
         parametersOf(photoModel)
@@ -27,25 +29,16 @@ class PhotoFragment : BaseFragment(
     override val contentView: View? by lazy { content_ll }
 
     private val photoModel: PhotoModel by argSerializable<PhotoModel>(ARG_KEY)
-    private val photoCornerRadius by lazy { requireActivity().dpToPix(Consts.DEFAULT_CORNER_RADIUS_DP) }
-    private val outlineProvider by lazy {
-        object : ViewOutlineProvider() {
-            override fun getOutline(view: View, outline: Outline) {
-                outline.setRoundRect(0, 0, view.width, view.height, photoCornerRadius)
-            }
-        }
-    }
 
     override fun initViews() {
         Glide.with(photo_iv)
             .load(photoModel.bigPhotoUrl)
+            .transform(CenterCrop())
             .into(photo_iv)
-        photo_iv.outlineProvider = outlineProvider
-        photo_iv.clipToOutline = true
     }
 
     override fun initListeners() {
-
+        back_btn_ll.setOnClickListener { navigateBack() }
     }
 
     companion object {
