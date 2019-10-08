@@ -1,15 +1,12 @@
 package com.greylabsdev.pexwalls.presentation.screen.photo
 
-import android.graphics.Outline
-import android.os.Bundle
 import android.view.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
-import com.greylabsdev.pexwalls.presentation.const.Consts
 import com.greylabsdev.pexwalls.presentation.ext.argSerializable
-import com.greylabsdev.pexwalls.presentation.ext.dpToPix
+import com.greylabsdev.pexwalls.presentation.ext.setTint
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.fragment_photo.*
@@ -35,6 +32,7 @@ class PhotoFragment : BaseFragment(
             .load(photoModel.bigPhotoUrl)
             .transform(CenterCrop())
             .into(photo_iv)
+        back_iv.setTint(R.color.colorLight)
     }
 
     override fun initListeners() {

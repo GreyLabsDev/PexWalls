@@ -39,9 +39,42 @@
             android:paddingEnd="4dp">
 
             <ImageView
+                android:id="@+id/back_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_back"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttons_container_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="48dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/like_btn_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_favorite_outline"
+                android:background="@drawable/bg_photo_btn"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="16dp"
+                android:layout_margin="8dp"/>
+
+            <ImageView
+                android:id="@+id/download_btn_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_download"
+                android:background="@drawable/bg_photo_btn"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_margin="8dp"
+                android:padding="16dp"/>
 
         </LinearLayout>
 
