@@ -37,33 +37,44 @@ class PhotoPagingUpdater(
 ) {
 
     override fun fetchPage(usePageUpdate: Boolean) {
-        var photoFetchObservable: Observable<List<PhotoEntity>>? = null
+        var photoFetchObservable: Observable<List<PhotoModel>>? = null
         when (type) {
             UpdaterType.SEARCH -> {
                 searchQuery?.let {
                     photoFetchObservable =
                         photoDisplayingUseCase?.serachPhoto(it, currentPage, pageSize)
+                            ?.debounce(400, TimeUnit.MILLISECONDS)
+                            ?.distinctUntilChanged()
+                            ?.map { it.map { photoEntity -> PresentationMapper.mapToPhotoModel(photoEntity) } }
                 }
             }
             UpdaterType.CATEGORY -> {
                 photoCategory?.let {
                     photoFetchObservable =
                         photoDisplayingUseCase?.getPhotosForCategory(it.name, currentPage, pageSize)
+                            ?.debounce(400, TimeUnit.MILLISECONDS)
+                            ?.distinctUntilChanged()
+                            ?.map { it.map { photoEntity -> PresentationMapper.mapToPhotoModel(photoEntity) } }
                 }
             }
             UpdaterType.CURATED -> {
                 photoFetchObservable =
                     photoDisplayingUseCase?.getCuratedPhotos(currentPage, pageSize)
+                        ?.debounce(400, TimeUnit.MILLISECONDS)
+                        ?.distinctUntilChanged()
+                        ?.map { it.map { photoEntity -> PresentationMapper.mapToPhotoModel(photoEntity) } }
+
             }
             UpdaterType.FAVORITES -> {
-//              TODO add impl
+                photoFetchObservable = photoFavoritesUseCase?.getFavoritePhotos()
+                    ?.toObservable()
+                    ?.debounce(400, TimeUnit.MILLISECONDS)
+                    ?.distinctUntilChanged()
+                    ?.map { it.map { photoEntity -> PresentationMapper.mapToPhotoModel(photoEntity) } }
             }
         }
         photoFetchObservable?.let { photoFetch ->
-            photoFetch.debounce(400, TimeUnit.MILLISECONDS)
-                .distinctUntilChanged()
-                .map { it.map { photoEntity -> PresentationMapper.mapToPhotoModel(photoEntity) } }
-                .shedulersSubscribe()
+            photoFetch.shedulersSubscribe()
                 .mainThreadObserve()
                 .doOnSubscribe {
                     if (currentPage == initialPage) loadingListener?.invoke()

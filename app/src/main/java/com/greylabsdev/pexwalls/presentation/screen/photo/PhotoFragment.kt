@@ -1,6 +1,7 @@
 package com.greylabsdev.pexwalls.presentation.screen.photo
 
 import android.view.*
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.greylabsdev.pexwalls.R
@@ -39,6 +40,15 @@ class PhotoFragment : BaseFragment(
     override fun initListeners() {
         back_btn_ll.setOnClickListener { navigateBack() }
         download_btn_iv.setOnClickListener { viewModel.downloadPhoto(requireContext().getScreenResolution()) }
+        like_btn_iv.setOnClickListener { viewModel.switchPhotoInFavoritesState() }
+    }
+
+    override fun initViewModelObserving() {
+        super.initViewModelObserving()
+        viewModel.isPhotoFavorite.observe(this, Observer { inFavorites ->
+            if (inFavorites) like_btn_iv.setImageResource(R.drawable.ic_favorite_fill)
+            else like_btn_iv.setImageResource(R.drawable.ic_favorite_outline)
+        })
     }
 
     companion object {

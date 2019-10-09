@@ -8,5 +8,17 @@ import androidx.room.PrimaryKey
 data class PhotoDbEntity(
     @PrimaryKey
     @ColumnInfo
-    val id: String
+    val id: Int,
+    @ColumnInfo
+    val normalPhotoUrl: String,
+    @ColumnInfo
+    val bigPhotoUrl: String,
+    @ColumnInfo
+    val photographer: String,
+    @ColumnInfo
+    val photographerUrl: String,
+    @ColumnInfo
+    val width: Int,
+    @ColumnInfo
+    val height: Int
 )

@@ -14,7 +14,7 @@ interface PhotoDao {
     fun getAll(): Single<List<PhotoDbEntity>>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE id LIKE :photoId")
-    fun getById(photoId: String): Single<PhotoDbEntity>
+    fun getById(photoId: Int): Single<List<PhotoDbEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: PhotoDbEntity): Completable
@@ -24,6 +24,9 @@ interface PhotoDao {
 
     @Delete
     fun delete(item: PhotoDbEntity): Completable
+
+    @Query("DELETE FROM $TABLE_NAME WHERE id = :id")
+    fun deleteById(id: Int): Completable
 
     @Query("DELETE FROM $TABLE_NAME")
     fun deleteAll(): Completable
