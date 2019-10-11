@@ -31,6 +31,8 @@ class PhotoFragment : BaseFragment(
     private val photoModel: PhotoModel by argSerializable(ARG_KEY)
 
     override fun initViews() {
+        bottom_sheet.photographer_tv.text = photoModel.photographer
+        bottom_sheet.resolution_tv.text = "${photoModel.width} x ${photoModel.height}"
         Glide.with(photo_iv)
             .load(photoModel.bigPhotoUrl)
             .transform(CenterCrop())
@@ -41,6 +43,8 @@ class PhotoFragment : BaseFragment(
     override fun initListeners() {
         back_btn_ll.setOnClickListener { navigateBack() }
         like_btn_iv.setOnClickListener { viewModel.switchPhotoInFavoritesState() }
+        bottom_sheet.download_btn.setOnClickListener {  }
+        bottom_sheet.wallpaper_btn.setOnClickListener {  }
     }
 
     override fun initViewModelObserving() {

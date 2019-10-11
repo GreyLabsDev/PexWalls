@@ -45,8 +45,6 @@
 
         </LinearLayout>
 
-
-
         <com.greylabsdev.pexwalls.presentation.view.PlaceholderView
             android:id="@+id/placeholder_view"
             android:visibility="gone"

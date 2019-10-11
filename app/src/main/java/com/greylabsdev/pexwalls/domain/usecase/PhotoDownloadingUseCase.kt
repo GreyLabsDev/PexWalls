@@ -14,24 +14,26 @@ class PhotoDownloadingUseCase(
     private val linkGenerator = PhotoUrlGenerator()
 
     fun callManagerToDownloadPhoto(
-        autror: String,
+        author: String,
         postfix: String,
-        baseLink: String,
-        resolution: Pair<Int, Int>) {
+        baseLink: String): Long {
 
-        val downloadLink = Uri.parse(linkGenerator.generateUrl(baseLink, resolutionManager.screenResolution))
-        val photoFile = File(context.getExternalFilesDir(null), "PexWalls")
+        val fileName = "${author}_${postfix}.jpeg"
+        val downloadUrl = Uri.parse(linkGenerator.generateUrl(baseLink, resolutionManager.screenResolution))
+        val photoFile = File(context.getExternalFilesDir(null), fileName)
 
-        val downloadRequest = DownloadManager.Request(downloadLink)
-            .setTitle("PexWalls.jpeg")
-            .setDescription("Downloading photo")
+        val downloadRequest = DownloadManager.Request(downloadUrl)
+            .setTitle(fileName)
+            .setDescription("downloading photo")
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
             .setDestinationUri(Uri.fromFile(photoFile))
-            .setRequiresCharging(false)
             .setAllowedOverMetered(true)
             .setAllowedOverRoaming(true)
 
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val id = downloadManager.enqueue(downloadRequest)
+        return id
     }
+
+
 }

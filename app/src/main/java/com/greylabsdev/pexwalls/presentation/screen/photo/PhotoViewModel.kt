@@ -30,12 +30,11 @@ class PhotoViewModel (
         checkIfPhotoInFavorites()
     }
 
-    fun downloadPhoto(resolution: Pair<Int, Int>) {
-        photoDownloadingUseCase.callManagerToDownloadPhoto(
-            autror = photoModel.photographer,
+    fun downloadPhoto() {
+        val id = photoDownloadingUseCase.callManagerToDownloadPhoto(
+            author = photoModel.photographer,
             postfix = "${photoModel.id}",
-            baseLink = photoModel.bigPhotoUrl,
-            resolution = resolution
+            baseLink = photoModel.bigPhotoUrl
         )
     }
 

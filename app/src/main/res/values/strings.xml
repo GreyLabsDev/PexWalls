@@ -15,6 +15,12 @@
     <!--  favorites  -->
     <string name="favorites_toolbar_title">Favorites</string>
 
+    <!--  photo  -->
+    <string name="photo_photographer_title">Photo by</string>
+    <string name="photo_resolution_title">Original resolution</string>
+    <string name="photo_download_btn">Download original</string>
+    <string name="photo_wallpaper_btn">Set as wallpaper</string>
+
     <!--  common  -->
     <string name="progress_title">your inspiration almost here</string>
     <string name="pexels_promo">powered by pexels api</string>
