@@ -14,6 +14,8 @@ data class PhotoDbEntity(
     @ColumnInfo
     val bigPhotoUrl: String,
     @ColumnInfo
+    val byScreenResolution: String,
+    @ColumnInfo
     val photographer: String,
     @ColumnInfo
     val photographerUrl: String,

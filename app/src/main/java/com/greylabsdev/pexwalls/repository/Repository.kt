@@ -45,7 +45,7 @@ class Repository(
         return localDataSource.getPhotoById(id)
     }
 
-    override fun getAllFavoritePhotos(): Single<List<PhotoDbEntity>> {
+    override fun getAllFavoritePhotos(): Observable<List<PhotoDbEntity>> {
         return localDataSource.getAllPhotos()
     }
 

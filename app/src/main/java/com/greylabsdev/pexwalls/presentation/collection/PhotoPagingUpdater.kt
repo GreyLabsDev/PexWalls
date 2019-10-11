@@ -1,6 +1,5 @@
 package com.greylabsdev.pexwalls.presentation.collection
 
-import com.greylabsdev.pexwalls.domain.entity.PhotoEntity
 import com.greylabsdev.pexwalls.domain.usecase.PhotoDisplayingUseCase
 import com.greylabsdev.pexwalls.domain.usecase.PhotoFavoritesUseCase
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
@@ -42,7 +41,7 @@ class PhotoPagingUpdater(
             UpdaterType.SEARCH -> {
                 searchQuery?.let {
                     photoFetchObservable =
-                        photoDisplayingUseCase?.serachPhoto(it, currentPage, pageSize)
+                        photoDisplayingUseCase?.searchPhoto(it, currentPage, pageSize)
                             ?.debounce(400, TimeUnit.MILLISECONDS)
                             ?.distinctUntilChanged()
                             ?.map { it.map { photoEntity -> PresentationMapper.mapToPhotoModel(photoEntity) } }
@@ -67,7 +66,6 @@ class PhotoPagingUpdater(
             }
             UpdaterType.FAVORITES -> {
                 photoFetchObservable = photoFavoritesUseCase?.getFavoritePhotos()
-                    ?.toObservable()
                     ?.debounce(400, TimeUnit.MILLISECONDS)
                     ?.distinctUntilChanged()
                     ?.map { it.map { photoEntity -> PresentationMapper.mapToPhotoModel(photoEntity) } }

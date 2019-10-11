@@ -8,7 +8,7 @@ import com.greylabsdev.pexwalls.domain.entity.PhotoSrcEntity
 
 object DomainMapper {
 
-    fun mapToPhotoEntity(src: PhotoDto): PhotoEntity {
+    fun mapToPhotoEntity(src: PhotoDto, byScreenResolution: String): PhotoEntity {
         return PhotoEntity(
             src.height,
             src.id,
@@ -23,7 +23,8 @@ object DomainMapper {
                 src.src.original,
                 src.src.portrait,
                 src.src.small,
-                src.src.tiny
+                src.src.tiny,
+                byScreenResolution
             ),
             src.url,
             src.width
@@ -34,7 +35,8 @@ object DomainMapper {
         return PhotoFavoriteEntity(
             photo.id,
             photo.normalPhotoUrl,
-            photo.normalPhotoUrl,
+            photo.bigPhotoUrl,
+            photo.byScreenResolution,
             photo.photographer,
             photo.photographerUrl,
             photo.width,
@@ -47,6 +49,7 @@ object DomainMapper {
             photo.id,
             photo.normalPhotoUrl,
             photo.bigPhotoUrl,
+            photo.byScreenResolutionUrl,
             photo.photographer,
             photo.photographerUrl,
             photo.width,

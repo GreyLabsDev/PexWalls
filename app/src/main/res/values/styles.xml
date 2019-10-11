@@ -24,6 +24,14 @@
         <item name="android:textColor">@color/colorBlack</item>
     </style>
 
+    <style name="TextStyle.Normal.Title" parent="TextStyle.Normal">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextStyle.Normal.Title.White" parent="TextStyle.Normal.Title">
+        <item name="android:textColor">@color/colorLight</item>
+    </style>
+
     <style name="TextStyle.Normal.White">
         <item name="android:fontFamily">@font/google_sans</item>
         <item name="android:textSize">16sp</item>

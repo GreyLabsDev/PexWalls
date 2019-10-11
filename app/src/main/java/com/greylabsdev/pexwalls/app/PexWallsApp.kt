@@ -7,6 +7,7 @@ import com.greylabsdev.pexwalls.data.datasource.dataSourceModule
 import com.greylabsdev.pexwalls.data.db.databaseModule
 import com.greylabsdev.pexwalls.data.network.networkModule
 import com.greylabsdev.pexwalls.data.prefs.prefsModule
+import com.greylabsdev.pexwalls.domain.tools.toolsModule
 import com.greylabsdev.pexwalls.domain.usecase.useCaseModule
 import com.greylabsdev.pexwalls.presentation.screen.categoryphotos.categoryPhotosModule
 import com.greylabsdev.pexwalls.presentation.screen.curatedphotos.curatedPhotosModule
@@ -30,12 +31,18 @@ class PexWallsApp : Application() {
             androidContext(this@PexWallsApp)
             modules(
                 listOf(
+                    // data
                     databaseModule,
                     dataSourceModule,
                     networkModule,
                     prefsModule,
                     repositoryModule,
+
+                    // tools
                     resourceManagerModule,
+                    toolsModule,
+
+                    // screens
                     splashModule,
                     useCaseModule,
                     categoryPhotosModule,

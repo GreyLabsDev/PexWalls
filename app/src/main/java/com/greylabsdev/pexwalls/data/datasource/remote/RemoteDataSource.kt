@@ -43,7 +43,7 @@ class RemoteDataSource(private val api: PexelsApi) : IDataSource {
         return Single.error(Exception("Method only for LocalDataSource realization"))
     }
 
-    override fun getAllPhotos(): Single<List<PhotoDbEntity>> {
-        return Single.error(Exception("Method only for LocalDataSource realization"))
+    override fun getAllPhotos(): Observable<List<PhotoDbEntity>> {
+        return Observable.error(Exception("Method only for LocalDataSource realization"))
     }
 }

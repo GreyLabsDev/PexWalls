@@ -3,6 +3,7 @@ package com.greylabsdev.pexwalls.data.db.dao
 import androidx.room.*
 import com.greylabsdev.pexwalls.data.db.entity.PhotoDbEntity
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 
 private const val TABLE_NAME = "PhotoDbEntity"
@@ -11,7 +12,7 @@ private const val TABLE_NAME = "PhotoDbEntity"
 interface PhotoDao {
 
     @Query("SELECT * FROM $TABLE_NAME")
-    fun getAll(): Single<List<PhotoDbEntity>>
+    fun getAll(): Observable<List<PhotoDbEntity>>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE id LIKE :photoId")
     fun getById(photoId: Int): Single<List<PhotoDbEntity>>

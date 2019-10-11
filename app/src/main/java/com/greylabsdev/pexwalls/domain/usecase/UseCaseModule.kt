@@ -4,8 +4,8 @@ import org.koin.dsl.module
 
 val useCaseModule = module {
 
-    factory { PhotoDisplayingUseCase(get()) }
-    factory { PhotoDownloadingUseCase(get()) }
+    factory { PhotoDisplayingUseCase(get(), get()) }
+    factory { PhotoDownloadingUseCase(get(), get()) }
     factory { PhotoFavoritesUseCase(get()) }
 
 }

@@ -45,7 +45,7 @@ class LocalDataSource(private val appDatabase: AppDatabase) : IDataSource {
         return appDatabase.photoDao().getById(id).map { it.first() }
     }
 
-    override fun getAllPhotos(): Single<List<PhotoDbEntity>> {
+    override fun getAllPhotos(): Observable<List<PhotoDbEntity>> {
         return appDatabase.photoDao().getAll()
     }
 }

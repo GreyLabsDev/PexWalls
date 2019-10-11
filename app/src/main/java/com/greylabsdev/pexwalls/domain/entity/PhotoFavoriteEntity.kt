@@ -4,6 +4,7 @@ data class PhotoFavoriteEntity(
     val id: Int,
     val normalPhotoUrl: String,
     val bigPhotoUrl: String,
+    val byScreenResolutionUrl: String,
     val photographer: String,
     val photographerUrl: String,
     val width: Int,

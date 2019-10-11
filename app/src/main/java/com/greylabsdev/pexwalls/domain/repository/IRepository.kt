@@ -16,5 +16,5 @@ interface IRepository  {
     fun removePhotoFromFavoritesById(id: Int): Completable
     fun checkIfPhotoInFavorites(id: Int): Single<Boolean>
     fun getPhotoById(id: Int): Single<PhotoDbEntity>
-    fun getAllFavoritePhotos(): Single<List<PhotoDbEntity>>
+    fun getAllFavoritePhotos(): Observable<List<PhotoDbEntity>>
 }

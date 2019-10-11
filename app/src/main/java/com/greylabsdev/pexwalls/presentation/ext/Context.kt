@@ -31,13 +31,6 @@ fun Context.getScreenHeightInPixels(): Int {
     return metrics.heightPixels
 }
 
-fun Context.getScreenResolution():Pair<Int, Int> {
-    return Pair(
-        this.getScreenWidthInPixels(),
-        this.getScreenHeightInPixels()
-    )
-}
-
 fun Context.windowManager(): WindowManager {
     return this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 }

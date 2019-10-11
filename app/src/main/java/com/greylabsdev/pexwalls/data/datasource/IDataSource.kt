@@ -17,5 +17,5 @@ interface IDataSource {
     fun removePhotoFromFavoritesById(id: Int): Completable
     fun checkIfPhotoInFavorites(id: Int): Single<Boolean>
     fun getPhotoById(id: Int): Single<PhotoDbEntity>
-    fun getAllPhotos(): Single<List<PhotoDbEntity>>
+    fun getAllPhotos(): Observable<List<PhotoDbEntity>>
 }
