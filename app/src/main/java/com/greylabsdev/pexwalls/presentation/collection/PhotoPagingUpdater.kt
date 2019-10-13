@@ -4,7 +4,7 @@ import com.greylabsdev.pexwalls.domain.usecase.PhotoDisplayingUseCase
 import com.greylabsdev.pexwalls.domain.usecase.PhotoFavoritesUseCase
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.ext.mainThreadObserve
-import com.greylabsdev.pexwalls.presentation.ext.shedulersSubscribe
+import com.greylabsdev.pexwalls.presentation.ext.schedulersSubscribe
 import com.greylabsdev.pexwalls.presentation.mapper.PresentationMapper
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.DataSourceMode
@@ -72,7 +72,7 @@ class PhotoPagingUpdater(
             }
         }
         photoFetchObservable?.let { photoFetch ->
-            photoFetch.shedulersSubscribe()
+            photoFetch.schedulersSubscribe()
                 .mainThreadObserve()
                 .doOnSubscribe {
                     if (currentPage == initialPage) loadingListener?.invoke()

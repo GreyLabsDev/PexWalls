@@ -16,7 +16,7 @@ class PhotoUrlGenerator() {
         val cropParameter = "?fit=crop"
         var sizeParameter = ""
         photoResolution?.let {
-            sizeParameter = "&h=${it.width}&w=${it.height}"
+            sizeParameter = "&h=${it.height}&w=${it.width}"
         }
         return if (sizeParameter.isNotBlank()) {
             baseUrl + cropParameter + sizeParameter

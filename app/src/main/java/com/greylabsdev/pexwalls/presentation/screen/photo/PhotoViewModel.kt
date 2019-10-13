@@ -7,13 +7,11 @@ import com.greylabsdev.pexwalls.domain.usecase.PhotoFavoritesUseCase
 import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
 import com.greylabsdev.pexwalls.presentation.base.ProgressState
 import com.greylabsdev.pexwalls.presentation.ext.mainThreadObserve
-import com.greylabsdev.pexwalls.presentation.ext.shedulersSubscribe
+import com.greylabsdev.pexwalls.presentation.ext.schedulersSubscribe
 import com.greylabsdev.pexwalls.presentation.mapper.PresentationMapper
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.schedulers.Timed
 import timber.log.Timber
 
 class PhotoViewModel (
@@ -30,12 +28,22 @@ class PhotoViewModel (
         checkIfPhotoInFavorites()
     }
 
-    fun downloadPhoto() {
+    fun downloadPhoto(useOriginalResolution: Boolean = false) {
         val id = photoDownloadingUseCase.callManagerToDownloadPhoto(
             author = photoModel.photographer,
-            postfix = "${photoModel.id}",
-            baseLink = photoModel.bigPhotoUrl
+            postfix = "${photoModel.id}${if (useOriginalResolution) "_original" else "_wallpaper"}",
+            baseLink = photoModel.bigPhotoUrl,
+            originalResolution = if (useOriginalResolution) Pair(photoModel.width,photoModel.height)
+                                 else null
         )
+        photoDownloadingUseCase.createDownloadListenerObservable(id)
+            .schedulersSubscribe()
+            .mainThreadObserve()
+            .subscribeBy(
+                onNext = {},
+                onComplete = {_progressState.value = ProgressState.DONE("Load complete")},
+                onError = {error -> Timber.e(error)}
+            ).addTo(disposables)
     }
 
     fun switchPhotoInFavoritesState() {
@@ -45,27 +53,27 @@ class PhotoViewModel (
 
     private fun addPhotoToFavorites() {
         favoritesUseCase.addPhotoToFavorites(PresentationMapper.mapToEntity(photoModel))
-            .shedulersSubscribe()
+            .schedulersSubscribe()
             .mainThreadObserve()
             .subscribeBy(
                 onComplete = {_isPhotoFavorite.value = true},
-                onError = {}
+                onError = {error -> Timber.e(error)}
             ).addTo(disposables)
     }
 
     private fun removePhotoFromFavorites() {
         favoritesUseCase.removePhotoFromFavorites(PresentationMapper.mapToEntity(photoModel))
-            .shedulersSubscribe()
+            .schedulersSubscribe()
             .mainThreadObserve()
             .subscribeBy(
                 onComplete = {_isPhotoFavorite.value = false},
-                onError = {}
+                onError = {error -> Timber.e(error)}
             ).addTo(disposables)
     }
 
     private fun checkIfPhotoInFavorites() {
         favoritesUseCase.checkIfPhotoInFavorites(photoModel.id)
-            .shedulersSubscribe()
+            .schedulersSubscribe()
             .mainThreadObserve()
             .subscribeBy(
                 onSuccess = {

@@ -1,6 +1,9 @@
 package com.greylabsdev.pexwalls.presentation.base
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.google.android.material.appbar.AppBarLayout
+import com.greylabsdev.pexwalls.presentation.screen.photo.PhotoFragment
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
@@ -30,6 +34,8 @@ abstract class BaseFragment(
     protected abstract val contentView: View?
 
     private val toolbarView: AppBarLayout? by lazy { toolbar_container }
+
+    private var onPermissionGrantedAction: (() -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,6 +105,27 @@ abstract class BaseFragment(
         }
     }
 
+    protected fun requestStoragePermissionWithAction(permissionNeededAction: () -> Unit) {
+        onPermissionGrantedAction = permissionNeededAction
+        if (Build.VERSION.SDK_INT >= 23) {
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_CODE)
+        } else {
+            onPermissionGrantedAction?.invoke()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == PERMISSION_CODE
+            && grantResults.first() == PackageManager.PERMISSION_GRANTED) {
+            onPermissionGrantedAction?.invoke()
+            onPermissionGrantedAction = null
+        }
+    }
+
     private fun initToolbar() {
         toolbarView?.let {
             toolbar_container.toolbar_title_tv.text = toolbarTitle ?: ""
@@ -126,6 +153,8 @@ abstract class BaseFragment(
         }
     }
 
-
+    companion object {
+        const val PERMISSION_CODE = 223
+    }
 
 }
