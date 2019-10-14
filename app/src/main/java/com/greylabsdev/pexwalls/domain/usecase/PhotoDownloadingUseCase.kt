@@ -7,13 +7,16 @@ import android.net.Uri
 import android.os.Environment
 import com.greylabsdev.pexwalls.domain.tools.PhotoUrlGenerator
 import com.greylabsdev.pexwalls.domain.tools.ResolutionManager
+import com.greylabsdev.pexwalls.domain.tools.WallpaperSetter
 import io.reactivex.Observable
 import java.io.File
+import java.net.URI
 import java.util.concurrent.TimeUnit
 
 class PhotoDownloadingUseCase(
     private val context: Context,
-    private val resolutionManager: ResolutionManager
+    private val resolutionManager: ResolutionManager,
+    private val wallpaperSetter: WallpaperSetter
 ) {
     private val linkGenerator = PhotoUrlGenerator()
 
@@ -21,7 +24,8 @@ class PhotoDownloadingUseCase(
         author: String,
         postfix: String,
         baseLink: String,
-        originalResolution: Pair<Int, Int>? = null): Long {
+        originalResolution: Pair<Int, Int>? = null,
+        setAsWallpaper: Boolean = false): Observable<Int> {
 
         val fileName = "${author.replace(" ", "_")}_${postfix}.jpeg"
         val downloadUrl = Uri.parse(linkGenerator.generateUrl(
@@ -45,27 +49,36 @@ class PhotoDownloadingUseCase(
 
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val id = downloadManager.enqueue(downloadRequest)
-        return id
+        return createDownloadListenerObservable(id, photoFile.toURI(), setAsWallpaper)
     }
 
-    fun createDownloadListenerObservable(downloadId: Long): Observable<Int> {
-
+    private fun createDownloadListenerObservable(
+        downloadId: Long,
+        fileUri: URI,
+        setAsWallpaper: Boolean
+    ): Observable<Int> {
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val query = DownloadManager.Query().apply {
             setFilterById(downloadId)
         }
-
-        val cursor: Cursor? = null
+        var cursor: Cursor? = null
         return Observable.interval(1, TimeUnit.SECONDS)
             .flatMap {
-                val cursor = downloadManager.query(query)
-                cursor.moveToFirst()
-                val bytesDownloaded = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
-                val bytesTotal = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
+                cursor = downloadManager.query(query)
+                cursor!!.moveToFirst()
+                val bytesDownloaded = cursor!!.getInt(cursor!!.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
+                val bytesTotal = cursor!!.getInt(cursor!!.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
                 val progress = (bytesDownloaded * 100L / bytesTotal).toInt()
                 Observable.just(progress)
             }
-            .takeUntil { progress -> progress != 100 }
-            .doOnComplete { cursor?.close() }
+            .takeWhile { progress -> progress != 100 }
+            .doOnComplete {
+                if (setAsWallpaper) setImageAsWallpaper(fileUri)
+                cursor?.close()
+            }
+    }
+
+    private fun setImageAsWallpaper(fileUri: URI) {
+        wallpaperSetter.setWallpaperByImagePath(fileUri)
     }
 }

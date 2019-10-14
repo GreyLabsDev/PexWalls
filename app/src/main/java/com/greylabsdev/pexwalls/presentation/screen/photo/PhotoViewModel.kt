@@ -28,17 +28,17 @@ class PhotoViewModel (
         checkIfPhotoInFavorites()
     }
 
-    fun downloadPhoto(useOriginalResolution: Boolean = false) {
-        val id = photoDownloadingUseCase.callManagerToDownloadPhoto(
+    fun downloadPhoto(useOriginalResolution: Boolean = false, setAsWallpaper: Boolean = false) {
+        photoDownloadingUseCase.callManagerToDownloadPhoto(
             author = photoModel.photographer,
             postfix = "${photoModel.id}${if (useOriginalResolution) "_original" else "_wallpaper"}",
             baseLink = photoModel.bigPhotoUrl,
             originalResolution = if (useOriginalResolution) Pair(photoModel.width,photoModel.height)
-                                 else null
-        )
-        photoDownloadingUseCase.createDownloadListenerObservable(id)
-            .schedulersSubscribe()
+                                 else null,
+            setAsWallpaper = setAsWallpaper
+        ).schedulersSubscribe()
             .mainThreadObserve()
+            .doOnSubscribe { _progressState.value = ProgressState.INITIAL("Downloading started, you will see downloading status in notification") }
             .subscribeBy(
                 onNext = {},
                 onComplete = {_progressState.value = ProgressState.DONE("Load complete")},

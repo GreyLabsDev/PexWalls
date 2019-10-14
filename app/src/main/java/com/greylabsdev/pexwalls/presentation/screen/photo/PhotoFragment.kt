@@ -51,12 +51,12 @@ class PhotoFragment : BaseFragment(
         like_btn_iv.setOnClickListener { viewModel.switchPhotoInFavoritesState() }
         bottom_sheet.download_btn.setOnClickListener {
             requestStoragePermissionWithAction {
-                viewModel.downloadPhoto(true)
+                viewModel.downloadPhoto(useOriginalResolution = true)
             }
         }
         bottom_sheet.wallpaper_btn.setOnClickListener {
             requestStoragePermissionWithAction {
-                viewModel.downloadPhoto()
+                viewModel.downloadPhoto(setAsWallpaper = true)
             }
         }
         val bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
@@ -77,7 +77,6 @@ class PhotoFragment : BaseFragment(
     }
 
     override fun initViewModelObserving() {
-//        super.initViewModelObserving()
         viewModel.isPhotoFavorite.observe(this, Observer { inFavorites ->
             if (inFavorites) like_btn_iv.setImageResource(R.drawable.ic_favorite_fill)
             else like_btn_iv.setImageResource(R.drawable.ic_favorite_outline)
@@ -87,9 +86,11 @@ class PhotoFragment : BaseFragment(
                is ProgressState.DONE -> {
                    Snackbar.make(root_cl, state.doneMessage ?: "", Snackbar.LENGTH_SHORT).show()
                }
+                is ProgressState.INITIAL -> {
+                    Snackbar.make(root_cl, state.initialMessage ?: "", Snackbar.LENGTH_SHORT).show()
+                }
             }
         })
-
     }
 
     companion object {
