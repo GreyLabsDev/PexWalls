@@ -1,9 +1,7 @@
 package com.greylabsdev.pexwalls.presentation.screen.photo
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
 import android.view.*
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -12,13 +10,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.base.ProgressState
-import com.greylabsdev.pexwalls.presentation.ext.argSerializable
-import com.greylabsdev.pexwalls.presentation.ext.setTint
+import com.greylabsdev.pexwalls.presentation.ext.*
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.bottom_sheet_photo_actions.view.*
 import kotlinx.android.synthetic.main.fragment_photo.*
-import kotlinx.android.synthetic.main.view_placeholder.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -44,6 +40,10 @@ class PhotoFragment : BaseFragment(
             .transform(CenterCrop())
             .into(photo_iv)
         back_iv.setTint(R.color.colorLight)
+        setupNeededPeekHeight()
+        bottom_sheet.navbar_bottom_spacer_v.setHeight(requireContext().getNavigationBarHeight())
+        bottom_sheet.navbar_top_spacer_v.setHeight(requireContext().getNavigationBarHeight())
+        bottom_sheet.navbar_bottom_spacer_v.isVisible = true
     }
 
     override fun initListeners() {
@@ -70,9 +70,12 @@ class PhotoFragment : BaseFragment(
                     .alpha(0+slideOffset)
                     .setDuration(0)
                     .start()
+                bottom_sheet.disappearing_container_ll.animate()
+                    .alpha(0+slideOffset)
+                    .setDuration(0)
+                    .start()
             }
-            override fun onStateChanged(bottomSheet: View, state: Int) {
-            }
+            override fun onStateChanged(bottomSheet: View, state: Int) {}
         })
     }
 
@@ -91,6 +94,17 @@ class PhotoFragment : BaseFragment(
                 }
             }
         })
+    }
+
+    private fun setupNeededPeekHeight() {
+        val allMargins = requireContext().dpToPix(55)
+        bottom_sheet.photographer_title_tv.measure(0,0)
+        bottom_sheet.photographer_tv.measure(0,0)
+        val photographerTitleHeight = bottom_sheet.photographer_title_tv.measuredHeight
+        val photographerTextHeight = bottom_sheet.photographer_tv.measuredHeight
+        val finalPeekHeight = allMargins + photographerTitleHeight + photographerTextHeight + requireContext().getNavigationBarHeight()
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
+        bottomSheetBehavior.peekHeight = finalPeekHeight.toInt()
     }
 
     companion object {

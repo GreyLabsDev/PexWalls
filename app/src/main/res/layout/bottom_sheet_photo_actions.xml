@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -21,8 +22,8 @@
         <ImageView
             android:id="@+id/img_slide"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/img_slide"
+            android:layout_height="6dp"
+            android:src="@drawable/img_slide_upside_down"
             android:scaleType="fitXY"
             android:layout_gravity="center_horizontal"/>
 
@@ -31,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="0"
-            android:src="@drawable/img_slide_upside_down"
+            android:src="@drawable/img_slide"
             android:scaleType="fitXY"
             android:layout_gravity="center_horizontal" />
 
@@ -39,6 +40,7 @@
 
 
     <TextView
+        android:id="@+id/photographer_title_tv"
         android:text="@string/photo_photographer_title"
         style="@style/TextStyle.Normal.White"
         android:layout_width="match_parent"
@@ -52,49 +54,72 @@
         android:layout_height="wrap_content"/>
 
     <View
+        android:id="@+id/navbar_top_spacer_v"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorLight"
-        android:layout_marginTop="18dp"
-        android:layout_marginBottom="18dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_height="0dp"/>
 
-    <TextView
-        android:text="@string/photo_resolution_title"
-        style="@style/TextStyle.Normal.White"
+    <LinearLayout
+        android:id="@+id/disappearing_container_ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/resolution_tv"
-        tools:text="4000 x 3000"
-        style="@style/TextStyle.Normal.Title.White"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorLightAlpha"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center_horizontal"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/download_btn"
-        android:text="@string/photo_download_btn"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_marginTop="16dp"
-        android:textAllCaps="false"
-        app:strokeColor="@color/colorLight"
-        android:textColor="@color/colorLight"
-        android:textAppearance="@style/TextStyle.Normal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:text="@string/photo_resolution_title"
+            style="@style/TextStyle.Normal.White"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/wallpaper_btn"
-        android:text="@string/photo_wallpaper_btn"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="24dp"
-        android:textAllCaps="false"
-        app:strokeColor="@color/colorLight"
-        android:textColor="@color/colorLight"
-        android:textAppearance="@style/TextStyle.Normal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/resolution_tv"
+            tools:text="4000 x 3000"
+            style="@style/TextStyle.Normal.Title.White"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/download_btn"
+            android:text="@string/photo_download_btn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_marginTop="16dp"
+            android:textAllCaps="false"
+            app:strokeColor="@color/colorLight"
+            android:textColor="@color/colorLight"
+            android:textAppearance="@style/TextStyle.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/wallpaper_btn"
+            android:text="@string/photo_wallpaper_btn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textAllCaps="false"
+            app:strokeColor="@color/colorLight"
+            android:textColor="@color/colorLight"
+            android:textAppearance="@style/TextStyle.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:id="@+id/navbar_bottom_spacer_v"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

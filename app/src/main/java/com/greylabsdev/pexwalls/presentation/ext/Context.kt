@@ -31,6 +31,15 @@ fun Context.getScreenHeightInPixels(): Int {
     return metrics.heightPixels
 }
 
+/**
+ * Getting navigation bar height
+ * */
+fun Context.getNavigationBarHeight(): Int {
+    val resId = this.resources.getIdentifier("navigation_bar_height", "dimen", "android")
+    return if (resId > 0) this.resources.getDimensionPixelSize(resId)
+           else 0
+}
+
 fun Context.windowManager(): WindowManager {
     return this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 }

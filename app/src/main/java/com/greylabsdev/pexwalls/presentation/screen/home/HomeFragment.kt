@@ -96,11 +96,4 @@ class HomeFragment : BaseFragment(
             listOf(Pair(CategoryPhotosFragment.ARG_KEY, category))
         )
     }
-
-    private fun navigateToPhoto(category: PhotoCategory) {
-        navigateTo(
-            R.id.categoryPhotosFragment,
-            listOf(Pair(CategoryPhotosFragment.ARG_KEY, category))
-        )
-    }
 }

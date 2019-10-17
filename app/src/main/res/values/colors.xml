@@ -7,6 +7,7 @@
     <color name="colorBlackTransparentBackground">#98000000</color>
     <color name="colorBlack">#202020</color>
     <color name="colorLight">#eeeeee</color>
+    <color name="colorLightAlpha">#60eeeeee</color>
     <color name="colorRed">#F44336</color>
     <color name="colorGreen">#4CAF50</color>
     <color name="colorBlue">#3F51B5</color>
