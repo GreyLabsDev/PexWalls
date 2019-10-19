@@ -24,4 +24,39 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <LinearLayout
+        android:id="@+id/navigation_container_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:background="@color/colorBlack">
+
+        <TextView
+            android:text="cura"
+            style="@style/TextStyle.Big.White"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="sear"
+            style="@style/TextStyle.Big.White"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="favo"
+            style="@style/TextStyle.Big.White"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

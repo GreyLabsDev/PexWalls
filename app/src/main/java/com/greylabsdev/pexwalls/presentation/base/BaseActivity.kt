@@ -19,6 +19,9 @@ abstract class BaseActivity(
         initViewModelObserving()
     }
 
+    open fun hideNavigation() {}
+    open fun showNavigation() {}
+
     protected open fun initViews() {}
     protected open fun initListeners() {}
     protected open fun initViewModelObserving() {}

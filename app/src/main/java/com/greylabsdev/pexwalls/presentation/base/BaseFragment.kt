@@ -11,11 +11,13 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat.getColor
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.google.android.material.appbar.AppBarLayout
+import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.screen.photo.PhotoFragment
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.layout_toolbar.*
@@ -49,7 +51,6 @@ abstract class BaseFragment(
     override fun onStart() {
         super.onStart()
 
-        activity?.window?.statusBarColor = Color.WHITE
         initViews()
         initListeners()
         initToolbar()
@@ -137,20 +138,35 @@ abstract class BaseFragment(
     }
 
     private fun setupStatusBar() {
+        activity?.window?.statusBarColor = Color.WHITE
         if (transparentStatusBar) {
             requireActivity().window.apply {
-                setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                )
+                setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+                )
                 decorView.systemUiVisibility = 0
             }
-
+            (requireActivity() as BaseActivity).hideNavigation()
         } else {
             requireActivity().window.apply {
                 clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
                 clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
                 decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
+            (requireActivity() as BaseActivity).showNavigation()
         }
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            requireActivity().window.apply {
+                navigationBarColor = getColor(requireContext(), R.color.colorBackground)
+                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            }
+        }
+
     }
 
     companion object {

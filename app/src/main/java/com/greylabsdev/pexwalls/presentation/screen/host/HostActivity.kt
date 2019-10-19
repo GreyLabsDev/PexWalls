@@ -4,20 +4,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import androidx.core.view.isVisible
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseActivity
 import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
+import kotlinx.android.synthetic.main.activity_host.*
 
 class HostActivity : BaseActivity(
     layoutResId = R.layout.activity_host
 ) {
     override val viewModel: BaseViewModel? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.navigationBarColor = getColor(R.color.colorBackground)
-        }
+    override fun hideNavigation() {
+        navigation_container_ll.isVisible = false
+    }
+
+    override fun showNavigation() {
+        navigation_container_ll.isVisible = true
     }
 
     companion object {
