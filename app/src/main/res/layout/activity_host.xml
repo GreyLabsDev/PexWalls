@@ -10,53 +10,33 @@
     android:fitsSystemWindows="false"
     tools:context=".presentation.screen.host.HostActivity">
 
-    <fragment
-        android:id="@+id/navigation_host_fr"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:fitsSystemWindows="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:navGraph="@navigation/navigation_graph"
-        app:defaultNavHost="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/navigation_container_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom"
-        android:background="@color/colorBlack">
+        <fragment
+            android:id="@+id/navigation_host_fr"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:fitsSystemWindows="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:navGraph="@navigation/navigation_graph"
+            app:defaultNavHost="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/navigation_view" />
 
-        <TextView
-            android:text="cura"
-            style="@style/TextStyle.Big.White"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <com.greylabsdev.pexwalls.presentation.view.NavigationView
+            android:id="@+id/navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <TextView
-            android:text="sear"
-            style="@style/TextStyle.Big.White"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:text="favo"
-            style="@style/TextStyle.Big.White"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

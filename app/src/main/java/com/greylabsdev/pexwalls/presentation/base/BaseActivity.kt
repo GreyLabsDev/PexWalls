@@ -1,11 +1,17 @@
 package com.greylabsdev.pexwalls.presentation.base
 
 import android.os.Bundle
+import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import com.greylabsdev.pexwalls.presentation.ext.contentView
+import java.io.Serializable
 
 abstract class BaseActivity(
-    @LayoutRes private val layoutResId: Int
+    @LayoutRes private val layoutResId: Int,
+    @IdRes private val navigationHostId: Int? = null
 ): AppCompatActivity() {
 
     protected abstract val viewModel: BaseViewModel?
@@ -26,7 +32,19 @@ abstract class BaseActivity(
     protected open fun initListeners() {}
     protected open fun initViewModelObserving() {}
 
-    protected open fun showLoading(isShow: Boolean) {}
-    protected open fun showError(errorMessage: String) {}
-    protected open fun showPlaceholder(isShow: Boolean, titleText: String? = null) {}
+    protected fun navigateTo(
+        @IdRes destinationId: Int,
+        navigationArgs: List<Pair<String, Serializable>>? = null
+    ) {
+        navigationHostId?.let {hostid ->
+            navigationArgs?.let {args ->
+                val bundle = Bundle()
+                args.forEach { bundle.putSerializable(it.first, it.second) }
+                Navigation.findNavController(this, hostid).navigate(destinationId, bundle)
+            } ?: run {
+                Navigation.findNavController(this, hostid).navigate(destinationId)
+            }
+        }
+
+    }
 }

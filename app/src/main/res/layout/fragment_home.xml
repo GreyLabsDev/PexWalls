@@ -62,32 +62,6 @@
                     android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-                <TextView
-                    android:id="@+id/curated_btn_tv"
-                    style="@style/TextStyle.ToolbarTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:text="to curated"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:id="@+id/search_btn_tv"
-                    style="@style/TextStyle.ToolbarTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:text="to search"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:id="@+id/favorites_btn_tv"
-                    style="@style/TextStyle.ToolbarTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:text="to favorites"
-                    android:textAlignment="center" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

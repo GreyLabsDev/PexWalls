@@ -1,6 +1,7 @@
 package com.greylabsdev.pexwalls.presentation.ext
 
 import android.app.Activity
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 
 /**
@@ -22,3 +23,6 @@ fun Activity.hideKeyboard() {
         inputMethodManager.hideSoftInputFromWindow(focusedView.windowToken, 0)
     }
 }
+
+val Activity.contentView: View
+    get() = this.findViewById(android.R.id.content)

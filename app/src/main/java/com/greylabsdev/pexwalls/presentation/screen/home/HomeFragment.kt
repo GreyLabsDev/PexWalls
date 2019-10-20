@@ -53,15 +53,6 @@ class HomeFragment : BaseFragment(
     }
 
     override fun initListeners() {
-        curated_btn_tv.setOnClickListener{
-            navigateTo(R.id.curatedPhotosFragment)
-        }
-        search_btn_tv.setOnClickListener {
-            navigateTo(R.id.searchFragment)
-        }
-        favorites_btn_tv.setOnClickListener {
-            navigateTo(R.id.favoritesFragment)
-        }
         placeholder_view.onTryNowBtnClickAction = {
             viewModel.fetchCategories()
         }
