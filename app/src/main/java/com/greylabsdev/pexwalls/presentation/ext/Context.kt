@@ -14,6 +14,18 @@ fun Context.dpToPix(dpValue: Int): Float {
 }
 
 /**
+ * Getting Density-independent Pixels from clean pixels
+ *
+ * @property pixValue - size in clean pixels
+ */
+fun Context.pixToDp(pixValue: Int): Int {
+    val density = this.resources
+        .displayMetrics
+        .density
+    return (pixValue / density).toInt()
+}
+
+/**
  * Getting device screen width in pixels
  */
 fun Context.getScreenWidthInPixels(): Int {

@@ -24,10 +24,11 @@ class HostActivity : BaseActivity(
     }
 
     override fun initListeners() {
-        navigation_view.to_home_btn.setOnClickListener { navigateTo(R.id.homeFragment) }
-        navigation_view.to_curated_btn.setOnClickListener { navigateTo(R.id.curatedPhotosFragment) }
-        navigation_view.to_search_btn.setOnClickListener { navigateTo(R.id.searchFragment) }
-        navigation_view.to_favorites_btn.setOnClickListener { navigateTo(R.id.favoritesFragment) }
+        navigation_view.to_home_btn_ll.setOnClickListener { navigateTo(R.id.homeFragment) }
+        navigation_view.to_curated_btn_ll.setOnClickListener { navigateTo(R.id.curatedPhotosFragment) }
+        navigation_view.to_search_btn_ll.setOnClickListener { navigateTo(R.id.searchFragment) }
+        navigation_view.to_favorites_btn_ll.setOnClickListener { navigateTo(R.id.favoritesFragment) }
+        navigation_view.initListeners()
     }
 
     companion object {

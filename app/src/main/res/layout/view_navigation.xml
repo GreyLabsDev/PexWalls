@@ -1,56 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp"
     android:background="@color/colorBlack"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/to_home_btn"
-        android:text="home"
-        style="@style/TextStyle.Big.White"
-        android:textStyle="bold"
-        android:textSize="12sp"
-        android:layout_weight="1"
-        android:textAlignment="center"
+    <LinearLayout
+        android:id="@+id/to_home_btn_ll"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/to_curated_btn"
-        android:text="curated"
-        style="@style/TextStyle.Big.White"
-        android:textStyle="bold"
-        android:textSize="12sp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:layout_weight="1"
-        android:textAlignment="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <TextView
-        android:id="@+id/to_search_btn"
-        android:text="search"
-        style="@style/TextStyle.Big.White"
-        android:textStyle="bold"
-        android:textSize="12sp"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/colorLight"
+            android:src="@drawable/ic_home"/>
+
+        <TextView
+            android:text="home"
+            android:id="@+id/home_title_tv"
+            style="@style/TextStyle.Big.White"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:layout_marginStart="8dp"
+            android:maxLines="1"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/to_curated_btn_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:layout_weight="1"
-        android:textAlignment="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/to_home_btn_ll"
+        app:layout_constraintEnd_toStartOf="@+id/to_search_btn_ll">
 
-    <TextView
-        android:id="@+id/to_favorites_btn"
-        android:text="favorites"
-        style="@style/TextStyle.Big.White"
-        android:textStyle="bold"
-        android:textSize="12sp"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/colorLight"
+            android:src="@drawable/ic_curated"/>
+
+        <TextView
+            android:text="curated"
+            style="@style/TextStyle.Big.White"
+            android:id="@+id/curated_title_tv"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_marginStart="8dp"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/to_search_btn_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:layout_weight="1"
-        android:textAlignment="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/to_favorites_btn_ll">
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/colorLight"
+            android:src="@drawable/ic_search"/>
+
+        <TextView
+            android:text="search"
+            android:id="@+id/search_title_tv"
+            style="@style/TextStyle.Big.White"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_marginStart="8dp"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/to_favorites_btn_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/colorLight"
+            android:src="@drawable/ic_favorites"/>
+
+        <TextView
+            android:text="favorites"
+            android:id="@+id/favorites_title_tv"
+            style="@style/TextStyle.Big.White"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_marginStart="8dp"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
