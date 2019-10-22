@@ -33,7 +33,6 @@ class NavigationView @JvmOverloads constructor(
                 button.onClickAction?.invoke()
             }
         }
-//        buttons.last().swapIn()
         activeScreensManager.onActiveButtonChangedAction = { activeButton, inactiveButtons ->
             activeButton.swapOut()
             inactiveButtons.forEach { it.swapIn() }

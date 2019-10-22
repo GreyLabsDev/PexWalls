@@ -17,11 +17,11 @@ class SplashActivity : BaseActivity(
     override val viewModel by viewModel<SplashViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
             window.navigationBarColor = getColor(R.color.colorBackground)
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
-        super.onCreate(savedInstanceState)
         Handler().postDelayed({HostActivity.start(this)}, 1500)
     }
 }

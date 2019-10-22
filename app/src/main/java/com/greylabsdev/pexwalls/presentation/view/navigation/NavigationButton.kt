@@ -32,17 +32,20 @@ class NavigationButton @JvmOverloads constructor(
     fun swapIn() {
         this.btn_bg_iv.animate()
             .alpha(0f)
-            .setDuration(350)
+            .setDuration(DEFAULT_ALPHA_ANIM_DURATION)
             .start()
-        this.btn_title_tv.swapInBySize()
+        this.btn_title_tv.swapInBySize(animDuration = DEFAULT_SCALE_ANIM_DURATION)
     }
 
     fun swapOut() {
         this.btn_bg_iv.animate()
             .alpha(1f)
-            .setDuration(350)
+            .setDuration(DEFAULT_ALPHA_ANIM_DURATION)
             .start()
-        this.btn_title_tv.swapOutBySize(swapWidth = titleWidth)
+        this.btn_title_tv.swapOutBySize(
+            animDuration = DEFAULT_SCALE_ANIM_DURATION,
+            swapWidth = titleWidth
+        )
     }
 
     private fun View.swapInBySize(animDuration: Long = 200) {
@@ -60,7 +63,7 @@ class NavigationButton @JvmOverloads constructor(
         animator.start()
     }
 
-    private fun View.swapOutBySize(animDuration: Long = 200, swapWidth: Int = 100) {
+    private fun View.swapOutBySize(animDuration: Long = 200, swapWidth: Int = 0) {
         val animator = ValueAnimator.ofInt(0, swapWidth)
         animator.addUpdateListener {
             val value = animator.animatedValue as Int
@@ -73,5 +76,10 @@ class NavigationButton @JvmOverloads constructor(
             interpolator = AccelerateInterpolator()
         }
         animator.start()
+    }
+
+    companion object {
+        private const val DEFAULT_SCALE_ANIM_DURATION = 200L
+        private const val DEFAULT_ALPHA_ANIM_DURATION = 350L
     }
 }

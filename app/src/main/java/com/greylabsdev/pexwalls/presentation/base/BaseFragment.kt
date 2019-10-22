@@ -156,7 +156,7 @@ abstract class BaseFragment(
             requireActivity().window.apply {
                 clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
                 clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+
             }
             (requireActivity() as BaseActivity).showNavigation()
         }
@@ -164,6 +164,8 @@ abstract class BaseFragment(
             requireActivity().window.apply {
                 navigationBarColor = getColor(requireContext(), R.color.colorBackground)
                 decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                if (transparentStatusBar.not())
+                    decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
         }
 

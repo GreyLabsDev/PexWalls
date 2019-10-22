@@ -29,5 +29,10 @@
     <string name="placeholder_search_empty_results">We did not find anything…</string>
     <string name="placeholder_search">Here you will see photos by your search</string>
     <string name="placeholder_loading_title">your inspiration almost here</string>
+    <string name="navigation_home">home</string>
+    <string name="navigation_curated">curated</string>
+    <string name="navigation_search">search</string>
+    <string name="navigation_favorite">favorite</string>
+
 
 </resources>

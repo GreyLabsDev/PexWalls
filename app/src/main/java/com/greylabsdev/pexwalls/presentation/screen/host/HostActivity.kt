@@ -29,25 +29,25 @@ class HostActivity : BaseActivity(
         navigation_view.setupButtons(
             NavigationButton(
                 context = this,
-                title = "home",
+                title = getString(R.string.navigation_home),
                 iconRes = R.drawable.ic_home,
                 onClickAction = { navigateTo(R.id.homeFragment) }
             ),
             NavigationButton(
                 context = this,
-                title = "curated",
+                title = getString(R.string.navigation_curated),
                 iconRes = R.drawable.ic_curated,
                 onClickAction = { navigateTo(R.id.curatedPhotosFragment) }
             ),
             NavigationButton(
                 context = this,
-                title = "search",
+                title = getString(R.string.navigation_search),
                 iconRes = R.drawable.ic_search,
                 onClickAction = { navigateTo(R.id.searchFragment) }
             ),
             NavigationButton(
                 context = this,
-                title = "favorites",
+                title = getString(R.string.navigation_favorite),
                 iconRes = R.drawable.ic_favorite_fill,
                 onClickAction = { navigateTo(R.id.favoritesFragment) }
             )
