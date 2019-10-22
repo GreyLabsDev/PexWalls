@@ -6,26 +6,24 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:background="@color/colorBlack">
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/btn_icon_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tint="@color/colorLight"
+        android:tint="@color/colorBlack"
         tools:src="@drawable/ic_home"/>
 
     <TextView
         android:id="@+id/btn_title_tv"
         tools:text="home"
-        style="@style/TextStyle.Big.White"
+        style="@style/TextStyle.Big"
         android:textStyle="bold"
         android:textSize="12sp"
         android:layout_marginStart="8dp"
         android:textAlignment="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="16dp"/>
 
 </LinearLayout>

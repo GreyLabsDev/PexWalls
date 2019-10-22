@@ -6,7 +6,9 @@ import androidx.core.view.isVisible
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseActivity
 import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
+import com.greylabsdev.pexwalls.presentation.view.navigation.NavigationButton
 import kotlinx.android.synthetic.main.activity_host.*
+import kotlinx.android.synthetic.main.view_navigation.*
 import kotlinx.android.synthetic.main.view_navigation.view.*
 
 class HostActivity : BaseActivity(
@@ -23,12 +25,33 @@ class HostActivity : BaseActivity(
         navigation_view.isVisible = true
     }
 
-    override fun initListeners() {
-        navigation_view.to_home_btn_ll.setOnClickListener { navigateTo(R.id.homeFragment) }
-        navigation_view.to_curated_btn_ll.setOnClickListener { navigateTo(R.id.curatedPhotosFragment) }
-        navigation_view.to_search_btn_ll.setOnClickListener { navigateTo(R.id.searchFragment) }
-        navigation_view.to_favorites_btn_ll.setOnClickListener { navigateTo(R.id.favoritesFragment) }
-        navigation_view.initListeners()
+    override fun initViews() {
+        navigation_view.setupButtons(
+            NavigationButton(
+                context = this,
+                title = "home",
+                iconRes = R.drawable.ic_home,
+                onClickAction = { navigateTo(R.id.homeFragment) }
+            ),
+            NavigationButton(
+                context = this,
+                title = "curated",
+                iconRes = R.drawable.ic_curated,
+                onClickAction = { navigateTo(R.id.curatedPhotosFragment) }
+            ),
+            NavigationButton(
+                context = this,
+                title = "search",
+                iconRes = R.drawable.ic_search,
+                onClickAction = { navigateTo(R.id.searchFragment) }
+            ),
+            NavigationButton(
+                context = this,
+                title = "favorites",
+                iconRes = R.drawable.ic_favorite_fill,
+                onClickAction = { navigateTo(R.id.favoritesFragment) }
+            )
+        )
     }
 
     companion object {
