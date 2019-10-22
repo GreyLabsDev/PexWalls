@@ -30,10 +30,18 @@ class NavigationButton @JvmOverloads constructor(
     }
 
     fun swapIn() {
+        this.btn_bg_iv.animate()
+            .alpha(0f)
+            .setDuration(350)
+            .start()
         this.btn_title_tv.swapInBySize()
     }
 
     fun swapOut() {
+        this.btn_bg_iv.animate()
+            .alpha(1f)
+            .setDuration(350)
+            .start()
         this.btn_title_tv.swapOutBySize(swapWidth = titleWidth)
     }
 

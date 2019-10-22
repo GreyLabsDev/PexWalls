@@ -24,8 +24,7 @@ import kotlinx.android.synthetic.main.layout_toolbar_search.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchFragment : BaseFragment(
-    layoutResId = R.layout.fragment_search,
-    hasToolbarBackButton = true
+    layoutResId = R.layout.fragment_search
 ) {
     override val viewModel by viewModel<SearchViewModel>()
     override val toolbarTitle: String? = null
