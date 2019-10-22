@@ -12,7 +12,7 @@ import timber.log.Timber
 
 private const val PEXELS_EDNPOINT = "https://api.pexels.com/"
 private const val KEY_AUTHORIZATION = "Authorization"
-private const val AUTHORIZATION_TOKEN = "some_key"
+private const val AUTHORIZATION_TOKEN = "some_token"
 
 val networkModule = module {
 

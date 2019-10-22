@@ -1,31 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:background="@color/colorBlack">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp"
+    android:gravity="center">
 
     <ImageView
-        android:id="@+id/btn_icon_iv"
+        android:id="@+id/btn_bg_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/bg_nav_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tint="@color/colorLight"
-        tools:src="@drawable/ic_home"/>
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/btn_title_tv"
-        tools:text="home"
-        style="@style/TextStyle.Big.White"
-        android:textStyle="bold"
-        android:textSize="12sp"
-        android:layout_marginStart="8dp"
-        android:textAlignment="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/btn_icon_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/colorBlack"
+            tools:src="@drawable/ic_home"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/btn_title_tv"
+            tools:text="home"
+            style="@style/TextStyle.Big"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_marginStart="8dp"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"/>
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

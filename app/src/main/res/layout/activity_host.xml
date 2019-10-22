@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/navigation_view" />
 
-        <com.greylabsdev.pexwalls.presentation.view.NavigationView
+        <com.greylabsdev.pexwalls.presentation.view.navigation.NavigationView
             android:id="@+id/navigation_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

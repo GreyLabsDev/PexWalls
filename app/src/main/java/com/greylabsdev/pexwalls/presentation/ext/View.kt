@@ -15,7 +15,6 @@ fun ImageView.setTint(@ColorRes colorRes: Int) {
 }
 
 fun TextView.measureWidth(): Int {
-    val bound = Rect()
-    this.paint.getTextBounds(this.text.toString(), 0, this.text.toString().length, bound)
-    return bound.width()
+    this.measure(0,0)
+    return this.measuredWidth
 }

@@ -1,4 +1,4 @@
-package com.greylabsdev.pexwalls.repository
+package com.greylabsdev.pexwalls.data.repository
 
 import com.greylabsdev.pexwalls.domain.repository.IRepository
 import org.koin.core.qualifier.named

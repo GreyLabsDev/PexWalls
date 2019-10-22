@@ -16,7 +16,7 @@ import com.greylabsdev.pexwalls.presentation.screen.home.homeModule
 import com.greylabsdev.pexwalls.presentation.screen.photo.photoModule
 import com.greylabsdev.pexwalls.presentation.screen.search.searchModule
 import com.greylabsdev.pexwalls.presentation.screen.splash.splashModule
-import com.greylabsdev.pexwalls.repository.repositoryModule
+import com.greylabsdev.pexwalls.data.repository.repositoryModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber

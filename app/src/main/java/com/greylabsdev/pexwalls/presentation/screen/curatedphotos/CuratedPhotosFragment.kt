@@ -18,8 +18,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class CuratedPhotosFragment : BaseFragment(
-    layoutResId = R.layout.fragment_curated_photos,
-    hasToolbarBackButton = true
+    layoutResId = R.layout.fragment_curated_photos
 ) {
     override val viewModel by viewModel<CuratedPhotosViewModel>()
     override val placeholderView: PlaceholderView? by lazy { placeholder_view }

@@ -1,4 +1,4 @@
-package com.greylabsdev.pexwalls.repository
+package com.greylabsdev.pexwalls.data.repository
 
 import com.greylabsdev.pexwalls.data.datasource.IDataSource
 import com.greylabsdev.pexwalls.data.db.entity.PhotoDbEntity

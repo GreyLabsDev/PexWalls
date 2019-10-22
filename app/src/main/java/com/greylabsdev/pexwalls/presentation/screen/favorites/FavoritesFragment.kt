@@ -19,8 +19,7 @@ import kotlinx.android.synthetic.main.fragment_favorites.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class FavoritesFragment : BaseFragment(
-    layoutResId = R.layout.fragment_favorites,
-    hasToolbarBackButton = true
+    layoutResId = R.layout.fragment_favorites
 ) {
 
     override val viewModel by viewModel<FavoritesViewModel>()
