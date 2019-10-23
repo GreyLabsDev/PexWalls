@@ -1,6 +1,7 @@
 package com.greylabsdev.pexwalls.presentation.screen.curatedphotos
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import androidx.lifecycle.Observer
 import com.greylabsdev.pexwalls.R
@@ -31,6 +32,7 @@ class CuratedPhotosFragment : BaseFragment(
     }
 
     private lateinit var photoListPagingAdapter: PhotoListPagingAdapter
+    private var recyclerState: Parcelable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +57,20 @@ class CuratedPhotosFragment : BaseFragment(
         viewModel.photos.observe(this, Observer {newPhoto ->
             photoListPagingAdapter.items = newPhoto
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        photo_list_rv.layoutManager?.onSaveInstanceState()?.let {state ->
+            recyclerState = state
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        recyclerState?.let {state ->
+            photo_list_rv.layoutManager?.onRestoreInstanceState(state)
+        }
     }
 
     private fun initPhotoListPagingAdapter() {

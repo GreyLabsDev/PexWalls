@@ -21,7 +21,7 @@ class NavigationView @JvmOverloads constructor(
 
     fun setupButtons(vararg buttons : NavigationButton) {
         buttons.forEach { button  ->
-            button.layoutParams = LinearLayout.LayoutParams(
+            button.layoutParams = LayoutParams(
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT,
                 1.0f

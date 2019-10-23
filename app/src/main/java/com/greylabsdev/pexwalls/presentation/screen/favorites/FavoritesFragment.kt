@@ -1,6 +1,7 @@
 package com.greylabsdev.pexwalls.presentation.screen.favorites
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -32,6 +33,7 @@ class FavoritesFragment : BaseFragment(
     private val photoCardHeight by lazy { requireActivity().getScreenHeightInPixels()/3}
 
     private lateinit var photoGridPagingAdapter: PhotoGridPagingAdapter
+    private var recyclerState: Parcelable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +59,20 @@ class FavoritesFragment : BaseFragment(
         viewModel.photos.observe(this, Observer {newPhotos ->
             photoGridPagingAdapter.items = newPhotos
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        photo_grid_rv.layoutManager?.onSaveInstanceState()?.let {state ->
+            recyclerState = state
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        recyclerState?.let {state ->
+            photo_grid_rv.layoutManager?.onRestoreInstanceState(state)
+        }
     }
 
     private fun initPhotoGridPagingAdapter() {

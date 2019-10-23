@@ -1,6 +1,7 @@
 package com.greylabsdev.pexwalls.presentation.screen.categoryphotos
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.greylabsdev.pexwalls.domain.usecase.PhotoDisplayingUseCase
 import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
 import com.greylabsdev.pexwalls.presentation.base.ProgressState
