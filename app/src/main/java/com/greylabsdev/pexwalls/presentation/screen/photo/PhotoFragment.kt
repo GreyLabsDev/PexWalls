@@ -1,6 +1,7 @@
 package com.greylabsdev.pexwalls.presentation.screen.photo
 
 import android.view.*
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -10,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.base.ProgressState
+import com.greylabsdev.pexwalls.presentation.const.Consts
 import com.greylabsdev.pexwalls.presentation.ext.*
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
@@ -33,6 +35,18 @@ class PhotoFragment : BaseFragment(
     private val photoModel: PhotoModel by argSerializable(ARG_KEY)
 
     override fun initViews() {
+        bottom_sheet.setOnApplyWindowInsetsListener { view, windowInsets ->
+            setupNeededPeekHeight(windowInsets.systemWindowInsetBottom)
+            windowInsets
+        }
+        bottom_sheet.navbar_bottom_spacer_v.setOnApplyWindowInsetsListener { view, windowInsets ->
+            view.setHeight(windowInsets.systemWindowInsetBottom)
+            windowInsets
+        }
+        bottom_sheet.navbar_top_spacer_v.setOnApplyWindowInsetsListener { view, windowInsets ->
+            view.setHeight(windowInsets.systemWindowInsetBottom)
+            windowInsets
+        }
         bottom_sheet.photographer_tv.text = photoModel.photographer
         bottom_sheet.resolution_tv.text = "${photoModel.width} x ${photoModel.height}"
         Glide.with(photo_iv)
@@ -40,7 +54,6 @@ class PhotoFragment : BaseFragment(
             .transform(CenterCrop())
             .into(photo_iv)
         back_iv.setTint(R.color.colorLight)
-
         bottom_sheet.navbar_bottom_spacer_v.isVisible = true
     }
 
@@ -56,18 +69,6 @@ class PhotoFragment : BaseFragment(
             requestStoragePermissionWithAction {
                 viewModel.downloadPhoto(setAsWallpaper = true)
             }
-        }
-        bottom_sheet.setOnApplyWindowInsetsListener { view, windowInsets ->
-            setupNeededPeekHeight(windowInsets.systemWindowInsetBottom)
-            windowInsets
-        }
-        bottom_sheet.navbar_bottom_spacer_v.setOnApplyWindowInsetsListener { view, windowInsets ->
-            view.setHeight(windowInsets.systemWindowInsetBottom)
-            windowInsets
-        }
-        bottom_sheet.navbar_top_spacer_v.setOnApplyWindowInsetsListener { view, windowInsets ->
-            view.setHeight(windowInsets.systemWindowInsetBottom)
-            windowInsets
         }
         val bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
         bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -97,10 +98,34 @@ class PhotoFragment : BaseFragment(
         viewModel.progressState.observe(this, Observer {state ->
             when (state) {
                is ProgressState.DONE -> {
-                   Snackbar.make(root_cl, state.doneMessage ?: "", Snackbar.LENGTH_SHORT).show()
+                   val snack = Snackbar.make(root_cl, state.doneMessage ?: "", Snackbar.LENGTH_SHORT)
+                   ViewCompat.setOnApplyWindowInsetsListener(snack.view) { v, insets ->
+                       v.setPadding(v.paddingLeft, v.paddingTop, v.paddingRight, v.paddingTop)
+                       val params = v.layoutParams as ViewGroup.MarginLayoutParams
+                       params.setMargins(
+                           params.leftMargin,
+                           params.topMargin,
+                           params.rightMargin,
+                           params.bottomMargin + insets.systemWindowInsetBottom)
+                       v.layoutParams = params
+                       insets
+                   }
+                   snack.show()
                }
                 is ProgressState.INITIAL -> {
-                    Snackbar.make(root_cl, state.initialMessage ?: "", Snackbar.LENGTH_SHORT).show()
+                    val snack = Snackbar.make(root_cl, state.initialMessage ?: "", Snackbar.LENGTH_SHORT)
+                    ViewCompat.setOnApplyWindowInsetsListener(snack.view) { v, insets ->
+                        v.setPadding(v.paddingLeft, v.paddingTop, v.paddingRight, v.paddingTop)
+                        val params = v.layoutParams as ViewGroup.MarginLayoutParams
+                        params.setMargins(
+                            params.leftMargin,
+                            params.topMargin,
+                            params.rightMargin,
+                            params.bottomMargin + insets.systemWindowInsetBottom)
+                        v.layoutParams = params
+                        insets
+                    }
+                    snack.show()
                 }
             }
         })
