@@ -18,7 +18,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.google.android.material.appbar.AppBarLayout
 import com.greylabsdev.pexwalls.R
-import com.greylabsdev.pexwalls.presentation.screen.photo.PhotoFragment
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
@@ -27,7 +26,8 @@ import java.io.Serializable
 abstract class BaseFragment(
     @LayoutRes private val layoutResId: Int,
     private val hasToolbarBackButton: Boolean = false,
-    private val transparentStatusBar: Boolean = false
+    private val transparentStatusBar: Boolean = false,
+    private val hideNavigation: Boolean = false
 ): Fragment() {
 
     protected abstract val viewModel: BaseViewModel?
@@ -44,7 +44,7 @@ abstract class BaseFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setupStatusBar()
+        setupSystemBars()
         return inflater.inflate(layoutResId, container, false)
     }
 
@@ -137,8 +137,9 @@ abstract class BaseFragment(
         }
     }
 
-    private fun setupStatusBar() {
+    private fun setupSystemBars() {
         activity?.window?.statusBarColor = Color.WHITE
+        if (hideNavigation) (requireActivity() as BaseActivity).hideNavigation()
         if (transparentStatusBar) {
             requireActivity().window.apply {
                 setFlags(
@@ -158,7 +159,7 @@ abstract class BaseFragment(
                 clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
 
             }
-            (requireActivity() as BaseActivity).showNavigation()
+            if (hideNavigation.not())(requireActivity() as BaseActivity).showNavigation()
         }
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
             requireActivity().window.apply {
@@ -168,7 +169,6 @@ abstract class BaseFragment(
                     decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
         }
-
     }
 
     companion object {

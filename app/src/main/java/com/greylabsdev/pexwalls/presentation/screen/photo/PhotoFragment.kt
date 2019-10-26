@@ -40,9 +40,7 @@ class PhotoFragment : BaseFragment(
             .transform(CenterCrop())
             .into(photo_iv)
         back_iv.setTint(R.color.colorLight)
-        setupNeededPeekHeight()
-        bottom_sheet.navbar_bottom_spacer_v.setHeight(requireContext().getNavigationBarHeight())
-        bottom_sheet.navbar_top_spacer_v.setHeight(requireContext().getNavigationBarHeight())
+
         bottom_sheet.navbar_bottom_spacer_v.isVisible = true
     }
 
@@ -58,6 +56,18 @@ class PhotoFragment : BaseFragment(
             requestStoragePermissionWithAction {
                 viewModel.downloadPhoto(setAsWallpaper = true)
             }
+        }
+        bottom_sheet.setOnApplyWindowInsetsListener { view, windowInsets ->
+            setupNeededPeekHeight(windowInsets.systemWindowInsetBottom)
+            windowInsets
+        }
+        bottom_sheet.navbar_bottom_spacer_v.setOnApplyWindowInsetsListener { view, windowInsets ->
+            view.setHeight(windowInsets.systemWindowInsetBottom)
+            windowInsets
+        }
+        bottom_sheet.navbar_top_spacer_v.setOnApplyWindowInsetsListener { view, windowInsets ->
+            view.setHeight(windowInsets.systemWindowInsetBottom)
+            windowInsets
         }
         val bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
         bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -96,13 +106,13 @@ class PhotoFragment : BaseFragment(
         })
     }
 
-    private fun setupNeededPeekHeight() {
+    private fun setupNeededPeekHeight(bottomInsetns: Int) {
         val allMargins = requireContext().dpToPix(55)
         bottom_sheet.photographer_title_tv.measure(0,0)
         bottom_sheet.photographer_tv.measure(0,0)
         val photographerTitleHeight = bottom_sheet.photographer_title_tv.measuredHeight
         val photographerTextHeight = bottom_sheet.photographer_tv.measuredHeight
-        val finalPeekHeight = allMargins + photographerTitleHeight + photographerTextHeight + requireContext().getNavigationBarHeight()
+        val finalPeekHeight = allMargins + photographerTitleHeight + photographerTextHeight + bottomInsetns
         val bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
         bottomSheetBehavior.peekHeight = finalPeekHeight.toInt()
     }

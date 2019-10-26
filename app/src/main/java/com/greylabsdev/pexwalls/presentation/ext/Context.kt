@@ -2,6 +2,7 @@ package com.greylabsdev.pexwalls.presentation.ext
 
 import android.content.Context
 import android.util.DisplayMetrics
+import android.view.WindowInsets
 import android.view.WindowManager
 
 /**
@@ -41,15 +42,6 @@ fun Context.getScreenHeightInPixels(): Int {
     val metrics = DisplayMetrics()
     this.windowManager().defaultDisplay.getMetrics(metrics)
     return metrics.heightPixels
-}
-
-/**
- * Getting navigation bar height
- * */
-fun Context.getNavigationBarHeight(): Int {
-    val resId = this.resources.getIdentifier("navigation_bar_height", "dimen", "android")
-    return if (resId > 0) this.resources.getDimensionPixelSize(resId)
-           else 0
 }
 
 fun Context.windowManager(): WindowManager {
