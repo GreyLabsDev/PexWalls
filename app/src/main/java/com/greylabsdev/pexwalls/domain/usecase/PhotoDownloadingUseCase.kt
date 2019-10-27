@@ -1,10 +1,13 @@
 package com.greylabsdev.pexwalls.domain.usecase
 
 import android.app.DownloadManager
+import android.content.ContentResolver
 import android.content.Context
+import android.database.ContentObserver
 import android.database.Cursor
 import android.net.Uri
 import android.os.Environment
+import android.os.Handler
 import com.greylabsdev.pexwalls.domain.tools.PhotoUrlGenerator
 import com.greylabsdev.pexwalls.domain.tools.ResolutionManager
 import com.greylabsdev.pexwalls.domain.tools.WallpaperSetter
@@ -19,13 +22,16 @@ class PhotoDownloadingUseCase(
     private val wallpaperSetter: WallpaperSetter
 ) {
     private val linkGenerator = PhotoUrlGenerator()
+    private val contentResolver = context.contentResolver
 
     fun callManagerToDownloadPhoto(
         author: String,
         postfix: String,
         baseLink: String,
         originalResolution: Pair<Int, Int>? = null,
-        setAsWallpaper: Boolean = false): Observable<Int> {
+        setAsWallpaper: Boolean = false,
+        onProgressChangedAction: ((progress: Int) -> Unit)? = null,
+        onDownloadFinishedAction: (() -> Unit)? = null): Long {
 
         val fileName = "${author.replace(" ", "_")}_${postfix}.jpeg"
         val downloadUrl = Uri.parse(linkGenerator.generateUrl(
@@ -38,18 +44,45 @@ class PhotoDownloadingUseCase(
         val photoDir = File(photoDirPath)
         if (photoDir.exists().not()) photoDir.mkdirs()
         val photoFile = File(photoDir, fileName)
+        val fileUri = Uri.fromFile(photoFile)
 
         val downloadRequest = DownloadManager.Request(downloadUrl)
             .setTitle(fileName)
             .setDescription("downloading photo")
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            .setDestinationUri(Uri.fromFile(photoFile))
+            .setDestinationUri(fileUri)
             .setAllowedOverMetered(true)
             .setAllowedOverRoaming(true)
 
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val id = downloadManager.enqueue(downloadRequest)
-        return createDownloadListenerObservable(id, photoFile.toURI(), setAsWallpaper)
+        val observer = object : ContentObserver(Handler()) {
+            val query = DownloadManager.Query().setFilterById(id)
+            override fun onChange(selfChange: Boolean, uri: Uri) {
+                downloadManager.query(query).use {cursor ->
+                    cursor.moveToFirst()
+                    val bytesDownloaded = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
+                    val bytesTotal = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
+                    val progress = (bytesDownloaded * 100L / bytesTotal).toInt()
+                    if (progress != 100) {
+                        onProgressChangedAction?.invoke(progress)
+                    } else {
+                        if (setAsWallpaper) setImageAsWallpaper(photoFile.toURI())
+                        onDownloadFinishedAction?.invoke()
+                    }
+                }
+
+            }
+        }
+        val query = DownloadManager.Query().setFilterById(id)
+        downloadManager.query(query).use {cursor ->
+            cursor.moveToFirst()
+            val index = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI)
+            val localUri = cursor.getString(index)
+            contentResolver.registerContentObserver(fileUri, false, observer)
+        }
+
+        return id
     }
 
     private fun createDownloadListenerObservable(
