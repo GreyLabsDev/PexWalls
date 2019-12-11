@@ -7,14 +7,15 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 interface IRepository  {
-    fun searchPhotos(query: String, page: Int, perPage: Int): Observable<SearchResultDto>
-    fun searchPhotosSingle(query: String, page: Int, perPage: Int): Single<SearchResultDto>
-    fun getCuratedPhotos(page: Int, perPage: Int): Observable<SearchResultDto>
+
+    suspend fun getCuratedPhotos(page: Int, perPage: Int): SearchResultDto?
 
     fun addPhotoToFavorites(photoEntity: PhotoDbEntity): Completable
     fun removePhotoFromFavorites(photoEntity: PhotoDbEntity): Completable
     fun removePhotoFromFavoritesById(id: Int): Completable
     fun checkIfPhotoInFavorites(id: Int): Single<Boolean>
     fun getPhotoById(id: Int): Single<PhotoDbEntity>
-    fun getAllFavoritePhotos(): Observable<List<PhotoDbEntity>>
+    suspend fun getAllFavoritePhotos(): List<PhotoDbEntity>
+
+    suspend fun searchPhotos(query: String, page: Int, perPage: Int): SearchResultDto?
 }

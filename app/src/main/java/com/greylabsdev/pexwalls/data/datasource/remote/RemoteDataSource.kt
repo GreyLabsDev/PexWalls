@@ -19,9 +19,9 @@ class RemoteDataSource(private val api: PexelsApi) : IDataSource {
         return api.searchPhotoByQuery(query,page, perPage)
     }
 
-    override fun getCuratedPhotos(page: Int, perPage: Int): Observable<SearchResultDto> {
-        return api.getCuratedPhotos(page, perPage)
-    }
+//    override fun getCuratedPhotos(page: Int, perPage: Int): Observable<SearchResultDto> {
+//        return api.getCuratedPhotos(page, perPage)
+//    }
 
     override fun addPhotoToFavorites(photoEntity: PhotoDbEntity): Completable {
         return Completable.error(Exception("Method only for LocalDataSource realization"))

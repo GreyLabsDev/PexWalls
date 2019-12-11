@@ -1,6 +1,7 @@
 package com.greylabsdev.pexwalls.presentation.screen.curatedphotos
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.greylabsdev.pexwalls.domain.usecase.PhotoDisplayingUseCase
 import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
 import com.greylabsdev.pexwalls.presentation.base.ProgressState
@@ -17,11 +18,11 @@ class CuratedPhotosViewModel(photoDisplayingUseCase: PhotoDisplayingUseCase): Ba
 
     var photoPagingUpdater: PagingUpdater<PhotoModel> =
         PhotoPagingUpdater(
-            disposables = disposables,
             photoDisplayingUseCase = photoDisplayingUseCase,
             type = UpdaterType.CURATED,
             emptyResultListener = {_progressState.value = ProgressState.EMPTY()},
-            errorListener = { error -> _progressState.value = ProgressState.ERROR(error) }
+            errorListener = { error -> _progressState.value = ProgressState.ERROR(error) },
+            viewModelScope = viewModelScope
         )
 
     fun repeatFetch() {

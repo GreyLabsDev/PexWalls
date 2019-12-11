@@ -3,6 +3,7 @@ package com.greylabsdev.pexwalls.data.network
 import com.greylabsdev.pexwalls.data.dto.SearchResultDto
 import io.reactivex.Observable
 import io.reactivex.Single
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -29,7 +30,7 @@ interface PexelsApi {
     fun getCuratedPhotos(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int = STANDARD_PAGE_SIZE
-    ): Observable<SearchResultDto>
+    ): Call<SearchResultDto>
 
     @GET("photos/{id}pexels-photo-{id}.jpeg")
     fun getPhotoById(
@@ -37,5 +38,14 @@ interface PexelsApi {
         @Query("h") height: Int,
         @Query("w") width: Int
     )
+
+    // For coroutines
+
+    @GET("v1/search")
+    fun searchPhotoByQueryCall(
+        @Query("query") query: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = STANDARD_PAGE_SIZE
+    ): Call<SearchResultDto>
 
 }

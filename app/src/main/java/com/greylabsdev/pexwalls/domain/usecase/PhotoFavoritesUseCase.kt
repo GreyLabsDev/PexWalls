@@ -11,10 +11,8 @@ class PhotoFavoritesUseCase (
     private val repository: IRepository
 ) {
 
-    fun getFavoritePhotos(): Observable<List<PhotoFavoriteEntity>> {
-        return repository.getAllFavoritePhotos().map {photos ->
-            photos.map { DomainMapper.mapToPhotoFavoriteEntity(it) }
-        }
+    suspend fun getFavoritePhotos(): List<PhotoFavoriteEntity> {
+        return repository.getAllFavoritePhotos().map { DomainMapper.mapToPhotoFavoriteEntity(it) }
     }
 
     fun addPhotoToFavorites(photo: PhotoFavoriteEntity): Completable {

@@ -14,6 +14,9 @@ interface PhotoDao {
     @Query("SELECT * FROM $TABLE_NAME")
     fun getAll(): Observable<List<PhotoDbEntity>>
 
+    @Query("SELECT * FROM $TABLE_NAME")
+    fun getAllPhotos(): List<PhotoDbEntity>
+
     @Query("SELECT * FROM $TABLE_NAME WHERE id LIKE :photoId")
     fun getById(photoId: Int): Single<List<PhotoDbEntity>>
 

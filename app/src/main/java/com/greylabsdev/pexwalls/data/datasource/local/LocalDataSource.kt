@@ -20,9 +20,9 @@ class LocalDataSource(private val appDatabase: AppDatabase) : IDataSource {
         return Observable.error(Exception("Method only for RemoteDataSource realization"))
     }
 
-    override fun getCuratedPhotos(page: Int, perPage: Int): Observable<SearchResultDto> {
-        return Observable.error(Exception("Method only for RemoteDataSource realization"))
-    }
+//    override fun getCuratedPhotos(page: Int, perPage: Int): Observable<SearchResultDto> {
+//        return Observable.error(Exception("Method only for RemoteDataSource realization"))
+//    }
 
     override fun addPhotoToFavorites(photoEntity: PhotoDbEntity): Completable {
         return appDatabase.photoDao().insert(photoEntity)
