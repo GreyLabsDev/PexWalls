@@ -1,6 +1,5 @@
 package com.greylabsdev.pexwalls.presentation.ext
 
-import android.graphics.Rect
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,6 +14,6 @@ fun ImageView.setTint(@ColorRes colorRes: Int) {
 }
 
 fun TextView.measureWidth(): Int {
-    this.measure(0,0)
+    this.measure(0, 0)
     return this.measuredWidth
 }

@@ -3,10 +3,9 @@ package com.greylabsdev.pexwalls.domain.repository
 import com.greylabsdev.pexwalls.data.db.entity.PhotoDbEntity
 import com.greylabsdev.pexwalls.data.dto.SearchResultDto
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 
-interface IRepository  {
+interface IRepository {
 
     suspend fun getCuratedPhotos(page: Int, perPage: Int): SearchResultDto?
 

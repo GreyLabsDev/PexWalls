@@ -4,6 +4,5 @@ import org.koin.dsl.module
 
 val resourceManagerModule = module {
 
-    single { ResourceManager(get()) }
-
+    single { ResManager(get()) }
 }

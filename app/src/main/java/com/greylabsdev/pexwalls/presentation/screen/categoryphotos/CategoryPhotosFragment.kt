@@ -7,11 +7,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
-import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
-import com.greylabsdev.pexwalls.presentation.ext.*
-import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoItemDecoration
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoGridPagingAdapter
+import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoItemDecoration
 import com.greylabsdev.pexwalls.presentation.const.Consts
+import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
+import com.greylabsdev.pexwalls.presentation.ext.argSerializable
+import com.greylabsdev.pexwalls.presentation.ext.dpToPix
+import com.greylabsdev.pexwalls.presentation.ext.getScreenHeightInPixels
+import com.greylabsdev.pexwalls.presentation.ext.getScreenWidthInPixels
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.screen.photo.PhotoFragment
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
@@ -23,9 +26,10 @@ class CategoryPhotosFragment : BaseFragment(
     layoutResId = R.layout.fragment_category_photos,
     hasToolbarBackButton = true
 ) {
-    override val viewModel by viewModel<CategoryPhotosViewModel>{
+    override val viewModel by viewModel<CategoryPhotosViewModel> {
         parametersOf(photoCategory)
     }
+
     override val toolbarTitle by lazy { photoCategory.name.capitalize() }
     override val placeholderView: PlaceholderView by lazy { placeholder_view }
     override val contentView: View? by lazy { photo_grid_rv }
@@ -33,8 +37,8 @@ class CategoryPhotosFragment : BaseFragment(
     private val photoCategory by argSerializable<PhotoCategory>(ARG_KEY)
 
     private val photoCardMargin by lazy { requireActivity().dpToPix(Consts.DEFAULT_MARGIN_DP) }
-    private val photoCardWidth by lazy { requireActivity().getScreenWidthInPixels()/2 }
-    private val photoCardHeight by lazy { requireActivity().getScreenHeightInPixels()/3}
+    private val photoCardWidth by lazy { requireActivity().getScreenWidthInPixels() / 2 }
+    private val photoCardHeight by lazy { requireActivity().getScreenHeightInPixels() / 3 }
 
     private lateinit var photoGridPagingAdapter: PhotoGridPagingAdapter
     private var recyclerState: Parcelable? = null
@@ -64,21 +68,21 @@ class CategoryPhotosFragment : BaseFragment(
 
     override fun initViewModelObserving() {
         super.initViewModelObserving()
-        viewModel.photos.observe(this, Observer {newPhotos ->
+        viewModel.photos.observe(this, Observer { newPhotos ->
             photoGridPagingAdapter.items = newPhotos
         })
     }
 
     override fun onPause() {
         super.onPause()
-        photo_grid_rv.layoutManager?.onSaveInstanceState()?.let {state ->
+        photo_grid_rv.layoutManager?.onSaveInstanceState()?.let { state ->
             recyclerState = state
         }
     }
 
     override fun onResume() {
         super.onResume()
-        recyclerState?.let {state ->
+        recyclerState?.let { state ->
             photo_grid_rv.layoutManager?.onRestoreInstanceState(state)
         }
     }

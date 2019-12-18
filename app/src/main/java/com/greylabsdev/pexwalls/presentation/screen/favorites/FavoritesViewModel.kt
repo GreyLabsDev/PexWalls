@@ -11,9 +11,9 @@ import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.PagingItem
 import com.greylabsdev.pexwalls.presentation.paging.PagingUpdater
 
-class FavoritesViewModel (
+class FavoritesViewModel(
     favoritesUseCase: PhotoFavoritesUseCase
-): BaseViewModel() {
+) : BaseViewModel() {
 
     val photos: LiveData<List<PagingItem<PhotoModel>>>
         get() = photoGridPagingUpdater.pagingDataSource.itemsChannelLiveData
@@ -22,7 +22,7 @@ class FavoritesViewModel (
         PhotoPagingUpdater(
             photoFavoritesUseCase = favoritesUseCase,
             type = UpdaterType.FAVORITES,
-            emptyResultListener = {_progressState.value = ProgressState.EMPTY() },
+            emptyResultListener = { _progressState.value = ProgressState.EMPTY() },
             errorListener = { error -> _progressState.value = ProgressState.ERROR(error) },
             viewModelScope = viewModelScope
         )

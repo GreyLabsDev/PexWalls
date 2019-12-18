@@ -60,10 +60,10 @@ class HomeFragment : BaseFragment(
 
     override fun initViewModelObserving() {
         super.initViewModelObserving()
-        viewModel.categoryThemes.observe(this, Observer {categories ->
+        viewModel.categoryThemes.observe(this, Observer { categories ->
             categoryThemeAdapter.categories = categories
         })
-        viewModel.categoryColors.observe(this, Observer {categories ->
+        viewModel.categoryColors.observe(this, Observer { categories ->
             categoryColorAdapter.categories = categories
         })
     }
@@ -71,12 +71,12 @@ class HomeFragment : BaseFragment(
     private fun initCategoriesAdapters() {
         categoryThemeAdapter = CategoryThemeAdapter(
             requireContext().dpToPix(Consts.DEFAULT_CORNER_RADIUS_DP)
-        ) {selectedCategory ->
+        ) { selectedCategory ->
             navigateToCategory(selectedCategory.category)
         }
         categoryColorAdapter = CategoryColorAdapter(
             requireContext().dpToPix(Consts.DEFAULT_CORNER_RADIUS_DP)
-        ) {selectedCategory ->
+        ) { selectedCategory ->
             navigateToCategory(selectedCategory.category)
         }
     }

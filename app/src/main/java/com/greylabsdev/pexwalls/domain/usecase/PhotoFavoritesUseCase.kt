@@ -4,10 +4,9 @@ import com.greylabsdev.pexwalls.domain.entity.PhotoFavoriteEntity
 import com.greylabsdev.pexwalls.domain.mapper.DomainMapper
 import com.greylabsdev.pexwalls.domain.repository.IRepository
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 
-class PhotoFavoritesUseCase (
+class PhotoFavoritesUseCase(
     private val repository: IRepository
 ) {
 
@@ -26,5 +25,4 @@ class PhotoFavoritesUseCase (
     fun checkIfPhotoInFavorites(id: Int): Single<Boolean> {
         return repository.checkIfPhotoInFavorites(id)
     }
-
 }

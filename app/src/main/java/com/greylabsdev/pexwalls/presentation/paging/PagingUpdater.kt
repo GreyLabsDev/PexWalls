@@ -44,12 +44,12 @@ abstract class PagingUpdater<ItemType>(
         fetchPage()
     }
 
-    fun <Type>mapToItems(list: List<Type>): List<PagingItem<Type>> {
+    fun <Type> mapToItems(list: List<Type>): List<PagingItem<Type>> {
         return list.map { PagingItem(it, PagingItem.ItemType.DATA, null) }.toList()
     }
 
     sealed class PagingMode {
-        class BY_PAGE: PagingMode()
-        class BY_OFFSET: PagingMode()
+        class BY_PAGE : PagingMode()
+        class BY_OFFSET : PagingMode()
     }
 }

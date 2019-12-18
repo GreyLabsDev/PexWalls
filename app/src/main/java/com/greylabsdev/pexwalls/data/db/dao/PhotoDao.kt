@@ -1,6 +1,10 @@
 package com.greylabsdev.pexwalls.data.db.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.greylabsdev.pexwalls.data.db.entity.PhotoDbEntity
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -34,5 +38,4 @@ interface PhotoDao {
 
     @Query("DELETE FROM $TABLE_NAME")
     fun deleteAll(): Completable
-
 }

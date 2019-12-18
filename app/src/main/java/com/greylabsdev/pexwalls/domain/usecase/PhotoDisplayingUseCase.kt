@@ -7,9 +7,6 @@ import com.greylabsdev.pexwalls.domain.tools.PhotoUrlGenerator
 import com.greylabsdev.pexwalls.domain.tools.ResolutionManager
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.model.CategoryModel
-import io.reactivex.Observable
-import io.reactivex.Single
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 
@@ -27,7 +24,7 @@ class PhotoDisplayingUseCase(
     ): List<PhotoEntity>? {
         return withContext(IO) {
             repository.searchPhotos(category, pageNumber, perPageCount)?.let {
-                it.photos.map {photoDto ->
+                it.photos.map { photoDto ->
                     val byScreenResolution = photoUrlGenerator.generateUrl(photoDto.src.large, resolutionManager.screenResolution)
                     DomainMapper.mapToPhotoEntity(photoDto, byScreenResolution)
                 }
@@ -41,13 +38,12 @@ class PhotoDisplayingUseCase(
                 CategoryModel(category, it.photos.random().src.large)
             }
         }
-
     }
 
     suspend fun getCuratedPhotos(pageNumber: Int, perPageCount: Int): List<PhotoEntity>? {
         return withContext(IO) {
             repository.getCuratedPhotos(pageNumber, perPageCount)?.let {
-                it.photos.map {photoDto ->
+                it.photos.map { photoDto ->
                     val byScreenResolution = photoUrlGenerator.generateUrl(photoDto.src.large, resolutionManager.screenResolution)
                     DomainMapper.mapToPhotoEntity(photoDto, byScreenResolution)
                 }
@@ -61,8 +57,8 @@ class PhotoDisplayingUseCase(
         perPageCount: Int
     ): List<PhotoEntity>? {
         return withContext(IO) {
-             repository.searchPhotos(query, pageNumber, perPageCount)?.let {
-                it.photos.map {photoDto ->
+            repository.searchPhotos(query, pageNumber, perPageCount)?.let {
+                it.photos.map { photoDto ->
                     val byScreenResolution = photoUrlGenerator.generateUrl(photoDto.src.large, resolutionManager.screenResolution)
                     DomainMapper.mapToPhotoEntity(photoDto, byScreenResolution)
                 }

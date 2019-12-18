@@ -11,7 +11,8 @@ class PhotoUrlGenerator() {
 
     private fun generateUrlByResolution(
         sourceUrl: String,
-        photoResolution: ResolutionManager.Resolution? = null): String {
+        photoResolution: ResolutionManager.Resolution? = null
+    ): String {
         val baseUrl = sourceUrl.split("?auto").first()
         val cropParameter = "?fit=crop"
         var sizeParameter = ""

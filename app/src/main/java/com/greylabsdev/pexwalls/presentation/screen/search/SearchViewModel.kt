@@ -12,7 +12,7 @@ import com.greylabsdev.pexwalls.presentation.paging.PagingItem
 
 class SearchViewModel(
     private val photoDisplayingUseCase: PhotoDisplayingUseCase
-)  : BaseViewModel() {
+) : BaseViewModel() {
 
     val photos: LiveData<List<PagingItem<PhotoModel>>>
         get() = photoGridPagingUpdater.pagingDataSource.itemsChannelLiveData
@@ -21,8 +21,8 @@ class SearchViewModel(
         PhotoPagingUpdater(
             photoDisplayingUseCase = photoDisplayingUseCase,
             type = UpdaterType.SEARCH,
-            doneListener = {_progressState.value = ProgressState.DONE()},
-            emptyResultListener = {_progressState.value = ProgressState.EMPTY()},
+            doneListener = { _progressState.value = ProgressState.DONE() },
+            emptyResultListener = { _progressState.value = ProgressState.EMPTY() },
             errorListener = { error -> _progressState.value = ProgressState.ERROR(error) },
             viewModelScope = viewModelScope
         )

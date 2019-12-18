@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CategoryColorItemDecoration(
     private val offset: Int
-): RecyclerView.ItemDecoration() {
+) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
         view: View,

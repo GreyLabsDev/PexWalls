@@ -14,7 +14,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
 
-class PhotoViewModel (
+class PhotoViewModel(
     private val photoDownloadingUseCase: PhotoDownloadingUseCase,
     private val favoritesUseCase: PhotoFavoritesUseCase,
     private val photoModel: PhotoModel
@@ -33,16 +33,16 @@ class PhotoViewModel (
             author = photoModel.photographer,
             postfix = "${photoModel.id}${if (useOriginalResolution) "_original" else "_wallpaper"}",
             baseLink = photoModel.bigPhotoUrl,
-            originalResolution = if (useOriginalResolution) Pair(photoModel.width,photoModel.height)
-                                 else null,
+            originalResolution = if (useOriginalResolution) Pair(photoModel.width, photoModel.height)
+                else null,
             setAsWallpaper = setAsWallpaper
         ).schedulersSubscribe()
             .mainThreadObserve()
             .doOnSubscribe { _progressState.value = ProgressState.INITIAL("Downloading started, you will see downloading status in notification") }
             .subscribeBy(
                 onNext = {},
-                onComplete = {_progressState.value = ProgressState.DONE("Load complete")},
-                onError = {error -> Timber.e(error)}
+                onComplete = { _progressState.value = ProgressState.DONE("Load complete") },
+                onError = { error -> Timber.e(error) }
             ).addTo(disposables)
     }
 
@@ -56,8 +56,8 @@ class PhotoViewModel (
             .schedulersSubscribe()
             .mainThreadObserve()
             .subscribeBy(
-                onComplete = {_isPhotoFavorite.value = true},
-                onError = {error -> Timber.e(error)}
+                onComplete = { _isPhotoFavorite.value = true },
+                onError = { error -> Timber.e(error) }
             ).addTo(disposables)
     }
 
@@ -66,8 +66,8 @@ class PhotoViewModel (
             .schedulersSubscribe()
             .mainThreadObserve()
             .subscribeBy(
-                onComplete = {_isPhotoFavorite.value = false},
-                onError = {error -> Timber.e(error)}
+                onComplete = { _isPhotoFavorite.value = false },
+                onError = { error -> Timber.e(error) }
             ).addTo(disposables)
     }
 
@@ -79,7 +79,7 @@ class PhotoViewModel (
                 onSuccess = {
                     _isPhotoFavorite.value = it
                 },
-                onError = {error ->
+                onError = { error ->
                     Timber.e(error)
                     _progressState.value = ProgressState.ERROR(error.message ?: "")
                 }

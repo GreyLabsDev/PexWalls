@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
-abstract class PagingAdapter<VH : RecyclerView.ViewHolder,ItemType> (
+abstract class PagingAdapter<VH : RecyclerView.ViewHolder, ItemType> (
     private val pagingUpdater: PagingUpdater<ItemType>,
     private val diffCallback: DiffUtil.ItemCallback<ItemType>,
     private val initialLoad: Boolean = false
@@ -32,8 +32,8 @@ abstract class PagingAdapter<VH : RecyclerView.ViewHolder,ItemType> (
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        //pagingUpdater.pagingDataSource.items.isNullOrEmpty() - protection for unnecessary API calls if adapter was recreated
-        //but datasource already has data
+        // pagingUpdater.pagingDataSource.items.isNullOrEmpty() - protection for unnecessary API calls if adapter was recreated
+        // but datasource already has data
         if (initialLoad && pagingUpdater.pagingDataSource.items.isNullOrEmpty()) pagingUpdater.fetchPage()
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -70,7 +70,7 @@ abstract class PagingAdapter<VH : RecyclerView.ViewHolder,ItemType> (
         private val diffCallback: DiffUtil.ItemCallback<ItemType>,
         private val oldItems: List<PagingItem<ItemType>>,
         private val newItems: List<PagingItem<ItemType>>
-    ): DiffUtil.Callback() {
+    ) : DiffUtil.Callback() {
         override fun getOldListSize(): Int = oldItems.size
         override fun getNewListSize(): Int = newItems.size
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
@@ -79,10 +79,9 @@ abstract class PagingAdapter<VH : RecyclerView.ViewHolder,ItemType> (
             } else {
                 false
             }
-
         }
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return if (oldItems[oldItemPosition].data != null &&  newItems[newItemPosition].data != null) {
+            return if (oldItems[oldItemPosition].data != null && newItems[newItemPosition].data != null) {
                 diffCallback.areContentsTheSame(oldItems[oldItemPosition].data!!, newItems[newItemPosition].data!!)
             } else {
                 false

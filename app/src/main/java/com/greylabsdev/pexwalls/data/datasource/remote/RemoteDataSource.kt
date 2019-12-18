@@ -12,11 +12,11 @@ import java.lang.Exception
 class RemoteDataSource(private val api: PexelsApi) : IDataSource {
 
     override fun searchPhotosSingle(query: String, page: Int, perPage: Int): Single<SearchResultDto> {
-        return api.searchPhotoByQuerySingle(query,page, perPage)
+        return api.searchPhotoByQuerySingle(query, page, perPage)
     }
 
     override fun searchPhotos(query: String, page: Int, perPage: Int): Observable<SearchResultDto> {
-        return api.searchPhotoByQuery(query,page, perPage)
+        return api.searchPhotoByQuery(query, page, perPage)
     }
 
 //    override fun getCuratedPhotos(page: Int, perPage: Int): Observable<SearchResultDto> {

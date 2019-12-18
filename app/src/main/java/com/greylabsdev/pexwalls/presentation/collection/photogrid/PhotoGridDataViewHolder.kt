@@ -28,7 +28,7 @@ class PhotoGridDataViewHolder(
     fun bind(item: PhotoModel, useHalfOfHeight: Boolean = false) {
         itemView.layoutParams = ViewGroup.LayoutParams(
             itemWidth,
-            if (useHalfOfHeight) itemHeight/2 else itemHeight
+            if (useHalfOfHeight) itemHeight / 2 else itemHeight
         )
         Glide.with(itemView.context)
             .load(item.normalPhotoUrl)

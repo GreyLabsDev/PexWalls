@@ -47,5 +47,4 @@ interface PexelsApi {
         @Query("page") page: Int,
         @Query("per_page") perPage: Int = STANDARD_PAGE_SIZE
     ): Call<SearchResultDto>
-
 }

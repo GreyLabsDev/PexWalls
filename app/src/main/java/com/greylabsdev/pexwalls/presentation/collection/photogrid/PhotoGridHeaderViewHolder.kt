@@ -9,7 +9,8 @@ import kotlinx.android.synthetic.main.item_header.view.*
 class PhotoGridHeaderViewHolder(
     view: View,
     width: Int,
-    height: Int): RecyclerView.ViewHolder(view) {
+    height: Int
+) : RecyclerView.ViewHolder(view) {
     init {
         view.layoutParams = ViewGroup.LayoutParams(width, height)
     }

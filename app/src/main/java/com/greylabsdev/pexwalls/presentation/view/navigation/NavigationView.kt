@@ -11,7 +11,7 @@ class NavigationView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): LinearLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     private val activeScreensManager = ActiveButtonsManager()
 
@@ -19,8 +19,8 @@ class NavigationView @JvmOverloads constructor(
         View.inflate(context, R.layout.view_navigation, this)
     }
 
-    fun setupButtons(vararg buttons : NavigationButton) {
-        buttons.forEach { button  ->
+    fun setupButtons(vararg buttons: NavigationButton) {
+        buttons.forEach { button ->
             button.layoutParams = LayoutParams(
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT,

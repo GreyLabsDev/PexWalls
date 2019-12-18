@@ -7,11 +7,7 @@ import com.greylabsdev.pexwalls.data.dto.SearchResultDto
 import com.greylabsdev.pexwalls.data.network.PexelsApi
 import com.greylabsdev.pexwalls.domain.repository.IRepository
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.io.IOException
 
 class Repository(
     private val localDataSource: IDataSource,
@@ -55,5 +51,4 @@ class Repository(
     override suspend fun getAllFavoritePhotos(): List<PhotoDbEntity> {
         return appDatabase.photoDao().getAllPhotos()
     }
-
 }

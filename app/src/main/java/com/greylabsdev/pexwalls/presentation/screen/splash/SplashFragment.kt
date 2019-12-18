@@ -18,6 +18,6 @@ class SplashFragment() : BaseFragment(
 
     override fun onStart() {
         super.onStart()
-        Handler().postDelayed({navigateTo(R.id.homeFragment)}, 2000)
+        Handler().postDelayed({ navigateTo(R.id.homeFragment) }, 2000)
     }
 }

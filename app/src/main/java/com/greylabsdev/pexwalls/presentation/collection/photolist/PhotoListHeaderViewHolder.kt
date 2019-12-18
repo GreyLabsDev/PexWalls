@@ -8,7 +8,8 @@ import kotlinx.android.synthetic.main.item_header.view.*
 
 class PhotoListHeaderViewHolder(
     view: View,
-    height: Int): RecyclerView.ViewHolder(view) {
+    height: Int
+) : RecyclerView.ViewHolder(view) {
     init {
         view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
     }

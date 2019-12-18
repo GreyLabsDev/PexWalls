@@ -10,10 +10,12 @@ import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.DataSourceMode
 import com.greylabsdev.pexwalls.presentation.paging.PagingDataSource
 import com.greylabsdev.pexwalls.presentation.paging.PagingUpdater
-import kotlinx.coroutines.*
-import timber.log.Timber
 import java.io.IOException
 import java.lang.Exception
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class PhotoPagingUpdater(
     private val type: UpdaterType,
@@ -54,7 +56,7 @@ class PhotoPagingUpdater(
                 }
             }
             UpdaterType.CATEGORY -> {
-                photoCategory?.let {category ->
+                photoCategory?.let { category ->
                     viewModelScope.launch {
                         delay(250)
                         if (currentPage == initialPage) loadingListener?.invoke()
@@ -115,7 +117,7 @@ class PhotoPagingUpdater(
             ?.let { photos -> pushPhotosWithPagingIncrement(photos, usePageUpdate) }
 
         localPhotosToProceed?.map { photoEntity -> PresentationMapper.mapToPhotoModel(photoEntity) }
-            ?.let {photos -> pushPhotosWithPagingIncrement(photos, usePageUpdate) }
+            ?.let { photos -> pushPhotosWithPagingIncrement(photos, usePageUpdate) }
     }
 
     private fun pushPhotosWithPagingIncrement(photos: List<PhotoModel>, usePageUpdate: Boolean) {
@@ -125,5 +127,4 @@ class PhotoPagingUpdater(
         pushToDataSource(mapToItems(photos))
         if (usePageUpdate) updateCurrentPage(photos.size)
     }
-
 }

@@ -3,7 +3,7 @@ package com.greylabsdev.pexwalls.data.prefs
 import android.content.Context
 import com.greylabsdev.pexwalls.data.ext.putPrimitiveValue
 
-class AppPrefs (context: Context) {
+class AppPrefs(context: Context) {
     private val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     fun putSampleString(newString: String) {

@@ -7,7 +7,6 @@ import com.greylabsdev.pexwalls.data.dto.SearchResultDto
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.internal.operators.observable.ObservableDoOnEach
 import java.lang.Exception
 
 class LocalDataSource(private val appDatabase: AppDatabase) : IDataSource {

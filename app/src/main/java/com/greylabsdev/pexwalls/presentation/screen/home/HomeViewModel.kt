@@ -9,10 +9,14 @@ import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
 import com.greylabsdev.pexwalls.presentation.base.ProgressState
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.model.CategoryModel
-import kotlinx.coroutines.*
+import java.lang.Exception
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import java.lang.Exception
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.withContext
 
 class HomeViewModel(
     private val photoDisplayingUseCase: PhotoDisplayingUseCase
@@ -72,14 +76,14 @@ class HomeViewModel(
     }
 }
 
-suspend fun <T>CoroutineScope.doAfterAllAwait(vararg awaitValues: T, nextAction: (Array<out T>) -> Unit) {
+suspend fun <T> CoroutineScope.doAfterAllAwait(vararg awaitValues: T, nextAction: (Array<out T>) -> Unit) {
     nextAction.invoke(awaitValues)
 }
 
 suspend fun ViewModel.runOnMain(vararg functionsToRun: () -> Unit) {
-    withContext(Main) { functionsToRun.forEach { it.invoke() }}
+    withContext(Main) { functionsToRun.forEach { it.invoke() } }
 }
 
-suspend fun ViewModel.runOnMain( functionToRun: () -> Unit) {
-    withContext(Main) { functionToRun.invoke()}
+suspend fun ViewModel.runOnMain(functionToRun: () -> Unit) {
+    withContext(Main) { functionToRun.invoke() }
 }

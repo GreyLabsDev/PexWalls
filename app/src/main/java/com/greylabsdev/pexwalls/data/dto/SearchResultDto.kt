@@ -1,6 +1,5 @@
 package com.greylabsdev.pexwalls.data.dto
 
-
 import com.google.gson.annotations.SerializedName
 
 data class SearchResultDto(

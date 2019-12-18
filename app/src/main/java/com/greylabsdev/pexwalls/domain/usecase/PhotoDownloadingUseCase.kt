@@ -25,9 +25,10 @@ class PhotoDownloadingUseCase(
         postfix: String,
         baseLink: String,
         originalResolution: Pair<Int, Int>? = null,
-        setAsWallpaper: Boolean = false): Observable<Int> {
+        setAsWallpaper: Boolean = false
+    ): Observable<Int> {
 
-        val fileName = "${author.replace(" ", "_")}_${postfix}.jpeg"
+        val fileName = "${author.replace(" ", "_")}_$postfix.jpeg"
         val downloadUrl = Uri.parse(linkGenerator.generateUrl(
                 baseLink, if (originalResolution != null) ResolutionManager.Resolution(originalResolution.first,
                 originalResolution.second)

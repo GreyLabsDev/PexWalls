@@ -25,6 +25,14 @@ android {
     }
 }
 
+repositories {
+    jcenter()
+}
+
+configurations {
+    ktlint
+}
+
 ext {
     room_version = "2.1.0"
     retrofit_version = "2.6.1"
@@ -52,6 +60,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // ktlint
+    ktlint "com.pinterest:ktlint:0.36.0"
 
     // Room
     kapt "androidx.room:room-compiler:$room_version"
@@ -100,4 +111,22 @@ dependencies {
     // Stetho
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
 
+}
+
+task ktlint(type: JavaExec, group: "ktlint") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args "src/**/*.kt"
+    // to generate report in checkstyle format prepend following args:
+    // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
+    // see https://github.com/pinterest/ktlint#usage for more
+}
+check.dependsOn ktlint
+
+task ktlintFormat(type: JavaExec, group: "ktlint") {
+    description = "Fix Kotlin code style deviations."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args "-F", "src/**/*.kt"
 }

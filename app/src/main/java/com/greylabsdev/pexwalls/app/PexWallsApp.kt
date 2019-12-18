@@ -7,6 +7,7 @@ import com.greylabsdev.pexwalls.data.datasource.dataSourceModule
 import com.greylabsdev.pexwalls.data.db.databaseModule
 import com.greylabsdev.pexwalls.data.network.networkModule
 import com.greylabsdev.pexwalls.data.prefs.prefsModule
+import com.greylabsdev.pexwalls.data.repository.repositoryModule
 import com.greylabsdev.pexwalls.domain.tools.toolsModule
 import com.greylabsdev.pexwalls.domain.usecase.useCaseModule
 import com.greylabsdev.pexwalls.presentation.screen.categoryphotos.categoryPhotosModule
@@ -15,7 +16,6 @@ import com.greylabsdev.pexwalls.presentation.screen.favorites.favoritesModule
 import com.greylabsdev.pexwalls.presentation.screen.home.homeModule
 import com.greylabsdev.pexwalls.presentation.screen.photo.photoModule
 import com.greylabsdev.pexwalls.presentation.screen.search.searchModule
-import com.greylabsdev.pexwalls.data.repository.repositoryModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber

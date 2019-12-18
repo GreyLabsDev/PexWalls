@@ -11,12 +11,12 @@ import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import kotlinx.android.synthetic.main.item_photo_in_list.view.*
 import kotlinx.android.synthetic.main.item_photo_in_list.view.photo_iv
 
-class PhotoListDataViewHolder (
+class PhotoListDataViewHolder(
     view: View,
     private val itemHeight: Int,
     private val photoCardCornerRadius: Float
 
-): RecyclerView.ViewHolder(view) {
+) : RecyclerView.ViewHolder(view) {
     private val outlineProvider by lazy {
         object : ViewOutlineProvider() {
             override fun getOutline(view: View, outline: Outline) {

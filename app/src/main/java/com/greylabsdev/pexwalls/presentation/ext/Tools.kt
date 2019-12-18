@@ -23,6 +23,6 @@ fun <T> randomFrom(vararg variables: T): T {
  *
  * @property variables - vararg of input nullable variables
  */
-inline fun <T: Any, R: Any> multiLet(vararg variables: T?, out: (List<T>) -> R?): R? {
-    return if (variables.all { it != null }) out (listOfNotNull(*variables)) else null
+inline fun <T : Any, R : Any> multiLet(vararg variables: T?, out: (List<T>) -> R?): R? {
+    return if (variables.all { it != null }) out(listOfNotNull(*variables)) else null
 }

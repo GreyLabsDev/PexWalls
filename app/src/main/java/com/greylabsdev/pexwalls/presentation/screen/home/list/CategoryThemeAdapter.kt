@@ -40,7 +40,7 @@ class CategoryThemeAdapter(
     class CategoryThemeViewHolder(
         view: View,
         private val photoCardCornerRadius: Float
-    ): RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(view) {
 
         private val outlineProvider by lazy {
             object : ViewOutlineProvider() {

@@ -11,7 +11,7 @@ import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.PagingItem
 import com.greylabsdev.pexwalls.presentation.paging.PagingUpdater
 
-class CuratedPhotosViewModel(photoDisplayingUseCase: PhotoDisplayingUseCase): BaseViewModel() {
+class CuratedPhotosViewModel(photoDisplayingUseCase: PhotoDisplayingUseCase) : BaseViewModel() {
 
     val photos: LiveData<List<PagingItem<PhotoModel>>>
         get() = photoPagingUpdater.pagingDataSource.itemsChannelLiveData
@@ -20,7 +20,7 @@ class CuratedPhotosViewModel(photoDisplayingUseCase: PhotoDisplayingUseCase): Ba
         PhotoPagingUpdater(
             photoDisplayingUseCase = photoDisplayingUseCase,
             type = UpdaterType.CURATED,
-            emptyResultListener = {_progressState.value = ProgressState.EMPTY()},
+            emptyResultListener = { _progressState.value = ProgressState.EMPTY() },
             errorListener = { error -> _progressState.value = ProgressState.ERROR(error) },
             viewModelScope = viewModelScope
         )
