@@ -15,6 +15,8 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import timber.log.Timber
@@ -25,32 +27,27 @@ class PhotoViewModel(
     private val photoModel: PhotoModel
 ) : BaseViewModel() {
 
-    private var _isPhotoFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
     val isPhotoFavorite: LiveData<Boolean>
         get() = _isPhotoFavorite
+    private var _isPhotoFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
 
     init {
         checkIfPhotoInFavorites()
     }
 
     fun downloadPhoto(useOriginalResolution: Boolean = false, setAsWallpaper: Boolean = false) {
-        photoDownloadingUseCase.callManagerToDownloadPhoto(
-            author = photoModel.photographer,
-            postfix = "${photoModel.id}${if (useOriginalResolution) "_original" else "_wallpaper"}",
-            baseLink = photoModel.bigPhotoUrl,
-            originalResolution = if (useOriginalResolution) Pair(photoModel.width, photoModel.height)
+        viewModelScope.launch {
+            photoDownloadingUseCase.callManagerToDownloadPhotoByFLow(
+                author = photoModel.photographer,
+                postfix = "${photoModel.id}${if (useOriginalResolution) "_original" else "_wallpaper"}",
+                baseLink = photoModel.bigPhotoUrl,
+                originalResolution = if (useOriginalResolution) Pair(photoModel.width, photoModel.height)
                 else null,
-            setAsWallpaper = setAsWallpaper
-        ).schedulersSubscribe()
-            .mainThreadObserve()
-            .doOnSubscribe {
-                _progressState.value = ProgressState.INITIAL("Downloading started, you will see downloading status in notification")
+                setAsWallpaper = setAsWallpaper
+            ).collect {progress ->
+                if (progress == 100) _progressState.value = ProgressState.DONE("Load complete")
             }
-            .subscribeBy(
-                onNext = {},
-                onComplete = { _progressState.value = ProgressState.DONE("Load complete") },
-                onError = { error -> Timber.e(error) }
-            ).addTo(disposables)
+        }
     }
 
     fun switchPhotoInFavoritesState() {
