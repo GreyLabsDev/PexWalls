@@ -28,23 +28,19 @@ class Repository(
         return response.body()
     }
 
-    override fun addPhotoToFavorites(photoEntity: PhotoDbEntity): Completable {
-        return localDataSource.addPhotoToFavorites(photoEntity)
+    override suspend fun addPhotoToFavorites(photoEntity: PhotoDbEntity) {
+        localDataSource.addPhotoToFavorites(photoEntity)
     }
 
-    override fun removePhotoFromFavorites(photoEntity: PhotoDbEntity): Completable {
-        return localDataSource.removePhotoFromFavorites(photoEntity)
+    override suspend fun removePhotoFromFavorites(photoEntity: PhotoDbEntity) {
+        localDataSource.removePhotoFromFavorites(photoEntity)
     }
 
-    override fun removePhotoFromFavoritesById(id: Int): Completable {
-        return localDataSource.removePhotoFromFavoritesById(id)
-    }
-
-    override fun checkIfPhotoInFavorites(id: Int): Single<Boolean> {
+    override suspend fun checkIfPhotoInFavorites(id: Int): Boolean {
         return localDataSource.checkIfPhotoInFavorites(id)
     }
 
-    override fun getPhotoById(id: Int): Single<PhotoDbEntity> {
+    override suspend fun getPhotoById(id: Int): PhotoDbEntity {
         return localDataSource.getPhotoById(id)
     }
 

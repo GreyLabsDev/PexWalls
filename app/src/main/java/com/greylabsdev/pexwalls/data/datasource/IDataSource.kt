@@ -12,10 +12,9 @@ interface IDataSource {
     fun searchPhotosSingle(query: String, page: Int, perPage: Int): Single<SearchResultDto>
 //    fun getCuratedPhotos(page: Int, perPage: Int): Observable<SearchResultDto>
 
-    fun addPhotoToFavorites(photoEntity: PhotoDbEntity): Completable
-    fun removePhotoFromFavorites(photoEntity: PhotoDbEntity): Completable
-    fun removePhotoFromFavoritesById(id: Int): Completable
-    fun checkIfPhotoInFavorites(id: Int): Single<Boolean>
-    fun getPhotoById(id: Int): Single<PhotoDbEntity>
+    suspend fun addPhotoToFavorites(photoEntity: PhotoDbEntity)
+    suspend fun removePhotoFromFavorites(photoEntity: PhotoDbEntity)
+    suspend fun checkIfPhotoInFavorites(id: Int): Boolean
+    suspend fun getPhotoById(id: Int): PhotoDbEntity
     fun getAllPhotos(): Observable<List<PhotoDbEntity>>
 }

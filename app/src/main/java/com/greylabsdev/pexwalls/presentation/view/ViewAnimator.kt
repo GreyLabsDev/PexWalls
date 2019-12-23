@@ -64,8 +64,11 @@ class ViewAnimator {
         v.startAnimation(anim)
     }
 
-    fun shiftUp(v: View, animDuration: Long = 100L, onEndAction: (() -> Unit)? = null): ObjectAnimator {
-        val moveHeight = v.height.toFloat()
+    fun shiftUp(
+        v: View,
+        animDuration: Long = 100L,
+        onEndAction: (() -> Unit)? = null
+    ): ObjectAnimator {
         return ObjectAnimator.ofFloat(v, View.TRANSLATION_Y, -100f).apply {
             duration = animDuration
             interpolator = DecelerateInterpolator()
@@ -73,8 +76,11 @@ class ViewAnimator {
         }
     }
 
-    fun shiftBack(v: View, animDuration: Long = 100L, onEndAction: (() -> Unit)? = null): ObjectAnimator {
-        val moveHeight = v.height.toFloat()
+    fun shiftBack(
+        v: View,
+        animDuration: Long = 100L,
+        onEndAction: (() -> Unit)? = null
+    ): ObjectAnimator {
         return ObjectAnimator.ofFloat(v, View.TRANSLATION_Y, 0f).apply {
             duration = animDuration
             interpolator = DecelerateInterpolator()
@@ -82,8 +88,11 @@ class ViewAnimator {
         }
     }
 
-    fun shiftDown(v: View, animDuration: Long = 100L, onEndAction: (() -> Unit)? = null): ObjectAnimator {
-        val moveHeight = v.height.toFloat()
+    fun shiftDown(
+        v: View,
+        animDuration: Long = 100L,
+        onEndAction: (() -> Unit)? = null
+    ): ObjectAnimator {
         return ObjectAnimator.ofFloat(v, View.TRANSLATION_Y, 100f).apply {
             duration = animDuration
             interpolator = DecelerateInterpolator()
@@ -91,14 +100,22 @@ class ViewAnimator {
         }
     }
 
-    fun fadeOut(v: View, animDuration: Long = 100L, onEndAction: (() -> Unit)? = null): ObjectAnimator {
+    fun fadeOut(
+        v: View,
+        animDuration: Long = 100L,
+        onEndAction: (() -> Unit)? = null
+    ): ObjectAnimator {
         return ObjectAnimator.ofFloat(v, View.ALPHA, 1f, 0f).apply {
             duration = animDuration
             onEndAction?.let { addOnEndAction(it) }
         }
     }
 
-    fun fadeIn(v: View, animDuration: Long = 100L, onEndAction: (() -> Unit)? = null): ObjectAnimator {
+    fun fadeIn(
+        v: View,
+        animDuration: Long = 100L,
+        onEndAction: (() -> Unit)? = null
+    ): ObjectAnimator {
         return ObjectAnimator.ofFloat(v, View.ALPHA, 0f, 1f).apply {
             duration = animDuration
             onEndAction?.let { addOnEndAction(it) }

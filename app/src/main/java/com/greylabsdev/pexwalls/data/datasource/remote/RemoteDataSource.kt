@@ -19,28 +19,20 @@ class RemoteDataSource(private val api: PexelsApi) : IDataSource {
         return api.searchPhotoByQuery(query, page, perPage)
     }
 
-//    override fun getCuratedPhotos(page: Int, perPage: Int): Observable<SearchResultDto> {
-//        return api.getCuratedPhotos(page, perPage)
-//    }
-
-    override fun addPhotoToFavorites(photoEntity: PhotoDbEntity): Completable {
-        return Completable.error(Exception("Method only for LocalDataSource realization"))
+    override suspend fun addPhotoToFavorites(photoEntity: PhotoDbEntity) {
+        throw Exception("Method only for LocalDataSource realization")
     }
 
-    override fun removePhotoFromFavorites(photoEntity: PhotoDbEntity): Completable {
-        return Completable.error(Exception("Method only for LocalDataSource realization"))
+    override suspend fun removePhotoFromFavorites(photoEntity: PhotoDbEntity) {
+        throw Exception("Method only for LocalDataSource realization")
     }
 
-    override fun removePhotoFromFavoritesById(id: Int): Completable {
-        return Completable.error(Exception("Method only for LocalDataSource realization"))
+    override suspend fun checkIfPhotoInFavorites(id: Int): Boolean {
+        throw Exception("Method only for LocalDataSource realization")
     }
 
-    override fun checkIfPhotoInFavorites(id: Int): Single<Boolean> {
-        return Single.error(Exception("Method only for LocalDataSource realization"))
-    }
-
-    override fun getPhotoById(id: Int): Single<PhotoDbEntity> {
-        return Single.error(Exception("Method only for LocalDataSource realization"))
+    override suspend fun getPhotoById(id: Int): PhotoDbEntity {
+        throw Exception("Method only for LocalDataSource realization")
     }
 
     override fun getAllPhotos(): Observable<List<PhotoDbEntity>> {

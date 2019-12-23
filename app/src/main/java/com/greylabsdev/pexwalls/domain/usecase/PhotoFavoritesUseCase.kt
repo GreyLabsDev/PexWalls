@@ -5,24 +5,34 @@ import com.greylabsdev.pexwalls.domain.mapper.DomainMapper
 import com.greylabsdev.pexwalls.domain.repository.IRepository
 import io.reactivex.Completable
 import io.reactivex.Single
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.withContext
 
 class PhotoFavoritesUseCase(
     private val repository: IRepository
 ) {
 
     suspend fun getFavoritePhotos(): List<PhotoFavoriteEntity> {
-        return repository.getAllFavoritePhotos().map { DomainMapper.mapToPhotoFavoriteEntity(it) }
+        return withContext(IO) {
+            repository.getAllFavoritePhotos().map { DomainMapper.mapToPhotoFavoriteEntity(it) }
+        }
     }
 
-    fun addPhotoToFavorites(photo: PhotoFavoriteEntity): Completable {
-        return repository.addPhotoToFavorites(DomainMapper.mapToDbEntity(photo))
+    suspend fun addPhotoToFavorites(photo: PhotoFavoriteEntity) {
+        withContext(IO) {
+            repository.addPhotoToFavorites(DomainMapper.mapToDbEntity(photo))
+        }
     }
 
-    fun removePhotoFromFavorites(photo: PhotoFavoriteEntity): Completable {
-        return repository.removePhotoFromFavorites(DomainMapper.mapToDbEntity(photo))
+    suspend fun removePhotoFromFavorites(photo: PhotoFavoriteEntity) {
+        withContext(IO) {
+            repository.removePhotoFromFavorites(DomainMapper.mapToDbEntity(photo))
+        }
     }
 
-    fun checkIfPhotoInFavorites(id: Int): Single<Boolean> {
-        return repository.checkIfPhotoInFavorites(id)
+    suspend fun checkIfPhotoInFavorites(id: Int): Boolean {
+        return withContext(IO) {
+            repository.checkIfPhotoInFavorites(id)
+        }
     }
 }

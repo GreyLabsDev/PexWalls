@@ -23,25 +23,20 @@ class LocalDataSource(private val appDatabase: AppDatabase) : IDataSource {
 //        return Observable.error(Exception("Method only for RemoteDataSource realization"))
 //    }
 
-    override fun addPhotoToFavorites(photoEntity: PhotoDbEntity): Completable {
-        return appDatabase.photoDao().insert(photoEntity)
+    override suspend fun addPhotoToFavorites(photoEntity: PhotoDbEntity) {
+        appDatabase.photoDao().insert(photoEntity)
     }
 
-    override fun removePhotoFromFavorites(photoEntity: PhotoDbEntity): Completable {
-        return appDatabase.photoDao().delete(photoEntity)
+    override suspend fun removePhotoFromFavorites(photoEntity: PhotoDbEntity) {
+        appDatabase.photoDao().delete(photoEntity)
     }
 
-    override fun removePhotoFromFavoritesById(id: Int): Completable {
-        return appDatabase.photoDao().deleteById(id)
+    override suspend fun checkIfPhotoInFavorites(id: Int): Boolean {
+        return appDatabase.photoDao().getById(id).isNotEmpty()
     }
 
-    override fun checkIfPhotoInFavorites(id: Int): Single<Boolean> {
-        return appDatabase.photoDao().getById(id)
-            .map { it.isNotEmpty() }
-    }
-
-    override fun getPhotoById(id: Int): Single<PhotoDbEntity> {
-        return appDatabase.photoDao().getById(id).map { it.first() }
+    override suspend fun getPhotoById(id: Int): PhotoDbEntity {
+        return appDatabase.photoDao().getById(id).first()
     }
 
     override fun getAllPhotos(): Observable<List<PhotoDbEntity>> {

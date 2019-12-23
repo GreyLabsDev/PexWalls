@@ -9,11 +9,10 @@ interface IRepository {
 
     suspend fun getCuratedPhotos(page: Int, perPage: Int): SearchResultDto?
 
-    fun addPhotoToFavorites(photoEntity: PhotoDbEntity): Completable
-    fun removePhotoFromFavorites(photoEntity: PhotoDbEntity): Completable
-    fun removePhotoFromFavoritesById(id: Int): Completable
-    fun checkIfPhotoInFavorites(id: Int): Single<Boolean>
-    fun getPhotoById(id: Int): Single<PhotoDbEntity>
+    suspend fun addPhotoToFavorites(photoEntity: PhotoDbEntity)
+    suspend fun removePhotoFromFavorites(photoEntity: PhotoDbEntity)
+    suspend fun checkIfPhotoInFavorites(id: Int): Boolean
+    suspend fun getPhotoById(id: Int): PhotoDbEntity
     suspend fun getAllFavoritePhotos(): List<PhotoDbEntity>
 
     suspend fun searchPhotos(query: String, page: Int, perPage: Int): SearchResultDto?
