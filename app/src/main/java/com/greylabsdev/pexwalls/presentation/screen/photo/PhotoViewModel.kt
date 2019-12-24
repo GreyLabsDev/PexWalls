@@ -13,12 +13,11 @@ import com.greylabsdev.pexwalls.presentation.mapper.PresentationMapper
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
 import timber.log.Timber
 
 class PhotoViewModel(
@@ -30,6 +29,8 @@ class PhotoViewModel(
     val isPhotoFavorite: LiveData<Boolean>
         get() = _isPhotoFavorite
     private var _isPhotoFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val flowScope = CoroutineScope(IO)
+    private var flowJob: Job? = null
 
     init {
         checkIfPhotoInFavorites()
@@ -37,15 +38,24 @@ class PhotoViewModel(
 
     fun downloadPhoto(useOriginalResolution: Boolean = false, setAsWallpaper: Boolean = false) {
         viewModelScope.launch {
-            photoDownloadingUseCase.callManagerToDownloadPhotoByFLow(
-                author = photoModel.photographer,
-                postfix = "${photoModel.id}${if (useOriginalResolution) "_original" else "_wallpaper"}",
-                baseLink = photoModel.bigPhotoUrl,
-                originalResolution = if (useOriginalResolution) Pair(photoModel.width, photoModel.height)
-                else null,
-                setAsWallpaper = setAsWallpaper
-            ).collect {progress ->
-                if (progress == 100) _progressState.value = ProgressState.DONE("Load complete")
+            flowJob = flowScope.launch {
+                photoDownloadingUseCase.callManagerToDownloadPhotoByFLow(
+                    author = photoModel.photographer,
+                    postfix = "${photoModel.id}${if (useOriginalResolution) "_original" else "_wallpaper"}",
+                    baseLink = photoModel.bigPhotoUrl,
+                    originalResolution = if (useOriginalResolution) Pair(photoModel.width, photoModel.height)
+                    else null,
+                    setAsWallpaper = setAsWallpaper
+                ).collect {progress ->
+                    if (progress == 100) {
+                        withContext(Main) {
+                            _progressState.value = ProgressState.DONE("Load complete")
+                            flowJob?.let {job ->
+                                if (job.isActive && job.isCancelled.not()) job.cancel()
+                            }
+                        }
+                    }
+                }
             }
         }
     }

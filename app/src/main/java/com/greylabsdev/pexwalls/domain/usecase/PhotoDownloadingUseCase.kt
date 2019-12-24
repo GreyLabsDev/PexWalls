@@ -30,7 +30,6 @@ class PhotoDownloadingUseCase(
         originalResolution: Pair<Int, Int>? = null,
         setAsWallpaper: Boolean = false
     ): Flow<Int> {
-
         val fileName = "${author.replace(" ", "_")}_$postfix.jpeg"
         val downloadUrl = Uri.parse(linkGenerator.generateUrl(
             baseLink, if (originalResolution != null) ResolutionManager.Resolution(originalResolution.first,
@@ -75,11 +74,11 @@ class PhotoDownloadingUseCase(
                 val bytesDownloaded = cursor!!.getInt(cursor!!.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
                 val bytesTotal = cursor!!.getInt(cursor!!.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
                 progress = (bytesDownloaded * 100L / bytesTotal).toInt()
-                emit(progress)
                 if (progress == 100) {
                     if (setAsWallpaper) setImageAsWallpaper(fileUri)
                     cursor?.close()
                 }
+                emit(progress)
             }
         }
     }
