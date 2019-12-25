@@ -29,8 +29,8 @@ class FavoritesFragment : BaseFragment(
     override val placeholderView: PlaceholderView? by lazy { placeholder_view }
 
     private val photoCardMargin by lazy { requireActivity().dpToPix(Consts.DEFAULT_MARGIN_DP) }
-    private val photoCardWidth by lazy { requireActivity().getScreenWidthInPixels()/2 }
-    private val photoCardHeight by lazy { requireActivity().getScreenHeightInPixels()/3}
+    private val photoCardWidth by lazy { requireActivity().getScreenWidthInPixels() / 2 }
+    private val photoCardHeight by lazy { requireActivity().getScreenHeightInPixels() / 3 }
 
     private lateinit var photoGridPagingAdapter: PhotoGridPagingAdapter
     private var recyclerState: Parcelable? = null
@@ -56,21 +56,21 @@ class FavoritesFragment : BaseFragment(
 
     override fun initViewModelObserving() {
         super.initViewModelObserving()
-        viewModel.photos.observe(this, Observer {newPhotos ->
+        viewModel.photos.observe(this, Observer { newPhotos ->
             photoGridPagingAdapter.items = newPhotos
         })
     }
 
     override fun onPause() {
         super.onPause()
-        photo_grid_rv.layoutManager?.onSaveInstanceState()?.let {state ->
+        photo_grid_rv.layoutManager?.onSaveInstanceState()?.let { state ->
             recyclerState = state
         }
     }
 
     override fun onResume() {
         super.onResume()
-        recyclerState?.let {state ->
+        recyclerState?.let { state ->
             photo_grid_rv.layoutManager?.onRestoreInstanceState(state)
         }
     }

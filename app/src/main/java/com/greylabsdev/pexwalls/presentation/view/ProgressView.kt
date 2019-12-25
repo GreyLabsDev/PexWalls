@@ -12,7 +12,7 @@ class ProgressView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val animator: ViewAnimator
 
@@ -32,13 +32,11 @@ class ProgressView @JvmOverloads constructor(
             play(animator.shiftBack(w_letter_tv, 450))
                 .with(animator.shiftBack(p_letter_tv, 450))
                 .with(animator.fadeOut(divider_v, 450))
-
         }
         val scaleBackSecond = AnimatorSet().apply {
             play(animator.shiftBack(p_letter_tv, 450))
                 .with(animator.shiftBack(w_letter_tv, 450))
                 .with(animator.fadeOut(divider_v, 450))
-
         }
         val scaleSecond = AnimatorSet().apply {
             play(animator.shiftUp(w_letter_tv, 450))

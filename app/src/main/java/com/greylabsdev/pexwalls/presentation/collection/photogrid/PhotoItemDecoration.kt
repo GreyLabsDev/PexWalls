@@ -27,16 +27,16 @@ class PhotoItemDecoration(private val offset: Int) : RecyclerView.ItemDecoration
                 outRect.bottom = offset / 4
                 outRect.top = offset / 2
             }
-            parent.getChildAdapterPosition(view).isEven()
-                    && parent.getChildLayoutPosition(view) != 1
+            parent.getChildAdapterPosition(view).isEven() &&
+                    parent.getChildLayoutPosition(view) != 1
                     && parent.getChildLayoutPosition(view) != 0 -> {
                 outRect.left = offset
                 outRect.right = offset / 4
                 outRect.bottom = offset / 4
                 outRect.top = offset / 4
             }
-            parent.getChildAdapterPosition(view).isOdd()
-                    && parent.getChildLayoutPosition(view) != 1
+            parent.getChildAdapterPosition(view).isOdd() &&
+                    parent.getChildLayoutPosition(view) != 1
                     && parent.getChildLayoutPosition(view) != 0 -> {
                 outRect.right = offset
                 outRect.left = offset / 4
@@ -45,5 +45,4 @@ class PhotoItemDecoration(private val offset: Int) : RecyclerView.ItemDecoration
             }
         }
     }
-
 }

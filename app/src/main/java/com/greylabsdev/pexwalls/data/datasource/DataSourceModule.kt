@@ -10,5 +10,4 @@ val dataSourceModule = module {
     single<IDataSource>(named("local")) { LocalDataSource(get()) }
 
     single<IDataSource>(named("remote")) { RemoteDataSource(get()) }
-
 }

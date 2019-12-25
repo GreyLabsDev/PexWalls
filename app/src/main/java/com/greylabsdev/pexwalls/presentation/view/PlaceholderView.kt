@@ -3,9 +3,7 @@ package com.greylabsdev.pexwalls.presentation.view
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import androidx.core.view.isVisible
-import com.google.android.material.button.MaterialButton
 import com.greylabsdev.pexwalls.R
 import kotlinx.android.synthetic.main.view_placeholder.view.*
 
@@ -13,7 +11,7 @@ class PlaceholderView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     var onTryNowBtnClickAction: (() -> Unit)? = null
         set(value) {

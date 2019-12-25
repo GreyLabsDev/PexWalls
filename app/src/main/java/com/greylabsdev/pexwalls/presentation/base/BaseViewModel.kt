@@ -1,9 +1,12 @@
 package com.greylabsdev.pexwalls.presentation.base
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BaseViewModel: ViewModel(), LifecycleObserver {
+abstract class BaseViewModel : ViewModel(), LifecycleObserver {
 
     protected val disposables = CompositeDisposable()
 
@@ -19,5 +22,4 @@ abstract class BaseViewModel: ViewModel(), LifecycleObserver {
         clearDisposables()
         super.onCleared()
     }
-
 }

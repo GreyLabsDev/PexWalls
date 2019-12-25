@@ -11,7 +11,7 @@ import com.greylabsdev.pexwalls.presentation.paging.PagingAdapter
 import com.greylabsdev.pexwalls.presentation.paging.PagingItem
 import com.greylabsdev.pexwalls.presentation.paging.PagingUpdater
 
-class PhotoListPagingAdapter (
+class PhotoListPagingAdapter(
     pagingUpdater: PagingUpdater<PhotoModel>,
     initialLoad: Boolean = false,
     private val photoCardHeight: Int,
@@ -54,7 +54,7 @@ class PhotoListPagingAdapter (
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             PagingItem.ItemType.DATA.itemCode -> {
-                items[position].data?.let {photo ->
+                items[position].data?.let { photo ->
                     (holder as PhotoListDataViewHolder).apply {
                         bind(photo)
                         setOnClickListener { onPhotoClickListener?.invoke(photo) }

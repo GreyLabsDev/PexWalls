@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.DisplayMetrics
 import com.greylabsdev.pexwalls.presentation.ext.windowManager
 
-class ResolutionManager (private val context: Context) {
+class ResolutionManager(private val context: Context) {
 
     val screenResolution: Resolution by lazy {
         val metrics = DisplayMetrics()

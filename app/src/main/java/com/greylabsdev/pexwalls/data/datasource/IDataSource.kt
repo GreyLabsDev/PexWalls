@@ -8,14 +8,12 @@ import io.reactivex.Single
 
 interface IDataSource {
 
-    fun searchPhotos(query: String, page: Int, perPage: Int): Observable<SearchResultDto>
-    fun searchPhotosSingle(query: String, page: Int, perPage: Int): Single<SearchResultDto>
-    fun getCuratedPhotos(page: Int, perPage: Int): Observable<SearchResultDto>
+    suspend fun searchPhotos(query: String, page: Int, perPage: Int): SearchResultDto?
+    suspend fun getCuratedPhotos(page: Int, perPage: Int): SearchResultDto?
 
-    fun addPhotoToFavorites(photoEntity: PhotoDbEntity): Completable
-    fun removePhotoFromFavorites(photoEntity: PhotoDbEntity): Completable
-    fun removePhotoFromFavoritesById(id: Int): Completable
-    fun checkIfPhotoInFavorites(id: Int): Single<Boolean>
-    fun getPhotoById(id: Int): Single<PhotoDbEntity>
-    fun getAllPhotos(): Observable<List<PhotoDbEntity>>
+    suspend fun addPhotoToFavorites(photoEntity: PhotoDbEntity)
+    suspend fun removePhotoFromFavorites(photoEntity: PhotoDbEntity)
+    suspend fun checkIfPhotoInFavorites(id: Int): Boolean
+    suspend fun getPhotoById(id: Int): PhotoDbEntity
+    suspend fun getAllPhotos(): List<PhotoDbEntity>
 }

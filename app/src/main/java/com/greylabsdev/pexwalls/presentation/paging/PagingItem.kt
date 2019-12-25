@@ -16,4 +16,3 @@ class PagingItem<DataType>(
         val message: String
     )
 }
-

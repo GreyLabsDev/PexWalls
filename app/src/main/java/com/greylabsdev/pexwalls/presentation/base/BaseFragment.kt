@@ -19,16 +19,16 @@ import androidx.navigation.Navigation
 import com.google.android.material.appbar.AppBarLayout
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
+import java.io.Serializable
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
-import java.io.Serializable
 
 abstract class BaseFragment(
     @LayoutRes private val layoutResId: Int,
     private val hasToolbarBackButton: Boolean = false,
     private val transparentStatusBar: Boolean = false,
     private val hideNavigation: Boolean = false
-): Fragment() {
+) : Fragment() {
 
     protected abstract val viewModel: BaseViewModel?
     protected abstract val toolbarTitle: String?
@@ -61,7 +61,7 @@ abstract class BaseFragment(
     protected open fun initViews() {}
     protected open fun initListeners() {}
     protected open fun initViewModelObserving() {
-        viewModel?.progressState?.observe(this, Observer {progressState ->
+        viewModel?.progressState?.observe(this, Observer { progressState ->
             when (progressState) {
                 is ProgressState.DONE -> {
                     placeholderView?.setState(PlaceholderView.PlaceholderState.GONE)
@@ -97,7 +97,7 @@ abstract class BaseFragment(
         @IdRes destinationId: Int,
         navigationArgs: List<Pair<String, Serializable>>? = null
     ) {
-        navigationArgs?.let {args ->
+        navigationArgs?.let { args ->
             val bundle = Bundle()
             args.forEach { bundle.putSerializable(it.first, it.second) }
             Navigation.findNavController(requireView()).navigate(destinationId, bundle)
@@ -120,8 +120,8 @@ abstract class BaseFragment(
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (requestCode == PERMISSION_CODE
-            && grantResults.first() == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == PERMISSION_CODE &&
+            grantResults.first() == PackageManager.PERMISSION_GRANTED) {
             onPermissionGrantedAction?.invoke()
             onPermissionGrantedAction = null
         }
@@ -157,7 +157,6 @@ abstract class BaseFragment(
             requireActivity().window.apply {
                 clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
                 clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-
             }
             if (hideNavigation.not())(requireActivity() as BaseActivity).showNavigation()
         }
@@ -174,5 +173,4 @@ abstract class BaseFragment(
     companion object {
         const val PERMISSION_CODE = 223
     }
-
 }

@@ -19,7 +19,7 @@ fun <T> Activity.argSerializableNullable(key: String) = lazy { intent?.getSerial
  */
 fun Activity.hideKeyboard() {
     val inputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-    this.currentFocus?.let {focusedView ->
+    this.currentFocus?.let { focusedView ->
         inputMethodManager.hideSoftInputFromWindow(focusedView.windowToken, 0)
     }
 }

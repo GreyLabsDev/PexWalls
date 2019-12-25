@@ -8,7 +8,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.greylabsdev.pexwalls"
         minSdkVersion 23
@@ -23,6 +23,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+repositories {
+    jcenter()
+}
+
+configurations {
+    ktlint
 }
 
 ext {
@@ -40,7 +48,8 @@ ext {
     contraint_version = "1.1.3"
     stetho_version = "1.5.1"
     navigation_version = "2.1.0"
-    glide_version = "4.9.0"
+    glide_version = "4.10.0"
+    coroutines_android_version = "1.3.2"
 }
 
 dependencies {
@@ -51,6 +60,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // ktlint
+    ktlint "com.pinterest:ktlint:0.36.0"
 
     // Room
     kapt "androidx.room:room-compiler:$room_version"
@@ -89,10 +101,29 @@ dependencies {
     // Koin
     implementation "org.koin:koin-android-viewmodel:$koin_version"
 
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_android_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_android_version"
+
     // Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
 
     // Stetho
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
 
+}
+
+task ktlint(type: JavaExec, group: "ktlint") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args "src/**/*.kt"
+}
+check.dependsOn ktlint
+
+task ktlintFormat(type: JavaExec, group: "ktlint") {
+    description = "Fix Kotlin code style deviations."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args "-F", "src/**/*.kt"
 }

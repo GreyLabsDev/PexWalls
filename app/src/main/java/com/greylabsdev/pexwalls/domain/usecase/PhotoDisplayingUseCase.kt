@@ -7,8 +7,8 @@ import com.greylabsdev.pexwalls.domain.tools.PhotoUrlGenerator
 import com.greylabsdev.pexwalls.domain.tools.ResolutionManager
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.model.CategoryModel
-import io.reactivex.Observable
-import io.reactivex.Single
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.withContext
 
 class PhotoDisplayingUseCase(
     private val repository: IRepository,
@@ -17,46 +17,52 @@ class PhotoDisplayingUseCase(
 
     private val photoUrlGenerator = PhotoUrlGenerator()
 
-    fun getPhotosForCategory(
+    suspend fun getPhotosForCategory(
         category: String,
         pageNumber: Int,
         perPageCount: Int
-    ): Observable<List<PhotoEntity>> {
-        return repository.searchPhotos(category, pageNumber, perPageCount)
-            .map {
-                it.photos.map {photoDto ->
+    ): List<PhotoEntity>? {
+        return withContext(IO) {
+            repository.searchPhotos(category, pageNumber, perPageCount)?.let {
+                it.photos.map { photoDto ->
                     val byScreenResolution = photoUrlGenerator.generateUrl(photoDto.src.large, resolutionManager.screenResolution)
                     DomainMapper.mapToPhotoEntity(photoDto, byScreenResolution)
                 }
             }
+        }
     }
 
-    fun getPhotoCategoryCover(category: PhotoCategory): Observable<CategoryModel> {
-        return repository.searchPhotos(category.name, 1, 30)
-            .map { CategoryModel(category, it.photos.random().src.large) }
+    suspend fun getPhotoCategoryCover(category: PhotoCategory): CategoryModel? {
+        return withContext(IO) {
+            repository.searchPhotos(category.name, 1, 30)?.let {
+                CategoryModel(category, it.photos.random().src.large)
+            }
+        }
     }
 
-    fun getCuratedPhotos(pageNumber: Int, perPageCount: Int): Observable<List<PhotoEntity>> {
-        return repository.getCuratedPhotos(pageNumber, perPageCount)
-            .map {
-                it.photos.map {photoDto ->
+    suspend fun getCuratedPhotos(pageNumber: Int, perPageCount: Int): List<PhotoEntity>? {
+        return withContext(IO) {
+            repository.getCuratedPhotos(pageNumber, perPageCount)?.let {
+                it.photos.map { photoDto ->
                     val byScreenResolution = photoUrlGenerator.generateUrl(photoDto.src.large, resolutionManager.screenResolution)
                     DomainMapper.mapToPhotoEntity(photoDto, byScreenResolution)
                 }
             }
+        }
     }
 
-    fun searchPhoto(query: String,
-                    pageNumber: Int,
-                    perPageCount: Int
-    ): Observable<List<PhotoEntity>> {
-        return repository.searchPhotos(query, pageNumber, perPageCount)
-            .map {
-                it.photos.map {photoDto ->
+    suspend fun searchPhotos(
+        query: String,
+        pageNumber: Int,
+        perPageCount: Int
+    ): List<PhotoEntity>? {
+        return withContext(IO) {
+            repository.searchPhotos(query, pageNumber, perPageCount)?.let {
+                it.photos.map { photoDto ->
                     val byScreenResolution = photoUrlGenerator.generateUrl(photoDto.src.large, resolutionManager.screenResolution)
                     DomainMapper.mapToPhotoEntity(photoDto, byScreenResolution)
                 }
             }
+        }
     }
-
 }

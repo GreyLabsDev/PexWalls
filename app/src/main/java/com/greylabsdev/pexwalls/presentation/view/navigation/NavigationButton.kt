@@ -19,7 +19,7 @@ class NavigationButton @JvmOverloads constructor(
     title: String? = null,
     @DrawableRes iconRes: Int? = null,
     var onClickAction: (() -> Unit)? = null
-): LinearLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     private val titleWidth: Int by lazy { this.btn_title_tv.measureWidth() }
 

@@ -9,9 +9,12 @@ import com.greylabsdev.pexwalls.domain.tools.PhotoUrlGenerator
 import com.greylabsdev.pexwalls.domain.tools.ResolutionManager
 import com.greylabsdev.pexwalls.domain.tools.WallpaperSetter
 import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.io.File
 import java.net.URI
 import java.util.concurrent.TimeUnit
+import kotlin.coroutines.suspendCoroutine
 
 class PhotoDownloadingUseCase(
     private val context: Context,
@@ -20,19 +23,19 @@ class PhotoDownloadingUseCase(
 ) {
     private val linkGenerator = PhotoUrlGenerator()
 
-    fun callManagerToDownloadPhoto(
+    fun callManagerToDownloadPhotoByFLow(
         author: String,
         postfix: String,
         baseLink: String,
         originalResolution: Pair<Int, Int>? = null,
-        setAsWallpaper: Boolean = false): Observable<Int> {
-
-        val fileName = "${author.replace(" ", "_")}_${postfix}.jpeg"
+        setAsWallpaper: Boolean = false
+    ): Flow<Int> {
+        val fileName = "${author.replace(" ", "_")}_$postfix.jpeg"
         val downloadUrl = Uri.parse(linkGenerator.generateUrl(
-                baseLink, if (originalResolution != null) ResolutionManager.Resolution(originalResolution.first,
+            baseLink, if (originalResolution != null) ResolutionManager.Resolution(originalResolution.first,
                 originalResolution.second)
-                    else resolutionManager.screenResolution
-            )
+            else resolutionManager.screenResolution
+        )
         )
         val photoDirPath = Environment.getExternalStorageDirectory().toString() + "/PexWalls"
         val photoDir = File(photoDirPath)
@@ -49,33 +52,35 @@ class PhotoDownloadingUseCase(
 
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val id = downloadManager.enqueue(downloadRequest)
-        return createDownloadListenerObservable(id, photoFile.toURI(), setAsWallpaper)
+        return buildProgressFlow(id, photoFile.toURI(), setAsWallpaper)
     }
 
-    private fun createDownloadListenerObservable(
+    private fun buildProgressFlow(
         downloadId: Long,
         fileUri: URI,
         setAsWallpaper: Boolean
-    ): Observable<Int> {
+    ): Flow<Int> {
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val query = DownloadManager.Query().apply {
             setFilterById(downloadId)
         }
         var cursor: Cursor? = null
-        return Observable.interval(1, TimeUnit.SECONDS)
-            .flatMap {
+        return flow {
+            var progress = 0
+            emit(progress)
+            while (progress <= 100) {
                 cursor = downloadManager.query(query)
                 cursor!!.moveToFirst()
                 val bytesDownloaded = cursor!!.getInt(cursor!!.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
                 val bytesTotal = cursor!!.getInt(cursor!!.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
-                val progress = (bytesDownloaded * 100L / bytesTotal).toInt()
-                Observable.just(progress)
+                progress = (bytesDownloaded * 100L / bytesTotal).toInt()
+                if (progress == 100) {
+                    if (setAsWallpaper) setImageAsWallpaper(fileUri)
+                    cursor?.close()
+                }
+                emit(progress)
             }
-            .takeWhile { progress -> progress != 100 }
-            .doOnComplete {
-                if (setAsWallpaper) setImageAsWallpaper(fileUri)
-                cursor?.close()
-            }
+        }
     }
 
     private fun setImageAsWallpaper(fileUri: URI) {

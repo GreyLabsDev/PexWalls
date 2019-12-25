@@ -11,7 +11,6 @@ import com.greylabsdev.pexwalls.presentation.paging.PagingAdapter
 import com.greylabsdev.pexwalls.presentation.paging.PagingItem
 import com.greylabsdev.pexwalls.presentation.paging.PagingUpdater
 
-
 class PhotoGridPagingAdapter(
     pagingUpdater: PagingUpdater<PhotoModel>,
     initialLoad: Boolean = false,
@@ -59,7 +58,7 @@ class PhotoGridPagingAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             PagingItem.ItemType.DATA.itemCode -> {
-                items[position].data?.let {photo ->
+                items[position].data?.let { photo ->
                     (holder as PhotoGridDataViewHolder).apply {
                         bind(photo, (position % 3 == 0))
                         setOnClickListener { onPhotoClickListener?.invoke(photo) }

@@ -11,5 +11,4 @@ import com.greylabsdev.pexwalls.data.db.entity.PhotoDbEntity
 abstract class AppDatabase() : RoomDatabase() {
 
     abstract fun photoDao(): PhotoDao
-
 }

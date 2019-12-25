@@ -2,7 +2,6 @@ package com.greylabsdev.pexwalls.presentation.ext
 
 import android.content.Context
 import android.util.DisplayMetrics
-import android.view.WindowInsets
 import android.view.WindowManager
 
 /**

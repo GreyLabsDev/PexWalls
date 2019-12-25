@@ -17,7 +17,6 @@ import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import kotlinx.android.synthetic.main.fragment_curated_photos.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
 class CuratedPhotosFragment : BaseFragment(
     layoutResId = R.layout.fragment_curated_photos
 ) {
@@ -54,21 +53,21 @@ class CuratedPhotosFragment : BaseFragment(
 
     override fun initViewModelObserving() {
         super.initViewModelObserving()
-        viewModel.photos.observe(this, Observer {newPhoto ->
+        viewModel.photos.observe(this, Observer { newPhoto ->
             photoListPagingAdapter.items = newPhoto
         })
     }
 
     override fun onPause() {
         super.onPause()
-        photo_list_rv.layoutManager?.onSaveInstanceState()?.let {state ->
+        photo_list_rv.layoutManager?.onSaveInstanceState()?.let { state ->
             recyclerState = state
         }
     }
 
     override fun onResume() {
         super.onResume()
-        recyclerState?.let {state ->
+        recyclerState?.let { state ->
             photo_list_rv.layoutManager?.onRestoreInstanceState(state)
         }
     }
