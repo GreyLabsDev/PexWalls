@@ -2,9 +2,6 @@ package com.greylabsdev.pexwalls.data.datasource
 
 import com.greylabsdev.pexwalls.data.db.entity.PhotoDbEntity
 import com.greylabsdev.pexwalls.data.dto.SearchResultDto
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
 
 interface IDataSource {
 

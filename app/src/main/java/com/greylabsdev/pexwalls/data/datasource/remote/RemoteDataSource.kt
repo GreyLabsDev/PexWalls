@@ -4,9 +4,6 @@ import com.greylabsdev.pexwalls.data.datasource.IDataSource
 import com.greylabsdev.pexwalls.data.db.entity.PhotoDbEntity
 import com.greylabsdev.pexwalls.data.dto.SearchResultDto
 import com.greylabsdev.pexwalls.data.network.PexelsApi
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
 import java.lang.Exception
 
 class RemoteDataSource(private val api: PexelsApi) : IDataSource {
@@ -42,5 +39,4 @@ class RemoteDataSource(private val api: PexelsApi) : IDataSource {
     override suspend fun getAllPhotos(): List<PhotoDbEntity> {
         throw Exception("Method only for LocalDataSource realization")
     }
-
 }

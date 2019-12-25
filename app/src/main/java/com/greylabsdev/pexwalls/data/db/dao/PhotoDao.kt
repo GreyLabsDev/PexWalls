@@ -6,9 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.greylabsdev.pexwalls.data.db.entity.PhotoDbEntity
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
 
 private const val TABLE_NAME = "PhotoDbEntity"
 

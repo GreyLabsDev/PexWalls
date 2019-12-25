@@ -7,17 +7,16 @@ import com.greylabsdev.pexwalls.domain.usecase.PhotoDownloadingUseCase
 import com.greylabsdev.pexwalls.domain.usecase.PhotoFavoritesUseCase
 import com.greylabsdev.pexwalls.presentation.base.BaseViewModel
 import com.greylabsdev.pexwalls.presentation.base.ProgressState
-import com.greylabsdev.pexwalls.presentation.ext.mainThreadObserve
-import com.greylabsdev.pexwalls.presentation.ext.schedulersSubscribe
 import com.greylabsdev.pexwalls.presentation.mapper.PresentationMapper
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class PhotoViewModel(
@@ -46,11 +45,11 @@ class PhotoViewModel(
                     originalResolution = if (useOriginalResolution) Pair(photoModel.width, photoModel.height)
                     else null,
                     setAsWallpaper = setAsWallpaper
-                ).collect {progress ->
+                ).collect { progress ->
                     if (progress == 100) {
                         withContext(Main) {
                             _progressState.value = ProgressState.DONE("Load complete")
-                            flowJob?.let {job ->
+                            flowJob?.let { job ->
                                 if (job.isActive && job.isCancelled.not()) job.cancel()
                             }
                         }

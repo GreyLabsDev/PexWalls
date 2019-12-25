@@ -8,13 +8,10 @@ import android.os.Environment
 import com.greylabsdev.pexwalls.domain.tools.PhotoUrlGenerator
 import com.greylabsdev.pexwalls.domain.tools.ResolutionManager
 import com.greylabsdev.pexwalls.domain.tools.WallpaperSetter
-import io.reactivex.Observable
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import java.io.File
 import java.net.URI
-import java.util.concurrent.TimeUnit
-import kotlin.coroutines.suspendCoroutine
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class PhotoDownloadingUseCase(
     private val context: Context,

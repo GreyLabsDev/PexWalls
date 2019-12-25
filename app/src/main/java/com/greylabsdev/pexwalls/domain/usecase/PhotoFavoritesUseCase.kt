@@ -3,8 +3,6 @@ package com.greylabsdev.pexwalls.domain.usecase
 import com.greylabsdev.pexwalls.domain.entity.PhotoFavoriteEntity
 import com.greylabsdev.pexwalls.domain.mapper.DomainMapper
 import com.greylabsdev.pexwalls.domain.repository.IRepository
-import io.reactivex.Completable
-import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 

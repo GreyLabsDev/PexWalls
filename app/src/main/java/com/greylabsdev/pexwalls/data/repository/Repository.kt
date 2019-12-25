@@ -1,13 +1,9 @@
 package com.greylabsdev.pexwalls.data.repository
 
 import com.greylabsdev.pexwalls.data.datasource.IDataSource
-import com.greylabsdev.pexwalls.data.db.AppDatabase
 import com.greylabsdev.pexwalls.data.db.entity.PhotoDbEntity
 import com.greylabsdev.pexwalls.data.dto.SearchResultDto
-import com.greylabsdev.pexwalls.data.network.PexelsApi
 import com.greylabsdev.pexwalls.domain.repository.IRepository
-import io.reactivex.Completable
-import io.reactivex.Single
 
 class Repository(
     private val localDataSource: IDataSource,
