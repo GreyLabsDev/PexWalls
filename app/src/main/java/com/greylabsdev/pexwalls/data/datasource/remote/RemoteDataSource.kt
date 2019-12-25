@@ -11,12 +11,16 @@ import java.lang.Exception
 
 class RemoteDataSource(private val api: PexelsApi) : IDataSource {
 
-    override fun searchPhotosSingle(query: String, page: Int, perPage: Int): Single<SearchResultDto> {
-        return api.searchPhotoByQuerySingle(query, page, perPage)
+    override suspend fun searchPhotos(query: String, page: Int, perPage: Int): SearchResultDto? {
+        val call = api.searchPhotoByQueryCall(query, page, perPage)
+        val response = call.execute()
+        return response.body()
     }
 
-    override fun searchPhotos(query: String, page: Int, perPage: Int): Observable<SearchResultDto> {
-        return api.searchPhotoByQuery(query, page, perPage)
+    override suspend fun getCuratedPhotos(page: Int, perPage: Int): SearchResultDto? {
+        val call = api.getCuratedPhotos(page, perPage)
+        val response = call.execute()
+        return response.body()
     }
 
     override suspend fun addPhotoToFavorites(photoEntity: PhotoDbEntity) {
@@ -35,7 +39,8 @@ class RemoteDataSource(private val api: PexelsApi) : IDataSource {
         throw Exception("Method only for LocalDataSource realization")
     }
 
-    override fun getAllPhotos(): Observable<List<PhotoDbEntity>> {
-        return Observable.error(Exception("Method only for LocalDataSource realization"))
+    override suspend fun getAllPhotos(): List<PhotoDbEntity> {
+        throw Exception("Method only for LocalDataSource realization")
     }
+
 }

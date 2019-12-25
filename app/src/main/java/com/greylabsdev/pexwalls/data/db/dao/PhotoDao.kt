@@ -16,7 +16,7 @@ private const val TABLE_NAME = "PhotoDbEntity"
 interface PhotoDao {
 
     @Query("SELECT * FROM $TABLE_NAME")
-    fun getAll(): Observable<List<PhotoDbEntity>>
+    fun getAll(): List<PhotoDbEntity>
 
     @Query("SELECT * FROM $TABLE_NAME")
     fun getAllPhotos(): List<PhotoDbEntity>
@@ -27,15 +27,6 @@ interface PhotoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: PhotoDbEntity)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: List<PhotoDbEntity>): Completable
-
     @Delete
     fun delete(item: PhotoDbEntity)
-
-    @Query("DELETE FROM $TABLE_NAME WHERE id = :id")
-    fun deleteById(id: Int): Completable
-
-    @Query("DELETE FROM $TABLE_NAME")
-    fun deleteAll(): Completable
 }

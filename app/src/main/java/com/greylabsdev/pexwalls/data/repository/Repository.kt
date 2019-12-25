@@ -11,21 +11,15 @@ import io.reactivex.Single
 
 class Repository(
     private val localDataSource: IDataSource,
-    private val remoteDataSource: IDataSource,
-    private val api: PexelsApi,
-    private val appDatabase: AppDatabase
+    private val remoteDataSource: IDataSource
 ) : IRepository {
 
     override suspend fun getCuratedPhotos(page: Int, perPage: Int): SearchResultDto? {
-        val call = api.getCuratedPhotos(page, perPage)
-        val response = call.execute()
-        return response.body()
+        return remoteDataSource.getCuratedPhotos(page, perPage)
     }
 
     override suspend fun searchPhotos(query: String, page: Int, perPage: Int): SearchResultDto? {
-        val call = api.searchPhotoByQueryCall(query, page, perPage)
-        val response = call.execute()
-        return response.body()
+        return remoteDataSource.searchPhotos(query, page, perPage)
     }
 
     override suspend fun addPhotoToFavorites(photoEntity: PhotoDbEntity) {
@@ -45,6 +39,6 @@ class Repository(
     }
 
     override suspend fun getAllFavoritePhotos(): List<PhotoDbEntity> {
-        return appDatabase.photoDao().getAllPhotos()
+        return localDataSource.getAllPhotos()
     }
 }

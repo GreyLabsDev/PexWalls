@@ -5,5 +5,5 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<IRepository> { Repository(get(named("local")), get(named("remote")), get(), get()) }
+    single<IRepository> { Repository(get(named("local")), get(named("remote"))) }
 }

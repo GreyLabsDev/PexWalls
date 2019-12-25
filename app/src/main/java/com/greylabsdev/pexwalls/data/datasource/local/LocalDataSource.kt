@@ -11,17 +11,13 @@ import java.lang.Exception
 
 class LocalDataSource(private val appDatabase: AppDatabase) : IDataSource {
 
-    override fun searchPhotosSingle(query: String, page: Int, perPage: Int): Single<SearchResultDto> {
-        return Single.error(Exception("Method only for RemoteDataSource realization"))
+    override suspend fun getCuratedPhotos(page: Int, perPage: Int): SearchResultDto? {
+        throw Exception("Method only for RemoteDataSource realization")
     }
 
-    override fun searchPhotos(query: String, page: Int, perPage: Int): Observable<SearchResultDto> {
-        return Observable.error(Exception("Method only for RemoteDataSource realization"))
+    override suspend fun searchPhotos(query: String, page: Int, perPage: Int): SearchResultDto? {
+        throw Exception("Method only for RemoteDataSource realization")
     }
-
-//    override fun getCuratedPhotos(page: Int, perPage: Int): Observable<SearchResultDto> {
-//        return Observable.error(Exception("Method only for RemoteDataSource realization"))
-//    }
 
     override suspend fun addPhotoToFavorites(photoEntity: PhotoDbEntity) {
         appDatabase.photoDao().insert(photoEntity)
@@ -39,7 +35,7 @@ class LocalDataSource(private val appDatabase: AppDatabase) : IDataSource {
         return appDatabase.photoDao().getById(id).first()
     }
 
-    override fun getAllPhotos(): Observable<List<PhotoDbEntity>> {
+    override suspend fun getAllPhotos(): List<PhotoDbEntity> {
         return appDatabase.photoDao().getAll()
     }
 }
