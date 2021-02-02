@@ -17,6 +17,7 @@ Base UI design implementing simple, clean and easy to understand approach to use
 
 ### Architecture
 - Based on Clean Acrchitecture
+- Single Activity
 - Android ViewModels for presentation layer logic
 - Android Data Binding
 - Use Cases for domain layer logic
