@@ -16,7 +16,7 @@ Base UI design implementing simple, clean and easy to understand approach to use
 - [Stetho (network debug inspection)](https://github.com/facebookarchive/stetho)
 
 ### Architecture
-- Based on Clean Acrchitecture
+- Based on Clean Architecture
 - Single Activity
 - Android ViewModels for presentation layer logic
 - Android Data Binding
