@@ -11,7 +11,7 @@ Base UI design implementing simple, clean and easy to understand approach to use
 - [Kotlin](https://kotlinlang.org/)
 - [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
 - [Koin (DI)](https://insert-koin.io/)
-- [Architexture Components (Navigation, Lifecycle, Room)](https://developer.android.com/topic/libraries/architecture)
+- [Architecture Components (Navigation, Lifecycle, Room)](https://developer.android.com/topic/libraries/architecture)
 - [Timber (logging)](https://github.com/JakeWharton/timber)
 - [Stetho (network debug inspection)](https://github.com/facebookarchive/stetho)
 
