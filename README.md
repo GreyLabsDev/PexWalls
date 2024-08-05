@@ -29,3 +29,7 @@ Base UI design implementing simple, clean and easy to understand approach to use
 - Custom bottom navigation view with animations
 - Custom loading placeholder with animation
 - Custom RecyclerView grid for photo gallery (ispired by Pinterest)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=GreyLabsDev/PexWalls&type=Date)](https://star-history.com/#GreyLabsDev/PexWalls&Date)
