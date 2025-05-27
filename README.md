@@ -30,6 +30,14 @@ Base UI design implementing simple, clean and easy to understand approach to use
 - Custom loading placeholder with animation
 - Custom RecyclerView grid for photo gallery (ispired by Pinterest)
 
+#### TODO
+- [ ] Update project
+- [ ] Update libs/deps
+- [ ] Update DI
+- [ ] Fix major bugs (wallpaper set, local db for favorites)
+- [ ] Move domain to separate module
+- [ ] Migrate to Compose
+
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=GreyLabsDev/PexWalls&type=Date)](https://star-history.com/#GreyLabsDev/PexWalls&Date)
