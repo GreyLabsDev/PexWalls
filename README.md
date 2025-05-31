@@ -36,6 +36,7 @@ Base UI design implementing simple, clean and easy to understand approach to use
 - [x] Update DI
 - [x] Fix image download crash
 - [x] Fix wallpapaer setting crash
+- [ ] Fix DB issue with favorites screen https://github.com/GreyLabsDev/PexWalls/issues/5
 - [ ] Fix navigation component usage crashes
 - [ ] Move domain to separate module
 - [ ] Migrate to Compose
