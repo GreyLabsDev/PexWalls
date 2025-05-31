@@ -31,10 +31,12 @@ Base UI design implementing simple, clean and easy to understand approach to use
 - Custom RecyclerView grid for photo gallery (ispired by Pinterest)
 
 #### TODO
-- [ ] Update project
-- [ ] Update libs/deps
-- [ ] Update DI
-- [ ] Fix major bugs (wallpaper set, local db for favorites)
+- [x] Update project
+- [x] Update libs/deps
+- [x] Update DI
+- [x] Fix image download crash
+- [x] Fix wallpapaer setting crash
+- [ ] Fix navigation component usage crashes
 - [ ] Move domain to separate module
 - [ ] Migrate to Compose
 
