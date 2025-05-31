@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.greylabsdev.pexwalls.R
-import kotlinx.android.synthetic.main.view_navigation.view.*
+import com.greylabsdev.pexwalls.databinding.ViewNavigationBinding
 
 class NavigationView @JvmOverloads constructor(
     context: Context,
@@ -14,19 +14,21 @@ class NavigationView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     private val activeScreensManager = ActiveButtonsManager()
+    private val binding: ViewNavigationBinding
 
     init {
         View.inflate(context, R.layout.view_navigation, this)
+        binding = ViewNavigationBinding.bind(this)
     }
 
     fun setupButtons(vararg buttons: NavigationButton) {
         buttons.forEach { button ->
             button.layoutParams = LayoutParams(
                 LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT,
+                LayoutParams.MATCH_PARENT,
                 1.0f
             )
-            buttons_container_ll.addView(button)
+            binding.root.addView(button)
             activeScreensManager.addButton(button)
             button.setOnClickListener {
                 activeScreensManager.toggleButtonToActive(button)

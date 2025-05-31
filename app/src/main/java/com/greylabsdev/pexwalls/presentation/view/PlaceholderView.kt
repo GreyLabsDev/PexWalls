@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import com.greylabsdev.pexwalls.R
-import kotlinx.android.synthetic.main.view_placeholder.view.*
+import com.greylabsdev.pexwalls.databinding.ViewPlaceholderBinding
 
 class PlaceholderView @JvmOverloads constructor(
     context: Context,
@@ -13,18 +13,21 @@ class PlaceholderView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
+    private val binding: ViewPlaceholderBinding
+
     var onTryNowBtnClickAction: (() -> Unit)? = null
         set(value) {
-            try_now_btn.isVisible = value != null
+            binding.tryNowBtn.isVisible = value != null
             value?.let { action ->
-                try_now_btn.setOnClickListener { action.invoke() }
+                binding.tryNowBtn.setOnClickListener { action.invoke() }
             }
             field = value
         }
 
     init {
         inflate(context, R.layout.view_placeholder, this)
-        try_now_btn.setOnClickListener { hideAll() }
+        binding = ViewPlaceholderBinding.bind(this)
+        binding.tryNowBtn.setOnClickListener { hideAll() }
     }
 
     fun setState(state: PlaceholderState) {
@@ -39,39 +42,44 @@ class PlaceholderView @JvmOverloads constructor(
 
     private fun showLoading() {
         show()
-        loading_container_ll.isVisible = true
-        error_container_ll.isVisible = false
-        initial_container_ll.isVisible = false
-        empty_container_ll.isVisible = false
+        binding.loadingContainerLl.isVisible = true
+        binding.errorContainerLl.isVisible = false
+        binding.initialContainerLl.isVisible = false
+        binding.emptyContainerLl.isVisible = false
     }
+
     private fun showError() {
         show()
-        loading_container_ll.isVisible = false
-        error_container_ll.isVisible = true
-        initial_container_ll.isVisible = false
-        empty_container_ll.isVisible = false
+        binding.loadingContainerLl.isVisible = false
+        binding.errorContainerLl.isVisible = true
+        binding.initialContainerLl.isVisible = false
+        binding.emptyContainerLl.isVisible = false
     }
+
     private fun showEmpty() {
         show()
-        loading_container_ll.isVisible = false
-        error_container_ll.isVisible = false
-        initial_container_ll.isVisible = false
-        empty_container_ll.isVisible = true
+        binding.loadingContainerLl.isVisible = false
+        binding.errorContainerLl.isVisible = false
+        binding.initialContainerLl.isVisible = false
+        binding.emptyContainerLl.isVisible = true
     }
+
     private fun showInitial() {
         show()
-        loading_container_ll.isVisible = false
-        error_container_ll.isVisible = false
-        initial_container_ll.isVisible = true
-        empty_container_ll.isVisible = false
+        binding.loadingContainerLl.isVisible = false
+        binding.errorContainerLl.isVisible = false
+        binding.initialContainerLl.isVisible = true
+        binding.emptyContainerLl.isVisible = false
     }
+
     private fun hideAll() {
-        loading_container_ll.isVisible = false
-        error_container_ll.isVisible = false
-        initial_container_ll.isVisible = false
-        empty_container_ll.isVisible = false
+        binding.loadingContainerLl.isVisible = false
+        binding.errorContainerLl.isVisible = false
+        binding.initialContainerLl.isVisible = false
+        binding.emptyContainerLl.isVisible = false
         this.isVisible = false
     }
+
     private fun show() {
         this.isVisible = true
     }

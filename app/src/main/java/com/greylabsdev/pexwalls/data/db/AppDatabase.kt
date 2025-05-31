@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.greylabsdev.pexwalls.data.db.dao.PhotoDao
 import com.greylabsdev.pexwalls.data.db.entity.PhotoDbEntity
 
-@Database(entities = [PhotoDbEntity::class], version = 1)
+@Database(entities = [PhotoDbEntity::class], version = 1, exportSchema = false )
 @TypeConverters(DbConverters::class)
 abstract class AppDatabase() : RoomDatabase() {
 

@@ -1,5 +1,6 @@
 package com.greylabsdev.pexwalls.presentation.screen.photo
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
@@ -10,6 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.greylabsdev.pexwalls.R
+import com.greylabsdev.pexwalls.databinding.FragmentPhotoBinding
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.base.ProgressState
 import com.greylabsdev.pexwalls.presentation.ext.argSerializable
@@ -18,29 +20,11 @@ import com.greylabsdev.pexwalls.presentation.ext.setHeight
 import com.greylabsdev.pexwalls.presentation.ext.setTint
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
-import kotlinx.android.synthetic.main.bottom_sheet_photo_actions.view.disappearing_container_ll
-import kotlinx.android.synthetic.main.bottom_sheet_photo_actions.view.download_btn
-import kotlinx.android.synthetic.main.bottom_sheet_photo_actions.view.img_slide
-import kotlinx.android.synthetic.main.bottom_sheet_photo_actions.view.img_slide_upside_down
-import kotlinx.android.synthetic.main.bottom_sheet_photo_actions.view.navbar_bottom_spacer_v
-import kotlinx.android.synthetic.main.bottom_sheet_photo_actions.view.navbar_top_spacer_v
-import kotlinx.android.synthetic.main.bottom_sheet_photo_actions.view.photographer_title_tv
-import kotlinx.android.synthetic.main.bottom_sheet_photo_actions.view.photographer_tv
-import kotlinx.android.synthetic.main.bottom_sheet_photo_actions.view.resolution_tv
-import kotlinx.android.synthetic.main.bottom_sheet_photo_actions.view.wallpaper_btn
-import kotlinx.android.synthetic.main.fragment_photo.back_btn_ll
-import kotlinx.android.synthetic.main.fragment_photo.back_iv
-import kotlinx.android.synthetic.main.fragment_photo.bottom_sheet
-import kotlinx.android.synthetic.main.fragment_photo.content_ll
-import kotlinx.android.synthetic.main.fragment_photo.like_btn_iv
-import kotlinx.android.synthetic.main.fragment_photo.photo_iv
-import kotlinx.android.synthetic.main.fragment_photo.placeholder_view
-import kotlinx.android.synthetic.main.fragment_photo.root_cl
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class PhotoFragment : BaseFragment(
-    layoutResId = R.layout.fragment_photo,
+class PhotoFragment : BaseFragment<FragmentPhotoBinding>(
+    bindingFactory = FragmentPhotoBinding::inflate,
     hasToolbarBackButton = true,
     transparentStatusBar = true
 ) {
@@ -48,117 +32,141 @@ class PhotoFragment : BaseFragment(
         parametersOf(photoModel)
     }
     override val toolbarTitle: String? = null
-    override val placeholderView: PlaceholderView? by lazy { placeholder_view }
-    override val contentView: View? by lazy { content_ll }
+    override val placeholderView: PlaceholderView?
+        get() = binding?.placeholderView
+    override val contentView: View?
+        get() = binding?.contentLl
 
     private val photoModel: PhotoModel by argSerializable(ARG_KEY)
 
+    @SuppressLint("SetTextI18n")
     override fun initViews() {
-        bottom_sheet.setOnApplyWindowInsetsListener { view, windowInsets ->
+        binding?.bottomSheet?.root?.setOnApplyWindowInsetsListener { view, windowInsets ->
             setupNeededPeekHeight(windowInsets.systemWindowInsetBottom)
             windowInsets
         }
-        bottom_sheet.navbar_bottom_spacer_v.setOnApplyWindowInsetsListener { view, windowInsets ->
+        binding?.bottomSheet?.navbarBottomSpacerV?.setOnApplyWindowInsetsListener { view, windowInsets ->
             view.setHeight(windowInsets.systemWindowInsetBottom)
             windowInsets
         }
-        bottom_sheet.navbar_top_spacer_v.setOnApplyWindowInsetsListener { view, windowInsets ->
+        binding?.bottomSheet?.navbarTopSpacerV?.setOnApplyWindowInsetsListener { view, windowInsets ->
             view.setHeight(windowInsets.systemWindowInsetBottom)
             windowInsets
         }
-        bottom_sheet.photographer_tv.text = photoModel.photographer
-        bottom_sheet.resolution_tv.text = "${photoModel.width} x ${photoModel.height}"
-        Glide.with(photo_iv)
-            .load(photoModel.bigPhotoUrl)
-            .transform(CenterCrop())
-            .into(photo_iv)
-        back_iv.setTint(R.color.colorLight)
-        bottom_sheet.navbar_bottom_spacer_v.isVisible = true
+        binding?.bottomSheet?.photographerTv?.text = photoModel.photographer
+        binding?.bottomSheet?.resolutionTv?.text = "${photoModel.width} x ${photoModel.height}"
+        binding?.photoIv?.let {
+            Glide.with(it).load(photoModel.bigPhotoUrl).transform(CenterCrop()).into(it)
+        }
+
+        binding?.backIv?.setTint(R.color.colorLight)
+        binding?.bottomSheet?.navbarBottomSpacerV?.isVisible = true
     }
 
     override fun initListeners() {
-        back_btn_ll.setOnClickListener { navigateBack() }
-        like_btn_iv.setOnClickListener { viewModel.switchPhotoInFavoritesState() }
-        bottom_sheet.download_btn.setOnClickListener {
-            requestStoragePermissionWithAction {
-                viewModel.downloadPhoto(useOriginalResolution = true)
+        binding?.let { bind ->
+            bind.backBtnLl.setOnClickListener { navigateBack() }
+            bind.likeBtnIv.setOnClickListener { viewModel.switchPhotoInFavoritesState() }
+            bind.bottomSheet.downloadBtn.setOnClickListener {
+                requestStoragePermissionWithAction {
+                    viewModel.downloadPhoto(useOriginalResolution = true)
+                }
             }
+            bind.bottomSheet.wallpaperBtn.setOnClickListener {
+                requestStoragePermissionWithAction {
+                    viewModel.downloadPhoto(setAsWallpaper = true)
+                }
+            }
+
+//            todo Add saveState for lifecycle safe alpha switching for
+//            bind.bottomSheet.disappearingContainerLl
+//            Why its happening - cause after changing Wallpaper fragment is restarting (?)
+//            after fixing this - uncomment string with alpha = 0f
+//            bind.bottomSheet.disappearingContainerLl.alpha = 0f
+
+            val bottomSheetBehavior = BottomSheetBehavior.from(bind.bottomSheet.root)
+            bottomSheetBehavior.setBottomSheetCallback(object :
+                BottomSheetBehavior.BottomSheetCallback() {
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    bind.bottomSheet.imgSlide.animate().alpha(1 - slideOffset).setDuration(0)
+                        .start()
+                    bind.bottomSheet.imgSlideUpsideDown.animate().alpha(0 + slideOffset)
+                        .setDuration(0).start()
+                    bind.bottomSheet.disappearingContainerLl.animate().alpha(0 + slideOffset)
+                        .setDuration(0).start()
+                }
+
+                override fun onStateChanged(bottomSheet: View, state: Int) {}
+            })
         }
-        bottom_sheet.wallpaper_btn.setOnClickListener {
-            requestStoragePermissionWithAction {
-                viewModel.downloadPhoto(setAsWallpaper = true)
-            }
-        }
-        val bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
-        bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                bottom_sheet.img_slide.animate()
-                    .alpha(1 - slideOffset)
-                    .setDuration(0)
-                    .start()
-                bottom_sheet.img_slide_upside_down.animate()
-                    .alpha(0 + slideOffset)
-                    .setDuration(0)
-                    .start()
-                bottom_sheet.disappearing_container_ll.animate()
-                    .alpha(0 + slideOffset)
-                    .setDuration(0)
-                    .start()
-            }
-            override fun onStateChanged(bottomSheet: View, state: Int) {}
-        })
     }
 
     override fun initViewModelObserving() {
         viewModel.isPhotoFavorite.observe(this, Observer { inFavorites ->
-            if (inFavorites) like_btn_iv.setImageResource(R.drawable.ic_favorite_fill)
-            else like_btn_iv.setImageResource(R.drawable.ic_favorite_outline)
+            if (inFavorites) binding?.likeBtnIv?.setImageResource(R.drawable.ic_favorite_fill)
+            else binding?.likeBtnIv?.setImageResource(R.drawable.ic_favorite_outline)
         })
         viewModel.progressState.observe(this, Observer { state ->
-            when (state) {
-                is ProgressState.DONE -> {
-                    val snack = Snackbar.make(root_cl, state.doneMessage ?: "", Snackbar.LENGTH_SHORT)
-                    ViewCompat.setOnApplyWindowInsetsListener(snack.view) { v, insets ->
-                        v.setPadding(v.paddingLeft, v.paddingTop, v.paddingRight, v.paddingTop)
-                        val params = v.layoutParams as ViewGroup.MarginLayoutParams
-                        params.setMargins(
-                            params.leftMargin,
-                            params.topMargin,
-                            params.rightMargin,
-                            params.bottomMargin + insets.systemWindowInsetBottom)
-                        v.layoutParams = params
-                        insets
+            binding?.let { bind ->
+                when (state) {
+                    is ProgressState.DONE -> {
+                        val snack = Snackbar.make(
+                            bind.rootCl, state.doneMessage ?: "", Snackbar.LENGTH_SHORT
+                        )
+                        ViewCompat.setOnApplyWindowInsetsListener(snack.view) { v, insets ->
+                            v.setPadding(v.paddingLeft, v.paddingTop, v.paddingRight, v.paddingTop)
+                            val params = v.layoutParams as ViewGroup.MarginLayoutParams
+                            params.setMargins(
+                                params.leftMargin,
+                                params.topMargin,
+                                params.rightMargin,
+                                params.bottomMargin + insets.systemWindowInsetBottom
+                            )
+                            v.layoutParams = params
+                            insets
+                        }
+                        snack.show()
                     }
-                    snack.show()
-                }
-                is ProgressState.INITIAL -> {
-                    val snack = Snackbar.make(root_cl, state.initialMessage ?: "", Snackbar.LENGTH_SHORT)
-                    ViewCompat.setOnApplyWindowInsetsListener(snack.view) { v, insets ->
-                        v.setPadding(v.paddingLeft, v.paddingTop, v.paddingRight, v.paddingTop)
-                        val params = v.layoutParams as ViewGroup.MarginLayoutParams
-                        params.setMargins(
-                            params.leftMargin,
-                            params.topMargin,
-                            params.rightMargin,
-                            params.bottomMargin + insets.systemWindowInsetBottom)
-                        v.layoutParams = params
-                        insets
+
+                    is ProgressState.INITIAL -> {
+                        val snack = Snackbar.make(
+                            bind.rootCl, state.initialMessage ?: "", Snackbar.LENGTH_SHORT
+                        )
+                        ViewCompat.setOnApplyWindowInsetsListener(snack.view) { v, insets ->
+                            v.setPadding(v.paddingLeft, v.paddingTop, v.paddingRight, v.paddingTop)
+                            val params = v.layoutParams as ViewGroup.MarginLayoutParams
+                            params.setMargins(
+                                params.leftMargin,
+                                params.topMargin,
+                                params.rightMargin,
+                                params.bottomMargin + insets.systemWindowInsetBottom
+                            )
+                            v.layoutParams = params
+                            insets
+                        }
+                        snack.show()
                     }
-                    snack.show()
+
+                    else -> {}
                 }
             }
+
         })
     }
 
     private fun setupNeededPeekHeight(bottomInsetns: Int) {
         val allMargins = requireContext().dpToPix(55)
-        bottom_sheet.photographer_title_tv.measure(0, 0)
-        bottom_sheet.photographer_tv.measure(0, 0)
-        val photographerTitleHeight = bottom_sheet.photographer_title_tv.measuredHeight
-        val photographerTextHeight = bottom_sheet.photographer_tv.measuredHeight
-        val finalPeekHeight = allMargins + photographerTitleHeight + photographerTextHeight + bottomInsetns
-        val bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
-        bottomSheetBehavior.peekHeight = finalPeekHeight.toInt()
+        binding?.bottomSheet?.photographerTitleTv?.measure(0, 0)
+        binding?.bottomSheet?.photographerTv?.measure(0, 0)
+        binding?.bottomSheet?.let {
+            val photographerTitleHeight = it.photographerTitleTv.measuredHeight
+            val photographerTextHeight = it.photographerTv.measuredHeight
+            val finalPeekHeight =
+                allMargins + photographerTitleHeight + photographerTextHeight + bottomInsetns
+            val bottomSheetBehavior = BottomSheetBehavior.from(it.root)
+            bottomSheetBehavior.peekHeight = finalPeekHeight.toInt()
+        }
+
     }
 
     companion object {

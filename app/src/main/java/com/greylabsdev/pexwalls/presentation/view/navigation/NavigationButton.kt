@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.greylabsdev.pexwalls.R
+import com.greylabsdev.pexwalls.databinding.ViewNavigationButtonBinding
 import com.greylabsdev.pexwalls.presentation.ext.measureWidth
-import kotlinx.android.synthetic.main.view_navigation_button.view.*
 
 class NavigationButton @JvmOverloads constructor(
     context: Context,
@@ -19,30 +20,33 @@ class NavigationButton @JvmOverloads constructor(
     title: String? = null,
     @DrawableRes iconRes: Int? = null,
     var onClickAction: (() -> Unit)? = null
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val titleWidth: Int by lazy { this.btn_title_tv.measureWidth() }
+    private val titleWidth: Int by lazy { binding.btnTitleTv.measureWidth() }
+    private val binding: ViewNavigationButtonBinding
 
     init {
         View.inflate(context, R.layout.view_navigation_button, this)
-        title?.let { this.btn_title_tv.text = it }
-        iconRes?.let { this.btn_icon_iv.setImageResource(it) }
+        binding = ViewNavigationButtonBinding.bind(this)
+        title?.let { binding.btnTitleTv.text = it }
+        iconRes?.let { binding.btnIconIv.setImageResource(it) }
+        binding.root.setOnClickListener { onClickAction?.invoke() }
     }
 
     fun swapIn() {
-        this.btn_bg_iv.animate()
+        binding.btnBgIv.animate()
             .alpha(0f)
             .setDuration(DEFAULT_ALPHA_ANIM_DURATION)
             .start()
-        this.btn_title_tv.swapInBySize(animDuration = DEFAULT_SCALE_ANIM_DURATION)
+        binding.btnTitleTv.swapInBySize(animDuration = DEFAULT_SCALE_ANIM_DURATION)
     }
 
     fun swapOut() {
-        this.btn_bg_iv.animate()
+        binding.btnBgIv.animate()
             .alpha(1f)
             .setDuration(DEFAULT_ALPHA_ANIM_DURATION)
             .start()
-        this.btn_title_tv.swapOutBySize(
+        binding.btnTitleTv.swapOutBySize(
             animDuration = DEFAULT_SCALE_ANIM_DURATION,
             swapWidth = titleWidth
         )

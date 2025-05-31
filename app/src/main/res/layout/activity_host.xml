@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/navigation_host_fr"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:fitsSystemWindows="false"
@@ -27,15 +27,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/navigation_view" />
+            app:layout_constraintBottom_toTopOf="@id/navigation_buttons_container" />
 
-        <com.greylabsdev.pexwalls.presentation.view.navigation.NavigationView
-            android:id="@+id/navigation_view"
+<!--        <com.greylabsdev.pexwalls.presentation.view.navigation.NavigationView-->
+<!--            android:id="@+id/navigation_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+        <LinearLayout
+            android:id="@+id/navigation_buttons_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingHorizontal="@dimen/padding_16"
+            android:paddingVertical="@dimen/padding_8"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

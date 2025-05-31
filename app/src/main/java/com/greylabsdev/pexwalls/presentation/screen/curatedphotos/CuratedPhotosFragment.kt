@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.view.View
 import androidx.lifecycle.Observer
 import com.greylabsdev.pexwalls.R
+import com.greylabsdev.pexwalls.databinding.FragmentCuratedPhotosBinding
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.collection.photolist.PhotoListItemDecoration
 import com.greylabsdev.pexwalls.presentation.collection.photolist.PhotoListPagingAdapter
@@ -14,18 +15,22 @@ import com.greylabsdev.pexwalls.presentation.ext.getScreenHeightInPixels
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.screen.photo.PhotoFragment
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
-import kotlinx.android.synthetic.main.fragment_curated_photos.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CuratedPhotosFragment : BaseFragment(
-    layoutResId = R.layout.fragment_curated_photos
+class CuratedPhotosFragment : BaseFragment<FragmentCuratedPhotosBinding>(
+    bindingFactory = FragmentCuratedPhotosBinding::inflate
 ) {
     override val viewModel by viewModel<CuratedPhotosViewModel>()
-    override val placeholderView: PlaceholderView? by lazy { placeholder_view }
-    override val contentView: View? by lazy { photo_list_rv }
+    override val placeholderView: PlaceholderView?
+        get() = binding?.placeholderView
+    override val contentView: View?
+        get() = binding?.photoListRv
+
     override val toolbarTitle: String? by lazy { getString(R.string.curated_toolbar_title) }
 
-    private val photoCardMargin by lazy { requireActivity().dpToPix(Consts.DEFAULT_MARGIN_DP).toInt() }
+    private val photoCardMargin by lazy {
+        requireActivity().dpToPix(Consts.DEFAULT_MARGIN_DP).toInt()
+    }
     private val photoCardHeight by lazy {
         (requireActivity().getScreenHeightInPixels() * Consts.PHOTO_HEIGHT_BY_SCREEN_PERCENT).toInt()
     }
@@ -39,16 +44,20 @@ class CuratedPhotosFragment : BaseFragment(
     }
 
     override fun initViews() {
-        photo_list_rv.adapter = photoListPagingAdapter
-        if (photo_list_rv.itemDecorationCount == 0) {
-            photo_list_rv.addItemDecoration(
-                PhotoListItemDecoration(photoCardMargin)
-            )
+        toolbarView = binding?.toolbar
+        binding?.photoListRv?.let { photoRv ->
+            photoRv.adapter = photoListPagingAdapter
+            if (photoRv.itemDecorationCount == 0) {
+                photoRv.addItemDecoration(
+                    PhotoListItemDecoration(photoCardMargin)
+                )
+            }
         }
+
     }
 
     override fun initListeners() {
-        placeholder_view.onTryNowBtnClickAction = { viewModel.repeatFetch() }
+        binding?.placeholderView?.onTryNowBtnClickAction = { viewModel.repeatFetch() }
     }
 
     override fun initViewModelObserving() {
@@ -60,7 +69,7 @@ class CuratedPhotosFragment : BaseFragment(
 
     override fun onPause() {
         super.onPause()
-        photo_list_rv.layoutManager?.onSaveInstanceState()?.let { state ->
+        binding?.photoListRv?.layoutManager?.onSaveInstanceState()?.let { state ->
             recyclerState = state
         }
     }
@@ -68,7 +77,7 @@ class CuratedPhotosFragment : BaseFragment(
     override fun onResume() {
         super.onResume()
         recyclerState?.let { state ->
-            photo_list_rv.layoutManager?.onRestoreInstanceState(state)
+            binding?.photoListRv?.layoutManager?.onRestoreInstanceState(state)
         }
     }
 

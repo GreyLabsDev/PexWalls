@@ -9,7 +9,9 @@
     android:gravity="center"
     tools:context=".presentation.screen.host.HostActivity">
 
-    <include layout="@layout/layout_toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar" />
 
     <FrameLayout
         android:layout_width="match_parent"

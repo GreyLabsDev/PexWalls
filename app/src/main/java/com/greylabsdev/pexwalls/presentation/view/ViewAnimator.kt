@@ -34,7 +34,10 @@ class ViewAnimator {
             setAnimationListener(
                 object : Animation.AnimationListener {
                     override fun onAnimationRepeat(p0: Animation?) {}
-                    override fun onAnimationEnd(p0: Animation?) { onEndAction?.invoke() }
+                    override fun onAnimationEnd(p0: Animation?) {
+                        onEndAction?.invoke()
+                    }
+
                     override fun onAnimationStart(p0: Animation?) {}
                 }
             )
@@ -56,7 +59,10 @@ class ViewAnimator {
             setAnimationListener(
                 object : Animation.AnimationListener {
                     override fun onAnimationRepeat(p0: Animation?) {}
-                    override fun onAnimationEnd(p0: Animation?) { onEndAction?.invoke() }
+                    override fun onAnimationEnd(p0: Animation?) {
+                        onEndAction?.invoke()
+                    }
+
                     override fun onAnimationStart(p0: Animation?) {}
                 }
             )

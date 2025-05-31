@@ -6,6 +6,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.greylabsdev.pexwalls.R
+import com.greylabsdev.pexwalls.databinding.FragmentCategoryPhotosBinding
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoGridPagingAdapter
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoItemDecoration
@@ -18,12 +19,11 @@ import com.greylabsdev.pexwalls.presentation.ext.getScreenWidthInPixels
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.screen.photo.PhotoFragment
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
-import kotlinx.android.synthetic.main.fragment_category_photos.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class CategoryPhotosFragment : BaseFragment(
-    layoutResId = R.layout.fragment_category_photos,
+class CategoryPhotosFragment : BaseFragment<FragmentCategoryPhotosBinding>(
+    bindingFactory = FragmentCategoryPhotosBinding::inflate,
     hasToolbarBackButton = true
 ) {
     override val viewModel by viewModel<CategoryPhotosViewModel> {
@@ -31,8 +31,10 @@ class CategoryPhotosFragment : BaseFragment(
     }
 
     override val toolbarTitle by lazy { photoCategory.name.capitalize() }
-    override val placeholderView: PlaceholderView by lazy { placeholder_view }
-    override val contentView: View? by lazy { photo_grid_rv }
+    override val placeholderView: PlaceholderView?
+        get() = binding?.placeholderView
+    override val contentView: View?
+        get() = binding?.photoGridRv
 
     private val photoCategory by argSerializable<PhotoCategory>(ARG_KEY)
 
@@ -49,21 +51,26 @@ class CategoryPhotosFragment : BaseFragment(
     }
 
     override fun initViews() {
-        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        photo_grid_rv.layoutManager = staggeredGridLayoutManager
-        photo_grid_rv.adapter = photoGridPagingAdapter
+        toolbarView = binding?.toolbar
+        val staggeredGridLayoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        binding?.photoGridRv?.let { photoGrid ->
+            photoGrid.layoutManager = staggeredGridLayoutManager
+            photoGrid.adapter = photoGridPagingAdapter
 
-        if (photo_grid_rv.itemDecorationCount == 0) {
-            photo_grid_rv.addItemDecoration(
-                PhotoItemDecoration(
-                    photoCardMargin.toInt()
+            if (photoGrid.itemDecorationCount == 0) {
+                photoGrid.addItemDecoration(
+                    PhotoItemDecoration(
+                        photoCardMargin.toInt()
+                    )
                 )
-            )
+            }
         }
+
     }
 
     override fun initListeners() {
-        placeholder_view.onTryNowBtnClickAction = { viewModel.repeatFetch() }
+        binding?.placeholderView?.onTryNowBtnClickAction = { viewModel.repeatFetch() }
     }
 
     override fun initViewModelObserving() {
@@ -75,7 +82,7 @@ class CategoryPhotosFragment : BaseFragment(
 
     override fun onPause() {
         super.onPause()
-        photo_grid_rv.layoutManager?.onSaveInstanceState()?.let { state ->
+        binding?.photoGridRv?.layoutManager?.onSaveInstanceState()?.let { state ->
             recyclerState = state
         }
     }
@@ -83,7 +90,7 @@ class CategoryPhotosFragment : BaseFragment(
     override fun onResume() {
         super.onResume()
         recyclerState?.let { state ->
-            photo_grid_rv.layoutManager?.onRestoreInstanceState(state)
+            binding?.photoGridRv?.layoutManager?.onRestoreInstanceState(state)
         }
     }
 

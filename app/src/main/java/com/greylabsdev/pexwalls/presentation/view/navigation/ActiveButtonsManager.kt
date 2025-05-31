@@ -7,7 +7,8 @@ class ActiveButtonsManager {
     private val inactiveButtons: List<NavigationButton>
         get() = buttons.filter { it != activeButton }
 
-    var onActiveButtonChangedAction: ((activeButton: NavigationButton, inactiveButtons: List<NavigationButton>) -> Unit)? = null
+    var onActiveButtonChangedAction: ((activeButton: NavigationButton, inactiveButtons: List<NavigationButton>) -> Unit)? =
+        null
 
     fun toggleButtonToActive(button: NavigationButton) {
         if (activeButton != button) {

@@ -8,6 +8,7 @@
     android:background="@color/colorBackground">
 
     <include
+        android:id="@+id/toolbar"
         layout="@layout/layout_toolbar"/>
 
     <FrameLayout

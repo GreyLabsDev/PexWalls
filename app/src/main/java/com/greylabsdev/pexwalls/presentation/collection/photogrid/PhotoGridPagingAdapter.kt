@@ -1,11 +1,13 @@
 package com.greylabsdev.pexwalls.presentation.collection.photogrid
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.greylabsdev.pexwalls.R
+import com.greylabsdev.pexwalls.databinding.ItemFooterBinding
+import com.greylabsdev.pexwalls.databinding.ItemHeaderBinding
+import com.greylabsdev.pexwalls.databinding.ItemPhotoInGridBinding
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
-import com.greylabsdev.pexwalls.presentation.ext.inflate
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.PagingAdapter
 import com.greylabsdev.pexwalls.presentation.paging.PagingItem
@@ -27,26 +29,40 @@ class PhotoGridPagingAdapter(
         lateinit var holder: RecyclerView.ViewHolder
         when (viewType) {
             PagingItem.ItemType.DATA.itemCode -> {
-                val view = parent.inflate(R.layout.item_photo_in_grid, parent, false)
+                val itemBinding = ItemPhotoInGridBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 holder = PhotoGridDataViewHolder(
-                    view,
+                    itemBinding,
                     photoCardWidth,
                     photoCardHeight,
-                    view.context.dpToPix(photoCardCornerRadius)
+                    itemBinding.root.context.dpToPix(photoCardCornerRadius)
                 )
             }
+
             PagingItem.ItemType.HEADER.itemCode -> {
-                val view = parent.inflate(R.layout.item_header, parent, false)
+                val itemBinding = ItemHeaderBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 holder = PhotoGridHeaderViewHolder(
-                    view,
+                    itemBinding,
                     photoCardWidth,
                     photoCardHeight
                 )
             }
+
             PagingItem.ItemType.FOOTER.itemCode -> {
-                val view = parent.inflate(R.layout.item_footer, parent, false)
+                val itemBinding = ItemFooterBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 holder = PhotoGridFooterViewHolder(
-                    view,
+                    itemBinding,
                     photoCardWidth,
                     photoCardHeight
                 )
@@ -65,11 +81,13 @@ class PhotoGridPagingAdapter(
                     }
                 }
             }
+
             PagingItem.ItemType.HEADER.itemCode -> {
                 items[position].itemData?.let {
                     (holder as PhotoGridHeaderViewHolder).bind(it)
                 }
             }
+
             PagingItem.ItemType.FOOTER.itemCode -> {
                 items[position].itemData?.let {
                     (holder as PhotoGridFooterViewHolder).bind(it, (position % 3 == 0))
@@ -83,6 +101,7 @@ class PhotoGridPagingAdapter(
             override fun areItemsTheSame(oldItem: PhotoModel, newItem: PhotoModel): Boolean {
                 return oldItem.id == newItem.id
             }
+
             override fun areContentsTheSame(oldItem: PhotoModel, newItem: PhotoModel): Boolean {
                 return oldItem.normalPhotoUrl == newItem.normalPhotoUrl
             }

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.greylabsdev.pexwalls.R
+import com.greylabsdev.pexwalls.databinding.FragmentHomeBinding
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.const.Consts
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
@@ -15,17 +16,18 @@ import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryColorItemD
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryThemeAdapter
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryThemeItemDecoration
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
-import kotlinx.android.synthetic.main.fragment_home.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : BaseFragment(
-    layoutResId = R.layout.fragment_home,
+class HomeFragment : BaseFragment<FragmentHomeBinding>(
+    bindingFactory = FragmentHomeBinding::inflate,
     hasToolbarBackButton = false
 ) {
     override val viewModel by viewModel<HomeViewModel>()
     override val toolbarTitle: String? by lazy { getString(R.string.category_toolbar_title) }
-    override val placeholderView: PlaceholderView? by lazy { placeholder_view }
-    override val contentView: View? by lazy { content_container_ll }
+    override val placeholderView: PlaceholderView?
+        get() = binding?.placeholderView
+    override val contentView: View?
+        get() = binding?.contentContainerLl
 
     private lateinit var categoryThemeAdapter: CategoryThemeAdapter
     private lateinit var categoryColorAdapter: CategoryColorAdapter
@@ -37,23 +39,33 @@ class HomeFragment : BaseFragment(
     }
 
     override fun initViews() {
-        category_themes_rv.adapter = categoryThemeAdapter
-        if (category_themes_rv.itemDecorationCount == 0) {
-            category_themes_rv.addItemDecoration(
-                CategoryThemeItemDecoration(requireContext().dpToPix(Consts.SMALL_MARGIN_DP).toInt())
-            )
+        toolbarView = binding?.toolbar
+        binding?.categoryThemesRv?.let { themesRv ->
+            themesRv.adapter = categoryThemeAdapter
+            if (themesRv.itemDecorationCount == 0) {
+                themesRv.addItemDecoration(
+                    CategoryThemeItemDecoration(
+                        requireContext().dpToPix(Consts.SMALL_MARGIN_DP).toInt()
+                    )
+                )
+            }
         }
-        category_colors_rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        category_colors_rv.adapter = categoryColorAdapter
-        if (category_colors_rv.itemDecorationCount == 0) {
-            category_colors_rv.addItemDecoration(
-                CategoryColorItemDecoration(requireContext().dpToPix(Consts.DEFAULT_MARGIN_DP).toInt())
-            )
+        binding?.categoryColorsRv?.let { colorsRv ->
+            colorsRv.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            colorsRv.adapter = categoryColorAdapter
+            if (colorsRv.itemDecorationCount == 0) {
+                colorsRv.addItemDecoration(
+                    CategoryColorItemDecoration(
+                        requireContext().dpToPix(Consts.DEFAULT_MARGIN_DP).toInt()
+                    )
+                )
+            }
         }
     }
 
     override fun initListeners() {
-        placeholder_view.onTryNowBtnClickAction = {
+        binding?.placeholderView?.onTryNowBtnClickAction = {
             viewModel.fetchCategories()
         }
     }

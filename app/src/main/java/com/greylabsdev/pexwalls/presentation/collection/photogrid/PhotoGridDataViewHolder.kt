@@ -7,15 +7,15 @@ import android.view.ViewOutlineProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.greylabsdev.pexwalls.databinding.ItemPhotoInGridBinding
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
-import kotlinx.android.synthetic.main.item_photo_in_grid.view.*
 
 class PhotoGridDataViewHolder(
-    view: View,
+    private val binding: ItemPhotoInGridBinding,
     private val itemWidth: Int,
     private val itemHeight: Int,
     private val photoCardCornerRadius: Float
-) : RecyclerView.ViewHolder(view) {
+) : RecyclerView.ViewHolder(binding.root) {
 
     private val outlineProvider by lazy {
         object : ViewOutlineProvider() {
@@ -33,12 +33,12 @@ class PhotoGridDataViewHolder(
         Glide.with(itemView.context)
             .load(item.normalPhotoUrl)
             .transform(CenterCrop())
-            .into(itemView.photo_iv)
-        itemView.photo_iv.outlineProvider = outlineProvider
-        itemView.photo_iv.clipToOutline = true
+            .into(binding.photoIv)
+        binding.photoIv.outlineProvider = outlineProvider
+        binding.photoIv.clipToOutline = true
     }
 
     fun setOnClickListener(onClickListener: () -> Unit) {
-        itemView.photo_iv.setOnClickListener { onClickListener.invoke() }
+        binding.photoIv.setOnClickListener { onClickListener.invoke() }
     }
 }

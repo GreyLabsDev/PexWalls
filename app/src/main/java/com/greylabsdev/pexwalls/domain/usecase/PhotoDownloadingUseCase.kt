@@ -12,6 +12,7 @@ import java.io.File
 import java.net.URI
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import androidx.core.net.toUri
 
 class PhotoDownloadingUseCase(
     private val context: Context,
@@ -28,13 +29,19 @@ class PhotoDownloadingUseCase(
         setAsWallpaper: Boolean = false
     ): Flow<Int> {
         val fileName = "${author.replace(" ", "_")}_$postfix.jpeg"
-        val downloadUrl = Uri.parse(linkGenerator.generateUrl(
-            baseLink, if (originalResolution != null) ResolutionManager.Resolution(originalResolution.first,
-                originalResolution.second)
+
+        val downloadUrl = linkGenerator.generateUrl(
+            baseLink, if (originalResolution != null) ResolutionManager.Resolution(
+                originalResolution.first,
+                originalResolution.second
+            )
             else resolutionManager.screenResolution
-        )
-        )
-        val photoDirPath = Environment.getExternalStorageDirectory().toString() + "/PexWalls"
+        ).toUri()
+
+        val photoDirPath = context.getExternalFilesDir(
+            Environment.DIRECTORY_DOWNLOADS
+        ).toString() + "/PexWalls"
+
         val photoDir = File(photoDirPath)
         if (photoDir.exists().not()) photoDir.mkdirs()
         val photoFile = File(photoDir, fileName)
@@ -68,8 +75,12 @@ class PhotoDownloadingUseCase(
             while (progress <= 100) {
                 cursor = downloadManager.query(query)
                 cursor!!.moveToFirst()
-                val bytesDownloaded = cursor!!.getInt(cursor!!.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
-                val bytesTotal = cursor!!.getInt(cursor!!.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
+                val bytesDownloaded = cursor!!.getInt(
+                    cursor!!.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR)
+                )
+                val bytesTotal = cursor!!.getInt(
+                    cursor!!.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES)
+                )
                 progress = (bytesDownloaded * 100L / bytesTotal).toInt()
                 if (progress == 100) {
                     if (setAsWallpaper) setImageAsWallpaper(fileUri)

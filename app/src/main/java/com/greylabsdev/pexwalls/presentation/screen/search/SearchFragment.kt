@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.greylabsdev.pexwalls.R
+import com.greylabsdev.pexwalls.databinding.FragmentSearchBinding
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoGridPagingAdapter
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoItemDecoration
@@ -18,17 +19,17 @@ import com.greylabsdev.pexwalls.presentation.ext.hideKeyboard
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.screen.photo.PhotoFragment
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
-import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.android.synthetic.main.layout_toolbar_search.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchFragment : BaseFragment(
-    layoutResId = R.layout.fragment_search
+class SearchFragment : BaseFragment<FragmentSearchBinding>(
+    bindingFactory = FragmentSearchBinding::inflate
 ) {
     override val viewModel by viewModel<SearchViewModel>()
     override val toolbarTitle: String? = null
-    override val contentView: View? by lazy { content_ll }
-    override val placeholderView: PlaceholderView? by lazy { placeholder_view }
+    override val contentView: View?
+        get() = binding?.contentLl
+    override val placeholderView: PlaceholderView?
+        get() = binding?.placeholderView
 
     private val photoCardMargin by lazy { requireActivity().dpToPix(Consts.DEFAULT_MARGIN_DP) }
     private val photoCardWidth by lazy { requireActivity().getScreenWidthInPixels() / 2 }
@@ -43,20 +44,23 @@ class SearchFragment : BaseFragment(
     }
 
     override fun initViews() {
-        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        photo_grid_rv.layoutManager = staggeredGridLayoutManager
-        photo_grid_rv.adapter = photoGridPagingAdapter
-        if (photo_grid_rv.itemDecorationCount == 0) {
-            photo_grid_rv.addItemDecoration(
-                PhotoItemDecoration(
-                    photoCardMargin.toInt()
+        val staggeredGridLayoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        binding?.photoGridRv?.let { photoGrid ->
+            photoGrid.layoutManager = staggeredGridLayoutManager
+            photoGrid.adapter = photoGridPagingAdapter
+            if (photoGrid.itemDecorationCount == 0) {
+                photoGrid.addItemDecoration(
+                    PhotoItemDecoration(
+                        photoCardMargin.toInt()
+                    )
                 )
-            )
+            }
         }
     }
 
     override fun initListeners() {
-        search_field_edt.setOnEditorActionListener { textView, i, keyEvent ->
+        binding?.searchBar?.searchFieldEdt?.setOnEditorActionListener { textView, i, keyEvent ->
             if (i == EditorInfo.IME_ACTION_DONE) {
                 viewModel.search(textView.text.toString())
                 requireActivity().hideKeyboard()
@@ -76,7 +80,7 @@ class SearchFragment : BaseFragment(
 
     override fun onPause() {
         super.onPause()
-        photo_grid_rv.layoutManager?.onSaveInstanceState()?.let { state ->
+        binding?.photoGridRv?.layoutManager?.onSaveInstanceState()?.let { state ->
             recyclerState = state
         }
     }
@@ -84,7 +88,7 @@ class SearchFragment : BaseFragment(
     override fun onResume() {
         super.onResume()
         recyclerState?.let { state ->
-            photo_grid_rv.layoutManager?.onRestoreInstanceState(state)
+            binding?.photoGridRv?.layoutManager?.onRestoreInstanceState(state)
         }
     }
 

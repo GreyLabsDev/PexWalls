@@ -1,17 +1,16 @@
 package com.greylabsdev.pexwalls.presentation.screen.home.list
 
 import android.graphics.Outline
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.greylabsdev.pexwalls.R
-import com.greylabsdev.pexwalls.presentation.ext.inflate
+import com.greylabsdev.pexwalls.databinding.ItemCategoryColorBinding
 import com.greylabsdev.pexwalls.presentation.ext.setTint
 import com.greylabsdev.pexwalls.presentation.model.CategoryModel
-import kotlinx.android.synthetic.main.item_category_color.view.*
 
 class CategoryColorAdapter(
     private val photoCardCornerRadius: Float,
@@ -27,8 +26,12 @@ class CategoryColorAdapter(
     override fun getItemCount(): Int = categories.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryColorViewHolder {
-        val view = parent.inflate(R.layout.item_category_color, parent, false)
-        return CategoryColorViewHolder(view, photoCardCornerRadius)
+        val itemBinding = ItemCategoryColorBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return CategoryColorViewHolder(itemBinding, photoCardCornerRadius)
     }
 
     override fun onBindViewHolder(holder: CategoryColorViewHolder, position: Int) {
@@ -39,9 +42,9 @@ class CategoryColorAdapter(
     }
 
     class CategoryColorViewHolder(
-        view: View,
+        private val binding: ItemCategoryColorBinding,
         private val photoCardCornerRadius: Float
-    ) : RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         private val outlineProvider by lazy {
             object : ViewOutlineProvider() {
                 override fun getOutline(view: View, outline: Outline) {
@@ -49,14 +52,15 @@ class CategoryColorAdapter(
                 }
             }
         }
+
         fun bind(item: CategoryModel) {
-            item.category.color?.let { itemView.color_iv.setTint(it) }
+            item.category.color?.let { binding.colorIv.setTint(it) }
             Glide.with(itemView.context)
                 .load(item.categoryPhotoUrl)
                 .transform(CenterCrop())
-                .into(itemView.category_cover_iv)
-            itemView.category_cover_iv.outlineProvider = outlineProvider
-            itemView.category_cover_iv.clipToOutline = true
+                .into(binding.categoryCoverIv)
+            binding.categoryCoverIv.outlineProvider = outlineProvider
+            binding.categoryCoverIv.clipToOutline = true
         }
     }
 }

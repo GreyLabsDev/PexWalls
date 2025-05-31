@@ -35,7 +35,7 @@
             android:id="@+id/btn_icon_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/colorBlack"
+            app:tint="@color/colorBlack"
             tools:src="@drawable/ic_home"/>
 
         <TextView

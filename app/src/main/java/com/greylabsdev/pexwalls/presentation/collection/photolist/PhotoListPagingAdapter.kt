@@ -1,11 +1,13 @@
 package com.greylabsdev.pexwalls.presentation.collection.photolist
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.greylabsdev.pexwalls.R
+import com.greylabsdev.pexwalls.databinding.ItemFooterBinding
+import com.greylabsdev.pexwalls.databinding.ItemHeaderBinding
+import com.greylabsdev.pexwalls.databinding.ItemPhotoInListBinding
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
-import com.greylabsdev.pexwalls.presentation.ext.inflate
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
 import com.greylabsdev.pexwalls.presentation.paging.PagingAdapter
 import com.greylabsdev.pexwalls.presentation.paging.PagingItem
@@ -26,24 +28,38 @@ class PhotoListPagingAdapter(
         lateinit var holder: RecyclerView.ViewHolder
         when (viewType) {
             PagingItem.ItemType.DATA.itemCode -> {
-                val view = parent.inflate(R.layout.item_photo_in_list, parent, false)
+                val itemBinding = ItemPhotoInListBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 holder = PhotoListDataViewHolder(
-                    view,
+                    itemBinding,
                     photoCardHeight,
-                    view.context.dpToPix(photoCardCornerRadius)
+                    itemBinding.root.context.dpToPix(photoCardCornerRadius)
                 )
             }
+
             PagingItem.ItemType.HEADER.itemCode -> {
-                val view = parent.inflate(R.layout.item_header, parent, false)
+                val itemBinding = ItemHeaderBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 holder = PhotoListHeaderViewHolder(
-                    view,
+                    itemBinding,
                     photoCardHeight
                 )
             }
+
             PagingItem.ItemType.FOOTER.itemCode -> {
-                val view = parent.inflate(R.layout.item_footer, parent, false)
+                val itemBinding = ItemFooterBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 holder = PhotoListFooterViewHolder(
-                    view,
+                    itemBinding,
                     photoCardHeight
                 )
             }
@@ -61,11 +77,13 @@ class PhotoListPagingAdapter(
                     }
                 }
             }
+
             PagingItem.ItemType.HEADER.itemCode -> {
                 items[position].itemData?.let {
                     (holder as PhotoListHeaderViewHolder).bind(it)
                 }
             }
+
             PagingItem.ItemType.FOOTER.itemCode -> {
                 items[position].itemData?.let {
                     (holder as PhotoListFooterViewHolder).bind(it)
@@ -79,6 +97,7 @@ class PhotoListPagingAdapter(
             override fun areItemsTheSame(oldItem: PhotoModel, newItem: PhotoModel): Boolean {
                 return oldItem.id == newItem.id
             }
+
             override fun areContentsTheSame(oldItem: PhotoModel, newItem: PhotoModel): Boolean {
                 return oldItem.normalPhotoUrl == newItem.normalPhotoUrl
             }

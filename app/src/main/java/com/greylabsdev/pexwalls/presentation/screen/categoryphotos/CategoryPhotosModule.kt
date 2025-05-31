@@ -1,7 +1,7 @@
 package com.greylabsdev.pexwalls.presentation.screen.categoryphotos
 
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val categoryPhotosModule = module {

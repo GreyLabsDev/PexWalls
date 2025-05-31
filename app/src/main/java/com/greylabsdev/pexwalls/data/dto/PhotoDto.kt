@@ -19,7 +19,7 @@ data class PhotoDto(
     val photographer: String,
     @ColumnInfo
     @SerializedName("photographer_id")
-    val photographerId: Int,
+    val photographerId: Long,
     @ColumnInfo
     @SerializedName("photographer_url")
     val photographerUrl: String,

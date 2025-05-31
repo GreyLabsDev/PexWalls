@@ -9,6 +9,6 @@ class WallpaperSetter(private val context: Context) {
     fun setWallpaperByImagePath(fileUri: URI) {
         val wallpaperManager = WallpaperManager.getInstance(context)
         val inputStream = fileUri.toURL().openStream()
-        wallpaperManager.setStream(inputStream)
+        wallpaperManager.setStream(inputStream, null, false, WallpaperManager.FLAG_SYSTEM)
     }
 }
