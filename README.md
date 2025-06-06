@@ -30,7 +30,7 @@ Base UI design implementing simple, clean and easy to understand approach to use
 - Custom loading placeholder with animation
 - Custom RecyclerView grid for photo gallery (ispired by Pinterest)
 
-#### TODO
+#### Restoring project tasks (2025)
 - [x] Update project
 - [x] Update libs/deps
 - [x] Update DI
