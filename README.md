@@ -39,8 +39,14 @@ Base UI design implementing simple, clean and easy to understand approach to use
 - [x] Fix navigation component usage crashes (or migrate to proper nav. system)
 - [x] Remove old unused Rx code
 - [x] Remove Stetho
-- [ ] Move domain to separate module
-- [ ] Migrate to Compose
+
+#### Project upgrade tasks (2026)
+- [ ] Update main deps
+- [ ] Multi-module architecture
+- [ ] Only Coroutines and Flow usage
+- [ ] Full Compose migration (including navigation)
+- [ ] Use @Stable, immutable collections and other Compose optimizations
+- [ ] MB(?) Add rules and instructions for AI-assisted development
 
 ## Star History
 
