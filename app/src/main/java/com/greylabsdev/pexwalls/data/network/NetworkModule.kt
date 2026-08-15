@@ -1,12 +1,10 @@
 package com.greylabsdev.pexwalls.data.network
 
-import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
@@ -49,7 +47,6 @@ fun createOkHttpClient(
     return OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .addNetworkInterceptor(networkInterceptor)
-        .addNetworkInterceptor(StethoInterceptor())
         .hostnameVerifier { _, _ -> true }
         .retryOnConnectionFailure(false)
         .build()
@@ -60,7 +57,6 @@ inline fun <reified T> createApiService(okHttpClient: OkHttpClient, apiUrl: Stri
         .baseUrl(apiUrl)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
     return retrofit.create(T::class.java)
 }

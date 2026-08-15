@@ -2,20 +2,12 @@ package com.greylabsdev.pexwalls.presentation.paging
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
 
-open class PagingDataSource<ItemType>(
-    private val dataSourceMode: DataSourceMode = DataSourceMode.RX()
-) {
+open class PagingDataSource<ItemType> {
 
     private var _itemsChannelLiveData: MutableLiveData<List<PagingItem<ItemType>>> = MutableLiveData()
     val itemsChannelLiveData: LiveData<List<PagingItem<ItemType>>>
         get() = _itemsChannelLiveData
-
-    private var _itemsChannelRx: BehaviorSubject<List<PagingItem<ItemType>>> = BehaviorSubject.create<List<PagingItem<ItemType>>>()
-    val itemsChannelRx: Observable<List<PagingItem<ItemType>>>
-        get() = _itemsChannelRx.hide()
 
     private var _items: MutableList<PagingItem<ItemType>> = mutableListOf()
     val items: List<PagingItem<ItemType>>
@@ -84,13 +76,6 @@ open class PagingDataSource<ItemType>(
     }
 
     private fun pushUpdatedItems() {
-        when (dataSourceMode) {
-            is DataSourceMode.LIVEDATA -> {
-                _itemsChannelLiveData.value = _items
-            }
-            is DataSourceMode.RX -> {
-                _itemsChannelRx.onNext(_items)
-            }
-        }
+        _itemsChannelLiveData.value = _items
     }
 }

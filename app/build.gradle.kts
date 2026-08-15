@@ -54,21 +54,14 @@ dependencies {
 
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.rxjava2)
     annotationProcessor(libs.androidx.room.compiler)
 
     implementation(libs.retrofit)
-    implementation(libs.retrofit.rxjava2)
     implementation(libs.retrofit.gson)
 
     implementation(libs.okhttp.logging)
 
     implementation(libs.glide)
-
-    implementation(libs.rxandroid)
-    implementation(libs.rxjava)
-    implementation(libs.rxkotlin)
-    implementation(libs.rxbinding)
 
     implementation(libs.androidx.lifecycle.extensions)
     ksp(libs.androidx.lifecycle.compiler)
@@ -79,6 +72,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
 
+    implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.android)
 
@@ -86,8 +80,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     implementation(libs.timber)
-
-    implementation(libs.stetho.okhttp3)
 }
 
 tasks.register<JavaExec>("ktlint") {

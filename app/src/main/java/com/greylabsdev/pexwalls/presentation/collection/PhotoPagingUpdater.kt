@@ -7,7 +7,6 @@ import com.greylabsdev.pexwalls.domain.usecase.PhotoFavoritesUseCase
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.mapper.PresentationMapper
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
-import com.greylabsdev.pexwalls.presentation.paging.DataSourceMode
 import com.greylabsdev.pexwalls.presentation.paging.PagingDataSource
 import com.greylabsdev.pexwalls.presentation.paging.PagingUpdater
 import java.io.IOException
@@ -29,7 +28,7 @@ class PhotoPagingUpdater(
     var searchQuery: String? = null,
     private val viewModelScope: CoroutineScope
 ) : PagingUpdater<PhotoModel>(
-    pagingDataSource = PagingDataSource(DataSourceMode.LIVEDATA()),
+    pagingDataSource = PagingDataSource(),
     pagingMode = PagingMode.BY_PAGE(),
     pageSize = 15,
     currentPage = 1

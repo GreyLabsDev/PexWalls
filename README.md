@@ -13,7 +13,6 @@ Base UI design implementing simple, clean and easy to understand approach to use
 - [Koin (DI)](https://insert-koin.io/)
 - [Architecture Components (Navigation, Lifecycle, Room)](https://developer.android.com/topic/libraries/architecture)
 - [Timber (logging)](https://github.com/JakeWharton/timber)
-- [Stetho (network debug inspection)](https://github.com/facebookarchive/stetho)
 
 ### Architecture
 - Based on Clean Architecture
@@ -23,7 +22,7 @@ Base UI design implementing simple, clean and easy to understand approach to use
 - Use Cases for domain layer logic
 - Dividing to Local and Remote data sources in repository
 - Unified approach for all screens in BaseFragment
-- Custom made pagination with mutable items for recycler, supports both Kotlin Coroutines and RxJava
+- Custom made pagination with mutable items for recycler
 
 ### Custom UI
 - Custom bottom navigation view with animations

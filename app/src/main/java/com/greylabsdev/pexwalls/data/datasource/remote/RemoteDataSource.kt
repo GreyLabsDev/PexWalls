@@ -9,7 +9,7 @@ import java.lang.Exception
 class RemoteDataSource(private val api: PexelsApi) : IDataSource {
 
     override suspend fun searchPhotos(query: String, page: Int, perPage: Int): SearchResultDto? {
-        val call = api.searchPhotoByQueryCall(query, page, perPage)
+        val call = api.searchPhotoByQuery(query, page, perPage)
         val response = call.execute()
         return response.body()
     }
