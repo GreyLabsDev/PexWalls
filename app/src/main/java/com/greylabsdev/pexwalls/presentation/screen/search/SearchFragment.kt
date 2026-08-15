@@ -12,6 +12,7 @@ import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoGridPagingAdapter
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoItemDecoration
 import com.greylabsdev.pexwalls.presentation.const.Consts
+import com.greylabsdev.pexwalls.presentation.ext.applySystemBarInsetsPadding
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
 import com.greylabsdev.pexwalls.presentation.ext.getScreenHeightInPixels
 import com.greylabsdev.pexwalls.presentation.ext.getScreenWidthInPixels
@@ -44,6 +45,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     }
 
     override fun initViews() {
+        binding?.searchBar?.toolbarContainer?.applySystemBarInsetsPadding(applyTop = true)
         val staggeredGridLayoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding?.photoGridRv?.let { photoGrid ->

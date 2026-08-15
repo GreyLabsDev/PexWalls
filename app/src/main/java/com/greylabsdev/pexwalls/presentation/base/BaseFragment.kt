@@ -2,22 +2,20 @@ package com.greylabsdev.pexwalls.presentation.base
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.annotation.IdRes
-import androidx.core.content.ContextCompat.getColor
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.viewbinding.ViewBinding
-import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.databinding.LayoutToolbarBinding
+import com.greylabsdev.pexwalls.presentation.ext.applySystemBarInsetsPadding
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import java.io.Serializable
 
@@ -133,6 +131,7 @@ abstract class BaseFragment<VB : ViewBinding>(
 
     private fun initToolbar() {
         toolbarView?.let {
+            it.toolbarContainer.applySystemBarInsetsPadding(applyTop = true)
             it.toolbarTitleTv.text = toolbarTitle ?: ""
             it.backIv.isVisible = hasToolbarBackButton
             if (hasToolbarBackButton) {
@@ -142,36 +141,22 @@ abstract class BaseFragment<VB : ViewBinding>(
     }
 
     private fun setupSystemBars() {
-        activity?.window?.statusBarColor = Color.WHITE
-        if (hideNavigation) (requireActivity() as BaseActivity<*>).hideNavigation()
-        if (transparentStatusBar) {
-            requireActivity().window.apply {
-                setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                )
-                setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
-                )
-                decorView.systemUiVisibility = 0
-            }
+        val window = activity?.window ?: return
+        val insetsController = WindowCompat.getInsetsController(window, window.decorView)
+
+        if (hideNavigation) {
             (requireActivity() as BaseActivity<*>).hideNavigation()
-        } else {
-            requireActivity().window.apply {
-                clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-            }
-            if (hideNavigation.not()) (requireActivity() as BaseActivity<*>).showNavigation()
+        } else if (hideNavigation.not() && transparentStatusBar.not()) {
+            (requireActivity() as BaseActivity<*>).showNavigation()
         }
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-            requireActivity().window.apply {
-                navigationBarColor = getColor(requireContext(), R.color.colorBackground)
-                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                if (transparentStatusBar.not())
-                    decorView.systemUiVisibility =
-                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            }
+
+        if (transparentStatusBar) {
+            (requireActivity() as BaseActivity<*>).hideNavigation()
+            insetsController.isAppearanceLightStatusBars = false
+            insetsController.isAppearanceLightNavigationBars = false
+        } else {
+            insetsController.isAppearanceLightStatusBars = true
+            insetsController.isAppearanceLightNavigationBars = true
         }
     }
 

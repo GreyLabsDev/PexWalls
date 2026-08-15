@@ -26,4 +26,8 @@ class FavoritesViewModel(
             errorListener = { error -> _progressState.value = ProgressState.ERROR(error) },
             viewModelScope = viewModelScope
         )
+
+    fun refreshFavorites() {
+        photoGridPagingUpdater.resetAndFetchAgain()
+    }
 }

@@ -36,6 +36,7 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(
 
     private lateinit var photoGridPagingAdapter: PhotoGridPagingAdapter
     private var recyclerState: Parcelable? = null
+    private var isFirstResume = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +78,11 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(
 
     override fun onResume() {
         super.onResume()
+        if (isFirstResume) {
+            isFirstResume = false
+        } else {
+            viewModel.refreshFavorites()
+        }
         recyclerState?.let { state ->
             binding?.photoGridRv?.layoutManager?.onRestoreInstanceState(state)
         }

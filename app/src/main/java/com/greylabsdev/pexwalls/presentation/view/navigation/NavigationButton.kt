@@ -19,6 +19,7 @@ class NavigationButton @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     title: String? = null,
     @DrawableRes iconRes: Int? = null,
+    val destinationId: Int = View.NO_ID,
     var onClickAction: (() -> Unit)? = null
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 

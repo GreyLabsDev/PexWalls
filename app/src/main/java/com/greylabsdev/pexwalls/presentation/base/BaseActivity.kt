@@ -1,14 +1,15 @@
 package com.greylabsdev.pexwalls.presentation.base
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.navigation.fragment.NavHostFragment
 import androidx.viewbinding.ViewBinding
 import java.io.Serializable
-import androidx.navigation.findNavController
 
 abstract class BaseActivity<VB: ViewBinding>(
     private val bindingFactory: (inflater: LayoutInflater) -> VB,
@@ -20,12 +21,23 @@ abstract class BaseActivity<VB: ViewBinding>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupEdgeToEdge()
         binding = bindingFactory(layoutInflater)
         setContentView(binding.root)
 
         initViews()
         initListeners()
         initViewModelObserving()
+    }
+
+    private fun setupEdgeToEdge() {
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = true
+            isAppearanceLightNavigationBars = true
+        }
     }
 
     open fun hideNavigation() {}
@@ -39,14 +51,19 @@ abstract class BaseActivity<VB: ViewBinding>(
         @IdRes destinationId: Int,
         navigationArgs: List<Pair<String, Serializable>>? = null
     ) {
-        navigationHostId?.let { hostid ->
-            navigationArgs?.let { args ->
-                val bundle = Bundle()
-                args.forEach { bundle.putSerializable(it.first, it.second) }
-                this.findNavController(hostid).navigate(destinationId, bundle)
-            } ?: run {
-                this.findNavController(hostid).navigate(destinationId)
-            }
+        val navController = navigationHostId
+            ?.let { hostId ->
+                (supportFragmentManager.findFragmentById(hostId) as? NavHostFragment)?.navController
+            } ?: return
+
+        if (navController.currentDestination == null) return
+
+        navigationArgs?.let { args ->
+            val bundle = Bundle()
+            args.forEach { bundle.putSerializable(it.first, it.second) }
+            navController.navigate(destinationId, bundle)
+        } ?: run {
+            navController.navigate(destinationId)
         }
     }
 }
