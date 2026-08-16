@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -15,6 +14,7 @@ import com.greylabsdev.pexwalls.databinding.FragmentPhotoBinding
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.base.ProgressState
 import com.greylabsdev.pexwalls.presentation.ext.argSerializable
+import com.greylabsdev.pexwalls.presentation.ext.collectFlow
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
 import com.greylabsdev.pexwalls.presentation.ext.setHeight
 import com.greylabsdev.pexwalls.presentation.ext.setTint
@@ -102,11 +102,12 @@ class PhotoFragment : BaseFragment<FragmentPhotoBinding>(
     }
 
     override fun initViewModelObserving() {
-        viewModel.isPhotoFavorite.observe(this, Observer { inFavorites ->
+        collectFlow(viewModel.isPhotoFavorite) { inFavorites ->
             if (inFavorites) binding?.likeBtnIv?.setImageResource(R.drawable.ic_favorite_fill)
             else binding?.likeBtnIv?.setImageResource(R.drawable.ic_favorite_outline)
-        })
-        viewModel.progressState.observe(this, Observer { state ->
+        }
+        collectFlow(viewModel.progressState) { state ->
+            state ?: return@collectFlow
             binding?.let { bind ->
                 when (state) {
                     is ProgressState.DONE -> {
@@ -150,8 +151,7 @@ class PhotoFragment : BaseFragment<FragmentPhotoBinding>(
                     else -> {}
                 }
             }
-
-        })
+        }
     }
 
     private fun setupNeededPeekHeight(bottomInsetns: Int) {

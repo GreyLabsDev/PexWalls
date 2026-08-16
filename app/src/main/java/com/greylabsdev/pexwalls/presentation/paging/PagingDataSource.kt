@@ -1,55 +1,56 @@
 package com.greylabsdev.pexwalls.presentation.paging
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 open class PagingDataSource<ItemType> {
 
-    private var _itemsChannelLiveData: MutableLiveData<List<PagingItem<ItemType>>> = MutableLiveData()
-    val itemsChannelLiveData: LiveData<List<PagingItem<ItemType>>>
-        get() = _itemsChannelLiveData
+    private val _itemsFlow = MutableStateFlow<List<PagingItem<ItemType>>>(emptyList())
+    val itemsFlow: StateFlow<List<PagingItem<ItemType>>> = _itemsFlow.asStateFlow()
 
-    private var _items: MutableList<PagingItem<ItemType>> = mutableListOf()
+    private var storedItems: MutableList<PagingItem<ItemType>> = mutableListOf()
     val items: List<PagingItem<ItemType>>
-        get() = _items
+        get() = storedItems
 
     val itemCount: Int
-        get() = _items.size
+        get() = storedItems.size
 
-    private var lastFooterPosition: Int? = null
     private var hasFooter = false
 
     fun addItems(items: List<PagingItem<ItemType>>) {
-        _items.addAll(items)
+        storedItems.addAll(items)
         pushUpdatedItems()
     }
 
     fun addItem(newItem: PagingItem<ItemType>) {
-        _items.add(newItem)
+        storedItems.add(newItem)
         pushUpdatedItems()
     }
 
     fun removeItemAtPosition(position: Int) {
-        _items.removeAt(position)
+        if (position !in storedItems.indices) return
+        storedItems.removeAt(position)
         pushUpdatedItems()
     }
 
     fun insertItemAtPosition(position: Int, item: PagingItem<ItemType>) {
-        _items.add(position, item)
+        val insertPosition = position.coerceIn(0, storedItems.size)
+        storedItems.add(insertPosition, item)
         pushUpdatedItems()
     }
 
     fun addFooter(title: String, message: String) {
-        if (hasFooter.not()) {
-            lastFooterPosition = itemCount
-            val footer = PagingItem<ItemType>(
-                data = null,
-                itemType = PagingItem.ItemType.FOOTER,
-                itemData = PagingItem.ItemData(title, message)
-            )
-            addItem(footer)
-            hasFooter = true
-        }
+        syncFooterState()
+        if (hasFooter) return
+
+        val footer = PagingItem<ItemType>(
+            data = null,
+            itemType = PagingItem.ItemType.FOOTER,
+            itemData = PagingItem.ItemData(title, message)
+        )
+        addItem(footer)
+        hasFooter = true
     }
 
     fun addHeader(title: String, message: String) {
@@ -62,20 +63,29 @@ open class PagingDataSource<ItemType> {
     }
 
     fun removeFooter() {
-        if (hasFooter) {
-            lastFooterPosition?.let {
-                removeItemAtPosition(it)
-                hasFooter = false
-            }
+        syncFooterState()
+        if (!hasFooter) return
+
+        val footerIndex = storedItems.indexOfLast { it.itemType == PagingItem.ItemType.FOOTER }
+        if (footerIndex >= 0) {
+            storedItems.removeAt(footerIndex)
+            pushUpdatedItems()
         }
+        hasFooter = false
     }
 
     fun clearItems() {
-        _items.clear()
+        storedItems.clear()
+        hasFooter = false
         pushUpdatedItems()
     }
 
+    private fun syncFooterState() {
+        val footerIndex = storedItems.indexOfLast { it.itemType == PagingItem.ItemType.FOOTER }
+        hasFooter = footerIndex >= 0
+    }
+
     private fun pushUpdatedItems() {
-        _itemsChannelLiveData.value = _items
+        _itemsFlow.value = storedItems.toList()
     }
 }

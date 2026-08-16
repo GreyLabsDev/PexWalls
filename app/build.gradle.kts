@@ -63,8 +63,8 @@ dependencies {
 
     implementation(libs.glide)
 
-    implementation(libs.androidx.lifecycle.extensions)
-    ksp(libs.androidx.lifecycle.compiler)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)

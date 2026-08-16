@@ -2,13 +2,13 @@ package com.greylabsdev.pexwalls.presentation.screen.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.databinding.FragmentHomeBinding
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.const.Consts
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
+import com.greylabsdev.pexwalls.presentation.ext.collectFlow
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
 import com.greylabsdev.pexwalls.presentation.screen.categoryphotos.CategoryPhotosFragment
 import com.greylabsdev.pexwalls.presentation.screen.home.list.CategoryColorAdapter
@@ -72,12 +72,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     override fun initViewModelObserving() {
         super.initViewModelObserving()
-        viewModel.categoryThemes.observe(this, Observer { categories ->
+        collectFlow(viewModel.categoryThemes) { categories ->
             categoryThemeAdapter.categories = categories
-        })
-        viewModel.categoryColors.observe(this, Observer { categories ->
+        }
+        collectFlow(viewModel.categoryColors) { categories ->
             categoryColorAdapter.categories = categories
-        })
+        }
     }
 
     private fun initCategoriesAdapters() {

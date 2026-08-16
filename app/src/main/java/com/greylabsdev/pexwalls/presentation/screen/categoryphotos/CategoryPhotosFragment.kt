@@ -3,16 +3,16 @@ package com.greylabsdev.pexwalls.presentation.screen.categoryphotos
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.databinding.FragmentCategoryPhotosBinding
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoGridPagingAdapter
 import com.greylabsdev.pexwalls.presentation.collection.photogrid.PhotoItemDecoration
+import com.greylabsdev.pexwalls.presentation.collection.photogrid.setupPhotoStaggeredGrid
 import com.greylabsdev.pexwalls.presentation.const.Consts
 import com.greylabsdev.pexwalls.presentation.const.PhotoCategory
 import com.greylabsdev.pexwalls.presentation.ext.argSerializable
+import com.greylabsdev.pexwalls.presentation.ext.collectFlow
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
 import com.greylabsdev.pexwalls.presentation.ext.getScreenHeightInPixels
 import com.greylabsdev.pexwalls.presentation.ext.getScreenWidthInPixels
@@ -52,10 +52,8 @@ class CategoryPhotosFragment : BaseFragment<FragmentCategoryPhotosBinding>(
 
     override fun initViews() {
         toolbarView = binding?.toolbar
-        val staggeredGridLayoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding?.photoGridRv?.let { photoGrid ->
-            photoGrid.layoutManager = staggeredGridLayoutManager
+            photoGrid.setupPhotoStaggeredGrid()
             photoGrid.adapter = photoGridPagingAdapter
 
             if (photoGrid.itemDecorationCount == 0) {
@@ -75,9 +73,9 @@ class CategoryPhotosFragment : BaseFragment<FragmentCategoryPhotosBinding>(
 
     override fun initViewModelObserving() {
         super.initViewModelObserving()
-        viewModel.photos.observe(this, Observer { newPhotos ->
+        collectFlow(viewModel.photos) { newPhotos ->
             photoGridPagingAdapter.items = newPhotos
-        })
+        }
     }
 
     override fun onPause() {

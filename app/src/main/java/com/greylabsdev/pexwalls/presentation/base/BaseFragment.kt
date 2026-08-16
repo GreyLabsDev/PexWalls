@@ -11,11 +11,11 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.viewbinding.ViewBinding
 import com.greylabsdev.pexwalls.databinding.LayoutToolbarBinding
 import com.greylabsdev.pexwalls.presentation.ext.applySystemBarInsetsPadding
+import com.greylabsdev.pexwalls.presentation.ext.collectFlow
 import com.greylabsdev.pexwalls.presentation.view.PlaceholderView
 import java.io.Serializable
 
@@ -49,47 +49,54 @@ abstract class BaseFragment<VB : ViewBinding>(
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViewModelObserving()
+    }
+
     override fun onStart() {
         super.onStart()
 
         initViews()
         initListeners()
         initToolbar()
-        initViewModelObserving()
         doInitialCalls()
     }
 
     protected open fun initViews() {}
     protected open fun initListeners() {}
     protected open fun initViewModelObserving() {
-        viewModel?.progressState?.observe(this, Observer { progressState ->
-            when (progressState) {
-                is ProgressState.DONE -> {
-                    placeholderView?.setState(PlaceholderView.PlaceholderState.GONE)
-                    contentView?.isVisible = true
-                }
+        viewModel?.let { vm ->
+            collectFlow(vm.progressState) { progressState ->
+                progressState ?: return@collectFlow
+                when (progressState) {
+                    is ProgressState.DONE -> {
+                        placeholderView?.setState(PlaceholderView.PlaceholderState.GONE)
+                        contentView?.isVisible = true
+                    }
 
-                is ProgressState.LOADING -> {
-                    placeholderView?.setState(PlaceholderView.PlaceholderState.LOADING)
-                    contentView?.isVisible = false
-                }
+                    is ProgressState.LOADING -> {
+                        placeholderView?.setState(PlaceholderView.PlaceholderState.LOADING)
+                        contentView?.isVisible = false
+                    }
 
-                is ProgressState.ERROR -> {
-                    placeholderView?.setState(PlaceholderView.PlaceholderState.ERROR)
-                    contentView?.isVisible = false
-                }
+                    is ProgressState.ERROR -> {
+                        placeholderView?.setState(PlaceholderView.PlaceholderState.ERROR)
+                        contentView?.isVisible = false
+                    }
 
-                is ProgressState.INITIAL -> {
-                    placeholderView?.setState(PlaceholderView.PlaceholderState.INITIAL)
-                    contentView?.isVisible = false
-                }
+                    is ProgressState.INITIAL -> {
+                        placeholderView?.setState(PlaceholderView.PlaceholderState.INITIAL)
+                        contentView?.isVisible = false
+                    }
 
-                is ProgressState.EMPTY -> {
-                    placeholderView?.setState(PlaceholderView.PlaceholderState.EMPTY)
-                    contentView?.isVisible = false
+                    is ProgressState.EMPTY -> {
+                        placeholderView?.setState(PlaceholderView.PlaceholderState.EMPTY)
+                        contentView?.isVisible = false
+                    }
                 }
             }
-        })
+        }
     }
 
     protected open fun doInitialCalls() {}

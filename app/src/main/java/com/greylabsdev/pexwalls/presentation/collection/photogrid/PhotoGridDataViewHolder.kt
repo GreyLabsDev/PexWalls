@@ -2,7 +2,6 @@ package com.greylabsdev.pexwalls.presentation.collection.photogrid
 
 import android.graphics.Outline
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -26,10 +25,8 @@ class PhotoGridDataViewHolder(
     }
 
     fun bind(item: PhotoModel, useHalfOfHeight: Boolean = false) {
-        itemView.layoutParams = ViewGroup.LayoutParams(
-            itemWidth,
-            if (useHalfOfHeight) itemHeight / 2 else itemHeight
-        )
+        val height = if (useHalfOfHeight) itemHeight / 2 else itemHeight
+        itemView.updateGridItemSize(itemWidth, height)
         Glide.with(itemView.context)
             .load(item.normalPhotoUrl)
             .transform(CenterCrop())

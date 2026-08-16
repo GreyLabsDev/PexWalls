@@ -3,8 +3,7 @@ package com.greylabsdev.pexwalls.presentation.collection.photogrid
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.greylabsdev.pexwalls.presentation.ext.isEven
-import com.greylabsdev.pexwalls.presentation.ext.isOdd
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 class PhotoItemDecoration(private val offset: Int) : RecyclerView.ItemDecoration() {
 
@@ -14,35 +13,33 @@ class PhotoItemDecoration(private val offset: Int) : RecyclerView.ItemDecoration
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
+        val halfGap = offset / 4
+        val edgeGap = offset
+        val topGap = offset / 2
+
+        val layoutParams = view.layoutParams
+        if (layoutParams is StaggeredGridLayoutManager.LayoutParams) {
+            if (layoutParams.isFullSpan) {
+                outRect.set(edgeGap, topGap, edgeGap, halfGap)
+                return
+            }
+            when (layoutParams.spanIndex) {
+                0 -> outRect.set(edgeGap, topGap, halfGap, halfGap)
+                else -> outRect.set(halfGap, topGap, edgeGap, halfGap)
+            }
+            return
+        }
+
+        val position = parent.getChildAdapterPosition(view)
+        if (position == RecyclerView.NO_POSITION) return
+
         when {
-            parent.getChildLayoutPosition(view) == 0 -> {
-                outRect.left = offset
-                outRect.right = offset / 4
-                outRect.bottom = offset / 4
-                outRect.top = offset / 2
-            }
-            parent.getChildLayoutPosition(view) == 1 -> {
-                outRect.left = offset / 4
-                outRect.right = offset
-                outRect.bottom = offset / 4
-                outRect.top = offset / 2
-            }
-            parent.getChildAdapterPosition(view).isEven() &&
-                    parent.getChildLayoutPosition(view) != 1
-                    && parent.getChildLayoutPosition(view) != 0 -> {
-                outRect.left = offset
-                outRect.right = offset / 4
-                outRect.bottom = offset / 4
-                outRect.top = offset / 4
-            }
-            parent.getChildAdapterPosition(view).isOdd() &&
-                    parent.getChildLayoutPosition(view) != 1
-                    && parent.getChildLayoutPosition(view) != 0 -> {
-                outRect.right = offset
-                outRect.left = offset / 4
-                outRect.bottom = offset / 4
-                outRect.top = offset / 4
-            }
+            position == 0 -> outRect.set(edgeGap, topGap, halfGap, halfGap)
+            position == 1 -> outRect.set(halfGap, topGap, edgeGap, halfGap)
+            position.isEven() -> outRect.set(edgeGap, halfGap, halfGap, halfGap)
+            else -> outRect.set(halfGap, halfGap, edgeGap, halfGap)
         }
     }
+
+    private fun Int.isEven(): Boolean = this % 2 == 0
 }

@@ -3,13 +3,13 @@ package com.greylabsdev.pexwalls.presentation.screen.curatedphotos
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
-import androidx.lifecycle.Observer
 import com.greylabsdev.pexwalls.R
 import com.greylabsdev.pexwalls.databinding.FragmentCuratedPhotosBinding
 import com.greylabsdev.pexwalls.presentation.base.BaseFragment
 import com.greylabsdev.pexwalls.presentation.collection.photolist.PhotoListItemDecoration
 import com.greylabsdev.pexwalls.presentation.collection.photolist.PhotoListPagingAdapter
 import com.greylabsdev.pexwalls.presentation.const.Consts
+import com.greylabsdev.pexwalls.presentation.ext.collectFlow
 import com.greylabsdev.pexwalls.presentation.ext.dpToPix
 import com.greylabsdev.pexwalls.presentation.ext.getScreenHeightInPixels
 import com.greylabsdev.pexwalls.presentation.model.PhotoModel
@@ -62,9 +62,9 @@ class CuratedPhotosFragment : BaseFragment<FragmentCuratedPhotosBinding>(
 
     override fun initViewModelObserving() {
         super.initViewModelObserving()
-        viewModel.photos.observe(this, Observer { newPhoto ->
+        collectFlow(viewModel.photos) { newPhoto ->
             photoListPagingAdapter.items = newPhoto
-        })
+        }
     }
 
     override fun onPause() {

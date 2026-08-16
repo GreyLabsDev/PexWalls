@@ -1,13 +1,12 @@
 package com.greylabsdev.pexwalls.presentation.base
 
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-abstract class BaseViewModel : ViewModel(), LifecycleObserver {
+abstract class BaseViewModel : ViewModel() {
 
-    protected var _progressState: MutableLiveData<ProgressState> = MutableLiveData()
-    val progressState: LiveData<ProgressState>
-        get() = _progressState
+    protected val _progressState = MutableStateFlow<ProgressState?>(null)
+    val progressState: StateFlow<ProgressState?> = _progressState.asStateFlow()
 }
