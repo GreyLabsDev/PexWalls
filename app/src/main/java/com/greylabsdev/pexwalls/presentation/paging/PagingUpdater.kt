@@ -36,6 +36,7 @@ abstract class PagingUpdater<ItemType>(
 
     fun resetPaging() {
         currentPage = initialPage
+        _isReachedPagingEnd = false
         pagingDataSource.clearItems()
     }
 

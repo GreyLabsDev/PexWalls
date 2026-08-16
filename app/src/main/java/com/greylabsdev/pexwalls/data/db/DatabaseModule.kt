@@ -12,6 +12,6 @@ val databaseModule = module {
 
 fun makeDbInstance(context: Context): AppDatabase {
     return Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
-        .fallbackToDestructiveMigration()
+        .addMigrations(*AppDatabaseMigrations.ALL)
         .build()
 }

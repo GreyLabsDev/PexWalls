@@ -7,6 +7,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 private const val PEXELS_EDNPOINT = "https://api.pexels.com/"
 private const val KEY_AUTHORIZATION = "Authorization"
@@ -24,11 +25,10 @@ val networkModule = module {
 }
 
 fun createLoggingInterceptor(): HttpLoggingInterceptor {
-    val logging = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { message ->
-        Timber.d(message)
-    })
-    logging.level = HttpLoggingInterceptor.Level.BODY
-    return logging
+    return HttpLoggingInterceptor { message -> Timber.d(message) }.apply {
+        redactHeader(KEY_AUTHORIZATION)
+        level = HttpLoggingInterceptor.Level.BODY
+    }
 }
 
 fun createNetworkInterceptor(): Interceptor {
@@ -45,6 +45,9 @@ fun createOkHttpClient(
     networkInterceptor: Interceptor
 ): OkHttpClient {
     return OkHttpClient.Builder()
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
         .addInterceptor(loggingInterceptor)
         .addNetworkInterceptor(networkInterceptor)
         .hostnameVerifier { _, _ -> true }

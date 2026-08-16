@@ -1,22 +1,22 @@
 [versions]
 agp = "9.3.1"
 ksp = "2.3.11"
-appcompat = "1.1.0"
-coreKtx = "1.1.0"
+appcompat = "1.8.0"
+coreKtx = "1.19.0"
 junit = "4.13.2"
-androidxTestRunner = "1.6.2"
-espresso = "3.6.1"
-ktlint = "0.36.0"
-room = "2.7.1"
-retrofit = "2.6.1"
-lifecycle = "2.8.7"
+androidxTestRunner = "1.7.0"
+espresso = "3.7.0"
+ktlint = "0.50.0"
+room = "2.8.4"
+retrofit = "3.0.0"
+okhttp = "5.5.0"
+lifecycle = "2.11.0"
 koin-bom = "4.2.2"
-timber = "4.7.0"
-okhttpLogging = "3.6.0"
-material = "1.0.0"
-constraintlayout = "1.1.3"
+timber = "5.0.1"
+material = "1.14.0"
+constraintlayout = "2.2.2"
 navigation = "2.9.8"
-glide = "4.10.0"
+glide = "5.0.9"
 coroutines = "1.11.0"
 
 [libraries]
@@ -30,7 +30,8 @@ androidx-room-runtime = { group = "androidx.room", name = "room-runtime", versio
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpLogging" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }

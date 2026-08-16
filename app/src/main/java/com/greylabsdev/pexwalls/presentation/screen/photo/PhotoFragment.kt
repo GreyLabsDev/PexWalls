@@ -85,7 +85,7 @@ class PhotoFragment : BaseFragment<FragmentPhotoBinding>(
 //            bind.bottomSheet.disappearingContainerLl.alpha = 0f
 
             val bottomSheetBehavior = BottomSheetBehavior.from(bind.bottomSheet.root)
-            bottomSheetBehavior.setBottomSheetCallback(object :
+            bottomSheetBehavior.addBottomSheetCallback(object :
                 BottomSheetBehavior.BottomSheetCallback() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
                     bind.bottomSheet.imgSlide.animate().alpha(1 - slideOffset).setDuration(0)

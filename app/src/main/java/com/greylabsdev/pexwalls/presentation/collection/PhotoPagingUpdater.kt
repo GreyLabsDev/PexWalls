@@ -120,10 +120,13 @@ class PhotoPagingUpdater(
     }
 
     private fun pushPhotosWithPagingIncrement(photos: List<PhotoModel>, usePageUpdate: Boolean) {
-        if (currentPage == initialPage) doneListener?.invoke()
-        if (photos.isNullOrEmpty()) emptyResultListener?.invoke()
         pagingDataSource.removeFooter()
-        pushToDataSource(mapToItems(photos))
-        if (usePageUpdate) updateCurrentPage(photos.size)
+        if (photos.isEmpty()) {
+            emptyResultListener?.invoke()
+        } else {
+            if (currentPage == initialPage) doneListener?.invoke()
+            pushToDataSource(mapToItems(photos))
+            if (usePageUpdate) updateCurrentPage(photos.size)
+        }
     }
 }

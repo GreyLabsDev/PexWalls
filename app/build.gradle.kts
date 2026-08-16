@@ -3,6 +3,10 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 android {
     compileSdk = 37
     namespace = "com.greylabsdev.pexwalls"
@@ -14,6 +18,12 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        getByName("androidTest") {
+            assets.srcDir("$projectDir/schemas")
+        }
     }
 
     buildTypes {
@@ -54,11 +64,11 @@ dependencies {
 
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
 
+    implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
 
     implementation(libs.glide)
