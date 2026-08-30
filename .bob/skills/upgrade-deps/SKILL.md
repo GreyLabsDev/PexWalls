@@ -3,8 +3,8 @@ name: upgrade-deps
 description: >
   Audits gradle/libs.versions.toml and adapts PexWalls when a library is
   outdated, yanked, unpublished, or unmaintained. Report-first; replace stacks
-  only with user approval. Use when the user says upgrade deps, библиотеки
-  устарели, dependency audit, yanked, not on Maven, or library unsupported.
+  only with user approval. Use when the user says upgrade deps, dependencies are outdated,
+  dependency audit, yanked, not on Maven, or library unsupported.
 user-invocable: true
 ---
 

@@ -2,7 +2,7 @@
 
 Use **Agent** mode.
 
-Task: актуализация `AGENTS.md` and `.bob/` so they match **this tree**.
+Task: update `AGENTS.md` and `.bob/` so they match **this tree**.
 
 In scope: `AGENTS.md`, `.bob/**`, `.bobignore`, the thin `.cursor/rules/*.mdc` mirror, and only the README section that points to Bob files.
 

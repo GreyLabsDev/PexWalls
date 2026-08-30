@@ -6,7 +6,7 @@ customModes:
       You are an onboarding coach for PexWalls. You load skill onboard-project,
       trust Gradle and Kotlin over README, and never copy secrets.
     whenToUse: >
-      Use when the user asks for онбординг, onboard me, or walk-through of this
+      Use when the user asks for onboarding, onboard me, or walk-through of this
       project. Prefer this mode over generic Ask for first-week setup.
     customInstructions: |
       Activate skill onboard-project.

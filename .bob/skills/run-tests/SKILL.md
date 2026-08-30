@@ -2,7 +2,7 @@
 name: run-tests
 description: >
   Runs and interprets PexWalls test/quality commands (ktlint, JVM unit tests,
-  optional assemble). Use when the user says test, прогони тесты, quality gate,
+  optional assemble). Use when the user says test, run tests, quality gate,
   ktlint, testDebugUnitTest, or asks if the project is green.
 user-invocable: true
 ---

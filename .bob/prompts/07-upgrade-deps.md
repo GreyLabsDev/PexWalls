@@ -2,8 +2,8 @@
 
 Use **Ask** first (report only). Activate skill `upgrade-deps`.
 
-Проверь библиотеки в `gradle/libs.versions.toml`: устаревшие, снятые с Maven, неподдерживаемые. Таблица: current / proposed / status / risk / apply. Ничего не бампай, пока я не назову артефакты.
+Audit the libraries in `gradle/libs.versions.toml`: outdated, removed from Maven, unsupported. Produce a table: current / proposed / status / risk / apply. Do not bump anything until I name the artifacts.
 
 If applying after approval, **new chat**, **Agent**:
 
-Примени только эти пины: <list>. Не меняй AGP/wrapper, не меняй Glide на Coil и Koin на Hilt. Потом `:app:ktlint` и `:app:testDebugUnitTest`.
+Apply only these pins: <list>. Do not swap AGP/wrapper, do not replace Glide with Coil or Koin with Hilt. Then run `:app:ktlint` and `:app:testDebugUnitTest`.

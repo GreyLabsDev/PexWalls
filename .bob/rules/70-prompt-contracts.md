@@ -4,19 +4,19 @@ If the user message is short or ambiguous, **rewrite it internally** to one of t
 
 ## Intent table
 
-| User says (RU or EN) | Contract | Mode they should be in |
+| User says | Contract | Mode they should be in |
 | --- | --- | --- |
-| актуализация правил, refresh agents, update AGENTS, review rules | Edit `AGENTS.md` + `.bob/**` from **current code on disk**. No app Kotlin unless a cited fact is in a source file you must quote. | Agent |
-| onboard, онбординг, walk me through | Skill `onboard-project` and/or mode **Onboarding Coach**. Save `workflow/onboarding/` only if asked. | Ask / onboarding-coach |
-| security-fix, убери ключ, hostnameVerifier | Activate `security-fix`. Never paste token values. | Agent |
-| plan X, спланируй | Files ≤8 unless justified, out-of-scope, acceptance criteria, verify commands. | Plan |
+| refresh agents, update AGENTS, review rules | Edit `AGENTS.md` + `.bob/**` from **current code on disk**. No app Kotlin unless a cited fact is in a source file you must quote. | Agent |
+| onboard, onboarding, walk me through | Skill `onboard-project` and/or mode **Onboarding Coach**. Save `workflow/onboarding/` only if asked. | Ask / onboarding-coach |
+| security-fix, remove key, hostnameVerifier | Activate `security-fix`. Never paste token values. | Agent |
+| plan X | Files ≤8 unless justified, out-of-scope, acceptance criteria, verify commands. | Plan |
 | implement this plan, `@plans/` | Only steps in the plan — nothing else. | Agent |
-| fix crash / баг | Repro path only; no architecture cleanup. | Agent |
+| fix crash / bug | Repro path only; no architecture cleanup. | Agent |
 | migrate Compose / multi-module | Confirm exact backlog item; Plan first; do not mix with unrelated fixes. | Plan then Agent |
-| upgrade deps, библиотеки устарели, yanked, not on Maven | Activate `upgrade-deps`. **Report table first.** Apply only named artifacts. | Ask then Agent |
-| test, прогони тесты, ktlint, quality gate | Activate `run-tests`. ktlint + `testDebugUnitTest`; assemble optional. | Agent |
-| add tests, увеличь тесты, coverage, write unit tests | Activate `write-unit-tests`. JVM only; update `35-testing.md` inventory. | Agent |
-| improve the app / наведи порядок / modernize | **Stop. Ask which README 2026 checkbox.** Do not start work. | Ask |
+| upgrade deps, dependencies are outdated, yanked, not on Maven | Activate `upgrade-deps`. **Report table first.** Apply only named artifacts. | Ask then Agent |
+| test, run tests, ktlint, quality gate | Activate `run-tests`. ktlint + `testDebugUnitTest`; assemble optional. | Agent |
+| add tests, increase test coverage, coverage, write unit tests | Activate `write-unit-tests`. JVM only; update `35-testing.md` inventory. | Agent |
+| improve the app / clean up / modernize | **Stop. Ask which README 2026 checkbox.** Do not start work. | Ask |
 
 ## Forbidden expansions
 

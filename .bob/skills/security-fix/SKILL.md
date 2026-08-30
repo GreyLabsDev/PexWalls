@@ -2,7 +2,7 @@
 name: security-fix
 description: >
   Moves Pexels auth off git, keeps TLS defaults, debug-only HTTP BODY and Timber.
-  Use when the user says security-fix, убери ключ, hostnameVerifier, hardcoded
+  Use when the user says security-fix, remove key, hostnameVerifier, hardcoded
   token, or Pexels API key in source.
 user-invocable: true
 ---

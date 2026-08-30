@@ -2,4 +2,4 @@
 
 Use **Agent** mode. Activate skill `security-fix`.
 
-Проверь, что ключ Pexels не в git, TLS по умолчанию, BODY/Timber только в debug. Не вставляй старый токен в файлы.
+Verify that the Pexels API key is not in git, TLS is using secure defaults, and BODY logging / Timber are debug-only. Do not paste the old token into any file.

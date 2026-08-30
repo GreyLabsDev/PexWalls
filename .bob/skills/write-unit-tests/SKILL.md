@@ -2,7 +2,7 @@
 name: write-unit-tests
 description: >
   Adds JVM JUnit 4 tests for PexWalls using PhotoFixtures and the coverage map
-  in .bob/rules/35-testing.md. Use when the user says add tests, увеличь тесты,
+  in .bob/rules/35-testing.md. Use when the user says add tests, increase test coverage,
   unit tests, coverage, or write tests for a class.
 user-invocable: true
 ---

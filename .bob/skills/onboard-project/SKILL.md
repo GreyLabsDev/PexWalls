@@ -3,8 +3,7 @@ name: onboard-project
 description: >
   Onboards a developer to PexWalls from the real tree, not README. Produces a
   setup + architecture + drift + hazards + first-ticket briefing. Use when the
-  user says onboard, онбординг, «проведи онбординг», «проведи мне онбординг в
-  этом проекте», walk me through this project, or new-hire setup.
+  user says onboard, onboarding, walk me through this project, or new-hire setup.
 user-invocable: true
 ---
 
@@ -61,4 +60,4 @@ If Agent: save to `workflow/onboarding/YYYY-MM-DD.md` (create the folder). Overw
 4. README vs disk (table)
 5. Hazards (no secret values)
 6. First three tickets
-7. «Ask me which ticket to Plan next»
+7. "Ask me which ticket to Plan next"
