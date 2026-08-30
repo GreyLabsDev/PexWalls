@@ -6,21 +6,41 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class LinkGeneratorTest {
+
+    private val generator = PhotoUrlGenerator()
+
     @Test
     fun `generated link is correct`() {
-        val mockLink = "https://images.pexels.com/photos/449627/pexels-photo-449627.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800"
-        val resultLink = "https://images.pexels.com/photos/449627/pexels-photo-449627.jpeg?fit=crop&h=800&w=600"
-
+        val mockLink =
+            "https://images.pexels.com/photos/449627/pexels-photo-449627.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800"
+        val resultLink =
+            "https://images.pexels.com/photos/449627/pexels-photo-449627.jpeg?fit=crop&h=800&w=600"
         val resolution = ResolutionManager.Resolution(600, 800)
-
-        val linkGenerator = PhotoUrlGenerator()
-
         assertEquals(
-            linkGenerator.generateUrl(
-                sourceUrl = mockLink,
-                photoResolution = resolution
-            ),
-            resultLink
+            resultLink,
+            generator.generateUrl(sourceUrl = mockLink, photoResolution = resolution)
+        )
+    }
+
+    @Test
+    fun `url without query is returned unchanged when resolution is null`() {
+        val url = "https://images.pexels.com/photos/1/photo.jpeg"
+        assertEquals(url, generator.generateUrl(url, photoResolution = null))
+    }
+
+    @Test
+    fun `null resolution keeps original url even with auto query`() {
+        val url = "https://images.pexels.com/photos/1/photo.jpeg?auto=compress&cs=tinysrgb"
+        assertEquals(url, generator.generateUrl(url, null))
+    }
+
+    @Test
+    fun `split uses first auto marker only`() {
+        val url = "https://example.com/a.jpeg?auto=one?auto=two"
+        val resolution = ResolutionManager.Resolution(100, 200)
+        assertEquals(
+            "https://example.com/a.jpeg?fit=crop&h=200&w=100",
+            generator.generateUrl(url, resolution)
         )
     }
 }

@@ -1,0 +1,3 @@
+# Local SDK and secrets — copy to local.properties (never commit)
+# sdk.dir=C:\\Users\\YOU\\AppData\\Local\\Android\\Sdk
+# pexels.api.key=YOUR_PEXELS_KEY

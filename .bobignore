@@ -1,0 +1,29 @@
+# Keep Bob off binaries, secrets, and evidence screenshots (Bobcoins + security).
+# Hackathon guide: Ignoring files in Bob IDE.
+
+.git/
+.gradle/
+**/build/
+.idea/
+*.iml
+local.properties
+.env
+.env.*
+keystore.properties
+*.jks
+*.keystore
+*.apk
+*.aab
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.ttf
+*.jar
+
+scr/
+bob_sessions/
+app/src/main/res/mipmap-*/
+app/src/main/res/font/
+gradle/wrapper/gradle-wrapper.jar

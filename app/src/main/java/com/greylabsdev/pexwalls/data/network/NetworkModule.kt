@@ -1,5 +1,6 @@
 package com.greylabsdev.pexwalls.data.network
 
+import com.greylabsdev.pexwalls.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,7 +12,6 @@ import java.util.concurrent.TimeUnit
 
 private const val PEXELS_EDNPOINT = "https://api.pexels.com/"
 private const val KEY_AUTHORIZATION = "Authorization"
-private const val AUTHORIZATION_TOKEN = "563492ad6f9170000100000172c80e246d6140d29af6505cc6a6a0ea"
 
 val networkModule = module {
 
@@ -27,14 +27,18 @@ val networkModule = module {
 fun createLoggingInterceptor(): HttpLoggingInterceptor {
     return HttpLoggingInterceptor { message -> Timber.d(message) }.apply {
         redactHeader(KEY_AUTHORIZATION)
-        level = HttpLoggingInterceptor.Level.BODY
+        level = if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor.Level.BODY
+        } else {
+            HttpLoggingInterceptor.Level.NONE
+        }
     }
 }
 
 fun createNetworkInterceptor(): Interceptor {
     return Interceptor {
         val request = it.request().newBuilder()
-            .addHeader(KEY_AUTHORIZATION, AUTHORIZATION_TOKEN)
+            .addHeader(KEY_AUTHORIZATION, BuildConfig.PEXELS_API_KEY)
             .build()
         it.proceed(request)
     }
@@ -50,7 +54,6 @@ fun createOkHttpClient(
         .writeTimeout(30, TimeUnit.SECONDS)
         .addInterceptor(loggingInterceptor)
         .addNetworkInterceptor(networkInterceptor)
-        .hostnameVerifier { _, _ -> true }
         .retryOnConnectionFailure(false)
         .build()
 }
