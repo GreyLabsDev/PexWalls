@@ -41,7 +41,7 @@ Base UI design implementing simple, clean and easy to understand approach to use
 - [x] Remove Stetho
 
 #### Project upgrade tasks (2026)
-- [ ] Update main deps
+- [x] Update main deps
 - [ ] Multi-module architecture
 - [x] Only Coroutines and Flow usage
 - [ ] Full Compose migration (including navigation)
