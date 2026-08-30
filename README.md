@@ -15,11 +15,11 @@ Pointers to the IBM Bob 2.0 project context. Gradle and Kotlin remain the source
 - [`.bob/rules/`](.bob/rules/) — workspace rules (all modes), including meta-priority and prompt contracts
 - Mode files: [ask](.bob/rules-ask/), [plan](.bob/rules-plan/), [code](.bob/rules-code/), [agent](.bob/rules-agent/) (code+agent duplicated — Bob docs use both slugs)
 - [`.bob/prompts/`](.bob/prompts/) — paste into Bob chat (not auto-loaded)
-- [`.bob/skills/onboard-project/`](.bob/skills/onboard-project/) — «проведи онбординг» (`/onboard-project`)
+- [`.bob/skills/onboard-project/`](.bob/skills/onboard-project/) — project onboarding (`/onboard-project`)
 - [`.bob/skills/run-tests/`](.bob/skills/run-tests/) — ktlint + unit tests (`/run-tests`)
 - [`.bob/skills/upgrade-deps/`](.bob/skills/upgrade-deps/) — audit / adapt libraries (`/upgrade-deps`)
 - [`.bob/skills/write-unit-tests/`](.bob/skills/write-unit-tests/) — JVM unit tests (`/write-unit-tests`)
-- [`.bob/skills/security-fix/`](.bob/skills/security-fix/) — ключ Pexels / TLS (`/security-fix`)
+- [`.bob/skills/security-fix/`](.bob/skills/security-fix/) — Pexels API key / TLS hardening (`/security-fix`)
 - [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) — mode Onboarding Coach
 - [`.bob/mcp.json`](.bob/mcp.json) — local MCP `pexwalls-context`
 - [`local.properties.example`](local.properties.example) — `sdk.dir` + `pexels.api.key` (copy to `local.properties`, never commit)
