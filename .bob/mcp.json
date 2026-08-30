@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "pexwalls-context": {
+      "command": "node",
+      "args": ["mcp/pexwalls-context-server.mjs"],
+      "disabled": false,
+      "alwaysAllow": ["get_agents_map", "list_unit_tests", "list_catalog_pins"]
+    }
+  }
+}
