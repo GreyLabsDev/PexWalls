@@ -43,4 +43,30 @@ class LinkGeneratorTest {
             generator.generateUrl(url, resolution)
         )
     }
+
+    @Test
+    fun `resolution without auto marker appends crop query after existing query`() {
+        val url = "https://example.com/a.jpeg?foo=1"
+        val resolution = ResolutionManager.Resolution(10, 20)
+        assertEquals(
+            "https://example.com/a.jpeg?foo=1?fit=crop&h=20&w=10",
+            generator.generateUrl(url, resolution)
+        )
+    }
+
+    @Test
+    fun `zero width and height still produce size parameters`() {
+        val url = "https://example.com/a.jpeg?auto=compress"
+        val resolution = ResolutionManager.Resolution(0, 0)
+        assertEquals(
+            "https://example.com/a.jpeg?fit=crop&h=0&w=0",
+            generator.generateUrl(url, resolution)
+        )
+    }
+
+    @Test
+    fun `default resolution argument leaves url unchanged`() {
+        val url = "https://example.com/plain.jpeg"
+        assertEquals(url, generator.generateUrl(url))
+    }
 }

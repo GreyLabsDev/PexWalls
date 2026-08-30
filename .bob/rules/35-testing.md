@@ -4,6 +4,8 @@ Facts (class list, commands): inventory below. This file is **do / don't**.
 
 Do not claim coverage you did not run. Mockito and Espresso **UI** suites stay out unless named. MockWebServer, Robolectric (DAO), and in-repo fakes are already pinned â€” reuse them; do not add a second mock stack.
 
+Coverage map + add JVM tests: skill `unit-test-coach` / mode **Unit Test Coach**. Gate only: `run-tests`. Named class already: `write-unit-tests`.
+
 ## Inventory (keep this table true)
 
 All paths share prefix `app/src/test/java/com/greylabsdev/pexwalls/` unless noted.
@@ -20,6 +22,8 @@ All paths share prefix `app/src/test/java/com/greylabsdev/pexwalls/` unless note
 | JVM MockWebServer | `RemoteDataSourceTest` | `app/src/test/java/com/greylabsdev/pexwalls/data/datasource/remote/RemoteDataSourceTest.kt` |
 | JVM | `PhotoFavoritesUseCaseTest` | `app/src/test/java/com/greylabsdev/pexwalls/domain/usecase/PhotoFavoritesUseCaseTest.kt` |
 | JVM fake | `FakeRepository` | `app/src/test/java/com/greylabsdev/pexwalls/domain/repository/FakeRepository.kt` |
+| JVM fake | `FakeDataSource` | `app/src/test/java/com/greylabsdev/pexwalls/data/datasource/FakeDataSource.kt` |
+| JVM | `RepositoryTest` | `app/src/test/java/com/greylabsdev/pexwalls/data/repository/RepositoryTest.kt` |
 | JVM Robolectric | `PhotoDaoTest` | `app/src/test/java/com/greylabsdev/pexwalls/data/db/dao/PhotoDaoTest.kt` |
 | Instrumented | `PhotoDaoAndroidTest` | `app/src/androidTest/java/com/greylabsdev/pexwalls/PhotoDaoAndroidTest.kt` |
 | Instrumented stub | `ExampleInstrumentedTest` | `app/src/androidTest/java/com/greylabsdev/pexwalls/ExampleInstrumentedTest.kt` |
@@ -55,6 +59,7 @@ If Gradle outputs `SDK location not found`, report it as an environment issue â€
 | `PhotoCategory` names | `PhotoCategoryTest` |
 | `RemoteDataSource` / `PexelsApi` | `RemoteDataSourceTest` (MockWebServer only, no live Pexels) |
 | `PhotoFavoritesUseCase` | `PhotoFavoritesUseCaseTest` + `FakeRepository` (no Mockito) |
+| `Repository` | `RepositoryTest` + `FakeDataSource` |
 | `PhotoDao` | `PhotoDaoTest` (Robolectric) and/or `PhotoDaoAndroidTest` |
 
 Still JVM-hard (state this in the PR; do not fake them): Fragment lifecycle, Glide, `WallpaperSetter`, `ResolutionManager.screenResolution`.

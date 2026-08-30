@@ -3,6 +3,7 @@ package com.greylabsdev.pexwalls
 import com.greylabsdev.pexwalls.data.db.entity.PhotoDbEntity
 import com.greylabsdev.pexwalls.data.dto.PhotoDto
 import com.greylabsdev.pexwalls.data.dto.PhotoSrcDto
+import com.greylabsdev.pexwalls.data.dto.SearchResultDto
 import com.greylabsdev.pexwalls.domain.entity.PhotoEntity
 import com.greylabsdev.pexwalls.domain.entity.PhotoFavoriteEntity
 import com.greylabsdev.pexwalls.domain.entity.PhotoSrcEntity
@@ -100,5 +101,19 @@ internal object PhotoFixtures {
         photographerUrl = "https://example.com/ada",
         width = 800,
         height = 1200
+    )
+
+    fun searchResultDto(
+        photos: List<PhotoDto> = listOf(photoDto()),
+        page: Int = 1,
+        perPage: Int = 15,
+        totalResults: Int = photos.size,
+        nextPage: String? = null
+    ) = SearchResultDto(
+        nextPage = nextPage,
+        page = page,
+        perPage = perPage,
+        photos = photos,
+        totalResults = totalResults
     )
 }

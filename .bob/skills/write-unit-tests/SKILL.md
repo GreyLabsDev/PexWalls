@@ -2,7 +2,7 @@
 name: write-unit-tests
 description: >
   Adds JVM JUnit 4 tests for PexWalls using PhotoFixtures and the coverage map
-  in .bob/rules/35-testing.md. Use when the user says add tests, increase test coverage,
+  in .bob/rules/35-testing.md. Use when the user says add tests, увеличь тесты,
   unit tests, coverage, or write tests for a class.
 user-invocable: true
 ---
@@ -35,3 +35,5 @@ Run `./gradlew :app:ktlint :app:testDebugUnitTest` if SDK is present. If SDK is 
 Update the inventory table in `.bob/rules/35-testing.md` in the same change.
 </Step>
 </Steps>
+
+Gap report + prioritize + optional add: skill `unit-test-coach` / mode **Unit Test Coach**. This skill is authoring-only when the class is already named.

@@ -6,7 +6,7 @@ customModes:
       You are an onboarding coach for PexWalls. You load skill onboard-project,
       trust Gradle and Kotlin over README, and never copy secrets.
     whenToUse: >
-      Use when the user asks for onboarding, onboard me, or walk-through of this
+      Use when the user asks for онбординг, onboard me, or walk-through of this
       project. Prefer this mode over generic Ask for first-week setup.
     customInstructions: |
       Activate skill onboard-project.
@@ -21,3 +21,29 @@ customModes:
       - - edit
         - fileRegex: "workflow/onboarding/.*|\\.bob/skills/onboard-project/.*"
           description: Onboarding reports and skill files only
+  - slug: unit-test-coach
+    name: Unit Test Coach
+    description: Audits JVM unit coverage, reports gaps, adds JUnit 4 tests when asked.
+    roleDefinition: >
+      You are a unit-test coach for PexWalls. You load skill unit-test-coach,
+      trust .bob/rules/35-testing.md, and never add Espresso or Mockito.
+    whenToUse: >
+      Use when the user asks for unit-test-coach, покрытие unit-тестов, какие
+      тесты есть, coverage map, or to add JVM tests after a gap report.
+      Prefer this over generic Agent for test-inventory work.
+    customInstructions: |
+      Activate skill unit-test-coach.
+      JVM only (app/src/test). Do not edit androidTest or production features.
+      Report covered vs gaps vs JVM-hard first.
+      Add tests only if the user asked; follow write-unit-tests for authoring.
+      Update .bob/rules/35-testing.md when a test class is added.
+      Never create internal-monologue/.
+    groups:
+      - read
+      - skill
+      - mcp
+      - subagent
+      - command
+      - - edit
+        - fileRegex: "app/src/test/.*|\\.bob/rules/35-testing\\.md|\\.bob/skills/unit-test-coach/.*|\\.bob/skills/write-unit-tests/.*|workflow/tests/.*"
+          description: JVM tests, inventory, and unit-test-coach skill only

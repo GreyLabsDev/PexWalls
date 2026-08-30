@@ -22,6 +22,9 @@ class PhotoFavoritesUseCaseTest {
         assertEquals(1, listed.size)
         assertEquals(5, listed.first().id)
         assertEquals(photo.byScreenResolutionUrl, listed.first().byScreenResolutionUrl)
+        assertEquals(photo.normalPhotoUrl, listed.first().normalPhotoUrl)
+        assertEquals(photo.bigPhotoUrl, listed.first().bigPhotoUrl)
+        assertEquals(photo.photographer, listed.first().photographer)
     }
 
     @Test
@@ -31,5 +34,38 @@ class PhotoFavoritesUseCaseTest {
         useCase.removePhotoFromFavorites(photo)
         assertFalse(useCase.checkIfPhotoInFavorites(8))
         assertTrue(useCase.getFavoritePhotos().isEmpty())
+    }
+
+    @Test
+    fun `empty repository yields empty list and false check`() = runBlocking {
+        assertTrue(useCase.getFavoritePhotos().isEmpty())
+        assertFalse(useCase.checkIfPhotoInFavorites(1))
+    }
+
+    @Test
+    fun `adding same id replaces previous row`() = runBlocking {
+        useCase.addPhotoToFavorites(PhotoFixtures.photoFavoriteEntity(id = 5))
+        useCase.addPhotoToFavorites(PhotoFixtures.photoFavoriteEntity(id = 5))
+        assertEquals(1, useCase.getFavoritePhotos().size)
+        assertEquals(1, repository.favorites.size)
+    }
+
+    @Test
+    fun `two different ids both listed`() = runBlocking {
+        useCase.addPhotoToFavorites(PhotoFixtures.photoFavoriteEntity(id = 1))
+        useCase.addPhotoToFavorites(PhotoFixtures.photoFavoriteEntity(id = 2))
+        val ids = useCase.getFavoritePhotos().map { it.id }.toSet()
+        assertEquals(setOf(1, 2), ids)
+        assertTrue(useCase.checkIfPhotoInFavorites(1))
+        assertTrue(useCase.checkIfPhotoInFavorites(2))
+        assertFalse(useCase.checkIfPhotoInFavorites(3))
+    }
+
+    @Test
+    fun `remove of missing id is a no-op`() = runBlocking {
+        useCase.addPhotoToFavorites(PhotoFixtures.photoFavoriteEntity(id = 1))
+        useCase.removePhotoFromFavorites(PhotoFixtures.photoFavoriteEntity(id = 99))
+        assertEquals(1, useCase.getFavoritePhotos().size)
+        assertTrue(useCase.checkIfPhotoInFavorites(1))
     }
 }
