@@ -19,8 +19,9 @@ Official order (workspace): **mode-specific directory → this `AGENTS.md` → `
 | `.bob/skills/run-tests/` | Skill: прогони тесты / ktlint / unit gate |
 | `.bob/skills/upgrade-deps/` | Skill: audit/adapt catalog if libs are stale, yanked, or unsupported |
 | `.bob/skills/write-unit-tests/` | Skill: add JVM JUnit tests + keep `35-testing.md` inventory true |
+| `.bob/skills/unit-test-coach/` | Skill: coverage map (covered / JVM gaps / JVM-hard) + add tests if asked |
 | `.bob/skills/security-fix/` | Skill: Pexels key / TLS / debug-only logs |
-| `.bob/custom_modes.yaml` | Mode **Onboarding Coach** (`onboarding-coach`) |
+| `.bob/custom_modes.yaml` | Modes **Onboarding Coach**, **Unit Test Coach** |
 | `.bob/mcp.json` | Local read-only MCP `pexwalls-context` (Node stdio, no secrets) |
 
 `.bobignore` keeps PDF, PNG, `bob_sessions/`, Gradle caches, and secrets out of context. Do not `@` those paths.
@@ -125,4 +126,4 @@ Navigate between fragments with `BaseFragment.navigateTo(destId, listOf(key to s
 
 Network: put `pexels.api.key` in `local.properties` (see `local.properties.example`). Never commit it.
 
-Dependency pins: `gradle/libs.versions.toml`. Skills: `upgrade-deps`, `run-tests`, `write-unit-tests`, `security-fix`. MCP: `.bob/mcp.json`. Onboarding mode: **Onboarding Coach**.
+Dependency pins: `gradle/libs.versions.toml`. Skills: `upgrade-deps`, `run-tests`, `write-unit-tests`, `unit-test-coach`, `security-fix`. MCP: `.bob/mcp.json`. Modes: **Onboarding Coach**, **Unit Test Coach**.

@@ -6,7 +6,7 @@ Source: *IBM TechXchange 2026 Pre-conference Dev Day Hackathon Guide* + Bob mode
 
 The judged core is **Bob IDE** (Agent / Plan / Ask, subagents, document understanding, rules, skills). Do not pivot the repo into a watsonx-only demo. Local MCP is already in `.bob/mcp.json`. Do not add **remote** MCP that exfiltrates the tree.
 
-Onboarding: skill `onboard-project` or mode **Onboarding Coach**. Tests: `run-tests` / `write-unit-tests`. Libraries: `upgrade-deps`. Security: `security-fix`.
+Onboarding: skill `onboard-project` or mode **Onboarding Coach**. Unit coverage: skill `unit-test-coach` or mode **Unit Test Coach** (JVM only). Run gate: `run-tests`. Add tests: `write-unit-tests`. Libraries: `upgrade-deps`. Security: `security-fix`.
 
 ## Cost (Bobcoins)
 

@@ -19,8 +19,9 @@ Pointers to the IBM Bob 2.0 project context. Gradle and Kotlin remain the source
 - [`.bob/skills/run-tests/`](.bob/skills/run-tests/) — ktlint + unit tests (`/run-tests`)
 - [`.bob/skills/upgrade-deps/`](.bob/skills/upgrade-deps/) — audit / adapt libraries (`/upgrade-deps`)
 - [`.bob/skills/write-unit-tests/`](.bob/skills/write-unit-tests/) — JVM unit tests (`/write-unit-tests`)
+- [`.bob/skills/unit-test-coach/`](.bob/skills/unit-test-coach/) — coverage map + add JVM tests (`/unit-test-coach`)
 - [`.bob/skills/security-fix/`](.bob/skills/security-fix/) — Pexels API key / TLS hardening (`/security-fix`)
-- [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) — mode Onboarding Coach
+- [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) — Onboarding Coach, Unit Test Coach
 - [`.bob/mcp.json`](.bob/mcp.json) — local MCP `pexwalls-context`
 - [`local.properties.example`](local.properties.example) — `sdk.dir` + `pexels.api.key` (copy to `local.properties`, never commit)
 - [`.bobignore`](.bobignore) — keep binaries, secrets, and `bob_sessions/` screenshots out of Bob context
