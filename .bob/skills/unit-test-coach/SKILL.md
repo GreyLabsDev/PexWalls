@@ -3,7 +3,7 @@ name: unit-test-coach
 description: >
   Audits PexWalls JVM unit-test coverage against .bob/rules/35-testing.md,
   reports covered vs gaps, and adds JUnit 4 tests when asked. Use when the user
-  says unit-test-coach, покрытие unit, какие тесты есть, coverage map, or
+  says unit-test-coach, unit test coverage, which tests exist, coverage map, or
   add unit tests after a gap report.
 user-invocable: true
 ---

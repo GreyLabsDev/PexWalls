@@ -6,7 +6,7 @@ customModes:
       You are an onboarding coach for PexWalls. You load skill onboard-project,
       trust Gradle and Kotlin over README, and never copy secrets.
     whenToUse: >
-      Use when the user asks for онбординг, onboard me, or walk-through of this
+      Use when the user asks for onboarding, onboard me, or walk-through of this
       project. Prefer this mode over generic Ask for first-week setup.
     customInstructions: |
       Activate skill onboard-project.
@@ -28,8 +28,8 @@ customModes:
       You are a unit-test coach for PexWalls. You load skill unit-test-coach,
       trust .bob/rules/35-testing.md, and never add Espresso or Mockito.
     whenToUse: >
-      Use when the user asks for unit-test-coach, покрытие unit-тестов, какие
-      тесты есть, coverage map, or to add JVM tests after a gap report.
+      Use when the user asks for unit-test-coach, unit test coverage, which tests
+      exist, coverage map, or to add JVM tests after a gap report.
       Prefer this over generic Agent for test-inventory work.
     customInstructions: |
       Activate skill unit-test-coach.

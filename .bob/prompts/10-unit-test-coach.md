@@ -4,6 +4,6 @@ Use mode **Unit Test Coach** if available, otherwise **Ask** (report) then **Age
 
 Activate skill `unit-test-coach` (`/unit-test-coach` if needed).
 
-Сверь JVM unit-тесты с `.bob/rules/35-testing.md`: что покрыто, какие пробелы можно закрыть на JVM, что нельзя (Fragment/Glide/Wallpaper). Не трогай androidTest. Mockito не подключай.
+Compare JVM unit tests with `.bob/rules/35-testing.md`: what is covered, which gaps can be closed on the JVM, and what cannot (Fragment/Glide/Wallpaper). Do not touch androidTest. Do not add Mockito.
 
-Если я не назвал классы — только отчёт и три следующих тикета. Если назвал или сказал «добавь» — допиши тесты и таблицу инвентаря.
+If I did not name classes — report only plus three next tickets. If I named classes or said "add" — write the tests and update the inventory table.
