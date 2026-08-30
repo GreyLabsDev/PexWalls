@@ -37,17 +37,37 @@ Do NOT invent versions. If a version is not pinned explicitly, mark it
 as UNRESOLVED and note the file where the dependency is declared.
 </Step>
 <Step>
-Look up the latest stable version for each artifact from official sources:
-- Google Maven: https://maven.google.com
-- Maven Central
-- Official GitHub releases / changelogs
+### Parallel version lookup (use subagents for catalogs with 10+ dependencies)
 
-Do not use blog posts, random Stack Overflow answers, or unverified sources
-as proof of a version. If you cannot verify the latest version, write
-UNVERIFIED in that column.
+Split the collected dependencies into two groups by registry:
+- **Group A -- Google Maven artifacts**: all `androidx.*`, `com.google.*`,
+  `com.android.*` coordinates
+- **Group B -- Maven Central artifacts**: everything else
+
+Spawn two subagents in parallel (type: "explore"):
+
+**Subagent 1 -- google-maven-lookup**
+Instructions: "For each artifact in Group A, find the latest stable version
+from https://maven.google.com/web/index.html or via the MCP tool
+`maven_get_latest_version` if available. Return a JSON array:
+[{coordinate, latestStable, fetchSource}]. Mark UNVERIFIED if unreachable."
+
+**Subagent 2 -- maven-central-lookup**
+Instructions: "For each artifact in Group B, find the latest stable version
+from Maven Central (https://central.sonatype.com or via MCP tool
+`maven_get_latest_version` if available). Return a JSON array:
+[{coordinate, latestStable, fetchSource}]. Mark UNVERIFIED if unreachable."
+
+Wait for both subagents to return, then merge their results.
+If the MCP server `android-maven-lookup` is connected, prefer calling
+`maven_get_latest_version` over free-text web lookup -- it is faster and
+deterministic.
+
+For small catalogs (<10 dependencies) skip the subagent split and look up
+versions sequentially.
 </Step>
 <Step>
-Classify each dependency:
+Classify each dependency using the merged version data:
 - **ok** -- current version is latest stable or within one patch release
 - **stale** -- newer stable version exists but current still resolves on Maven
 - **yanked** -- current version no longer published / removed from Maven

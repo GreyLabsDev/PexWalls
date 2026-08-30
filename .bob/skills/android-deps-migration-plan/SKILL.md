@@ -74,6 +74,27 @@ Label these clearly as "must land before PR N" in the plan.
 Fill [plan-template.md](plan-template.md) with the full ordered list.
 If saving to disk (Agent mode), write to `workflow/deps/migration-plan-YYYY-MM-DD.md`.
 </Step>
+<Step>
+### Offer subtask execution
+
+After presenting the plan, ask the user:
+"Do you want me to execute this plan? I can run each PR as a separate subtask
+with its own conversation thread and todo list, or apply them all in this chat."
+
+If the user chooses subtasks (recommended for 3+ PRs):
+- Create one subtask per PR using `start_subtask`
+- Title: the PR title from the plan (e.g. "Migrate: Bump Timber 5.0.1 -> 5.0.2")
+- Mode: "agent"
+- Message: the full PR section from the plan (files, version strings,
+  breaking changes, verification command, done-when criterion)
+- Initial todo list: the steps listed in that PR section
+- Run PRs in dependency order (respect "Depends on" from the plan table)
+- Do NOT create the next subtask until the user confirms the previous one passed
+
+If the user chooses in-chat execution:
+- Follow Capability 4 instructions in the mode's customInstructions
+- Use `update_todo_list` to track each PR as a checklist item
+</Step>
 </Steps>
 
 ## Rules

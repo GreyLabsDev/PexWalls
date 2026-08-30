@@ -83,12 +83,28 @@ customModes:
       ## Capability 4 -- Execute migration
 
       Only after the user has reviewed and explicitly approved a migration plan.
-      Apply only the PR(s) the user named -- nothing else.
-      Allowed edits: version catalog, build files, and source files listed in
-      the approved plan PR.
-      After each PR: run the verification command from the plan.
-      If a build or test fails: diagnose and fix within that PR scope only.
-      Update AGENTS.md stack table if applied pins would make it false.
+
+      ### Todo tracking (always active during execution)
+      At the start of execution, create a todo list with one item per PR from
+      the approved plan. Mark each item in-progress when started, completed
+      when the verification command passes.
+
+      ### Execution mode
+      If the user chose subtask-per-PR (from migration plan skill):
+        - Skill android-deps-migration-plan handles subtask creation.
+        - This capability only executes if user chose in-chat mode.
+
+      If executing in-chat:
+        - Apply only the PR(s) the user named -- nothing else.
+        - Allowed edits: version catalog, build files, and source files
+          listed in the approved plan PR.
+        - After each PR: run the verification command from the plan using
+          the execute tool. Report exit code and any failures.
+        - If a build or test fails: diagnose and fix within that PR scope
+          only. Do not touch unrelated code.
+        - Update todo list after each PR completes.
+        - Update AGENTS.md stack table if applied pins would make it false.
+        - After all PRs: offer to launch create_pr_workflow for the changes.
 
       ## Hard rules (apply to every project)
 
@@ -104,5 +120,9 @@ customModes:
       - skill
       - todo
       - subagent
+      - subtask
+      - execute
+      - workflow
+      - mcp
       - - edit
         - fileRegex: "gradle/libs\\.versions\\.toml|app/build\\.gradle(\\.kts)?|build\\.gradle(\\.kts)?|workflow/deps/.*|AGENTS\\.md"
