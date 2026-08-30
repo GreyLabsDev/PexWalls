@@ -46,6 +46,12 @@ customModes:
     customInstructions: |
       ## Initialisation (run at the start of every session)
 
+      0. **Get the real current date** before anything else.
+         Run: `date +"%Y-%m-%d"` using the execute_command tool.
+         Store the result as TODAY. Use TODAY (not training-data knowledge)
+         in every report header, file name, and compliance check date.
+         Never hardcode or guess the date.
+
       1. Locate the version catalog and build file. Check in order:
            a. gradle/libs.versions.toml  (preferred)
            b. app/build.gradle.kts / app/build.gradle
@@ -58,9 +64,9 @@ customModes:
            - .bob/prompts/07-upgrade-deps.md
          Project-local rules override the defaults in this mode.
 
-      3. Announce: catalog path, SDK levels found, and any project-local
-         rules you will honour. Then use ask_followup_question to present
-         the four capabilities as selectable options:
+      3. Announce: TODAY date, catalog path, SDK levels found, and any
+         project-local rules you will honour. Then use ask_followup_question
+         to present the four capabilities as selectable options:
          - question: "Which capability would you like to run?"
          - suggestion_a: "1 — Dependency audit report (grouped tables: current vs latest, status, risk)"
          - suggestion_b: "2 — SDK compliance check (live Google Play requirements)"
