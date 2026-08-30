@@ -49,7 +49,7 @@ def _error_text(req_id: Any, text: str) -> None:
 # HTTP helpers
 # ---------------------------------------------------------------------------
 
-TIMEOUT = 10  # seconds
+TIMEOUT = 15  # seconds
 
 def _get(url: str) -> str:
     req = urllib.request.Request(url, headers={"User-Agent": "android-maven-lookup/1.0"})
@@ -61,33 +61,62 @@ def _get(url: str) -> str:
 # ---------------------------------------------------------------------------
 
 def _latest_from_maven_central(group: str, artifact: str) -> dict:
-    """Query Maven Central Search API for the latest stable release."""
+    """Query Maven Central Search API for the latest stable release.
+
+    Uses the group-level query (no core=gav) which returns a single doc with
+    latestVersion — faster and more reliable than the per-version core=gav endpoint.
+    Falls back to the per-version query if the group query returns no results.
+    """
     coord = f"{group}:{artifact}"
-    url = (
+
+    # Primary: group-level query → latestVersion field
+    url_primary = (
         "https://search.maven.org/solrsearch/select"
         f"?q=g:{urllib.parse.quote(group)}+AND+a:{urllib.parse.quote(artifact)}"
-        "&rows=1&wt=json&core=gav"
+        "&rows=1&wt=json"
     )
-    try:
-        raw = _get(url)
-        data = json.loads(raw)
-        docs = data.get("response", {}).get("docs", [])
-        # Filter out pre-releases: no -alpha, -beta, -rc, -SNAPSHOT suffixes
-        stable = [
-            d["v"] for d in docs
-            if not re.search(r"(?i)(-alpha|-beta|-rc|-snapshot|\.rc)", d.get("v", ""))
-        ]
-        if stable:
-            return {"coordinate": coord, "latestStable": stable[0], "source": "Maven Central"}
-        # fallback: take first doc regardless
-        if docs:
-            return {"coordinate": coord, "latestStable": docs[0]["v"],
-                    "source": "Maven Central (may include pre-release)"}
-        return {"coordinate": coord, "latestStable": "UNVERIFIED",
-                "source": "Maven Central — no results"}
-    except Exception as exc:
-        return {"coordinate": coord, "latestStable": "UNVERIFIED",
-                "source": f"Maven Central — FETCH FAILED: {exc}"}
+    # Fallback: per-version query with core=gav — returns individual versions so
+    # we can filter pre-releases when latestVersion itself is a pre-release
+    url_fallback = (
+        "https://search.maven.org/solrsearch/select"
+        f"?q=g:{urllib.parse.quote(group)}+AND+a:{urllib.parse.quote(artifact)}"
+        "&rows=20&wt=json&core=gav"
+    )
+    for attempt, url in enumerate([url_primary, url_fallback]):
+        try:
+            raw = _get(url)
+            data = json.loads(raw)
+            docs = data.get("response", {}).get("docs", [])
+            if not docs:
+                continue
+            if attempt == 0:
+                # Group-level: single doc with latestVersion
+                version = docs[0].get("latestVersion") or docs[0].get("v", "")
+                if version and not re.search(r"(?i)(-alpha|-beta|-rc|-snapshot)", version):
+                    return {"coordinate": coord, "latestStable": version,
+                            "source": "Maven Central"}
+                # latestVersion is a pre-release — fall through to per-version query
+                continue
+            else:
+                # Per-version: pick newest stable
+                stable = [
+                    d["v"] for d in docs
+                    if not re.search(r"(?i)(-alpha|-beta|-rc|-snapshot)", d.get("v", ""))
+                ]
+                if stable:
+                    return {"coordinate": coord, "latestStable": stable[0],
+                            "source": "Maven Central"}
+                # All versions are pre-release — return newest anyway
+                return {"coordinate": coord, "latestStable": docs[0].get("v", "UNVERIFIED"),
+                        "source": "Maven Central (only pre-releases found)"}
+        except Exception as exc:
+            if attempt == 1:
+                return {"coordinate": coord, "latestStable": "UNVERIFIED",
+                        "source": f"Maven Central — FETCH FAILED: {exc}"}
+            # first attempt failed, try fallback
+            continue
+    return {"coordinate": coord, "latestStable": "UNVERIFIED",
+            "source": "Maven Central — no results"}
 
 # ---------------------------------------------------------------------------
 # Google Maven lookup
