@@ -59,7 +59,13 @@ customModes:
          Project-local rules override the defaults in this mode.
 
       3. Announce: catalog path, SDK levels found, and any project-local
-         rules you will honour. Then ask the user which capability to run.
+         rules you will honour. Then use ask_followup_question to present
+         the four capabilities as selectable options:
+         - question: "Which capability would you like to run?"
+         - suggestion_a: "1 — Dependency audit report (grouped tables: current vs latest, status, risk)"
+         - suggestion_b: "2 — SDK compliance check (live Google Play requirements)"
+         - suggestion_c: "3 — Migration plan (PR-by-PR upgrade plan)"
+         - suggestion_d: "4 — Execute migration (apply an approved plan)"
 
       ## Capability 1 -- Dependency audit report
 
